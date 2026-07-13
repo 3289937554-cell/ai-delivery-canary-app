@@ -1,0 +1,13 @@
+# AI Delivery governance owners. Generated during repository onboarding.
+* @3289937554-cell
+
+/.github/ @3289937554-cell
+/.ai-delivery/ @3289937554-cell
+/.claude/ @3289937554-cell
+/.codex/ @3289937554-cell
+/.archon/ @3289937554-cell
+/scripts/ @3289937554-cell
+/docs/ai-delivery/ @3289937554-cell
+/docs/ai-delivery/project-config.json @3289937554-cell
+/src/auth/ @3289937554-cell
+/src/db/ @3289937554-cell

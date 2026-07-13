@@ -1,0 +1,92 @@
+{
+  "full_mode_extra_dirs": [
+    "docs/ai-delivery/schema",
+    "docs/ai-delivery/templates"
+  ],
+  "full_mode_extra_files": [
+    ".claude/agents/planner.md",
+    ".claude/agents/architect-reviewer.md",
+    ".claude/agents/final-reviewer.md",
+    ".codex/agents/explorer.toml",
+    ".codex/agents/worker.toml",
+    ".codex/agents/reviewer-security.toml",
+    ".codex/agents/reviewer-tests.toml",
+    ".archon/workflows/plan-to-pr.yaml",
+    ".archon/workflows/pr-review-fix-loop.yaml"
+  ],
+  "installed_at": "2026-07-13T07:42:34Z",
+  "installer_version": "ai-delivery-installer/v1",
+  "mode": "thin",
+  "owners": {
+    "data_owner": "@3289937554-cell",
+    "default_owner": "@3289937554-cell",
+    "platform_owner": "@3289937554-cell",
+    "security_owner": "@3289937554-cell"
+  },
+  "pack_root": "/Users/jiangli/总控库/软件开发",
+  "project_id": "project-0007-ai-delivery-canary-app",
+  "registry_path": "/Users/jiangli/总控库/软件开发/registry/projects.jsonl",
+  "required_local_files": [
+    ".github/workflows/ai-delivery-ci.yml",
+    ".github/CODEOWNERS",
+    ".github/pull_request_template.md",
+    ".github/ISSUE_TEMPLATE/ai-delivery.yml",
+    ".ai-delivery/lock.json",
+    "docs/ai-delivery/project-config.json",
+    "scripts/generate_evidence_manifest.py",
+    "scripts/validate_evidence_manifest.py"
+  ],
+  "schema_version": "ai-delivery-target-lock/v1",
+  "target_repo": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app",
+  "template_identity": {
+    "control_mode": "thin",
+    "control_plane_root": "/Users/jiangli/总控库/软件开发",
+    "files": [
+      {
+        "destination": ".github/CODEOWNERS",
+        "expected_sha256": "c8326ce6310aec5b5e77b397d99a155356357705365494832545dd90419a1907",
+        "kind": "rendered-codeowners",
+        "source": "templates/github/CODEOWNERS.example",
+        "source_sha256": "b6e339048e5e0afc4bf39905b8ea48e4c49848bca1bf0393eb76ff1cfb3d1d80"
+      },
+      {
+        "destination": ".github/ISSUE_TEMPLATE/ai-delivery.yml",
+        "expected_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf",
+        "kind": "copy",
+        "source": "templates/github/ISSUE_TEMPLATE/ai-delivery.yml",
+        "source_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf"
+      },
+      {
+        "destination": ".github/pull_request_template.md",
+        "expected_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee",
+        "kind": "copy",
+        "source": "templates/github/pull_request_template.md",
+        "source_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee"
+      },
+      {
+        "destination": ".github/workflows/ai-delivery-ci.yml",
+        "expected_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a",
+        "kind": "copy",
+        "source": "templates/github/workflows/ai-delivery-ci.yml",
+        "source_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a"
+      },
+      {
+        "destination": "scripts/generate_evidence_manifest.py",
+        "expected_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01",
+        "kind": "copy",
+        "source": "scripts/generate_evidence_manifest.py",
+        "source_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01"
+      },
+      {
+        "destination": "scripts/validate_evidence_manifest.py",
+        "expected_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520",
+        "kind": "copy",
+        "source": "scripts/validate_evidence_manifest.py",
+        "source_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520"
+      }
+    ],
+    "identity_sha256": "e0c64b8bf61ca23adf399651dd6654e28b09bc4cbe0fb5b666af46e49ea0ac53",
+    "installer_version": "ai-delivery-installer/v1",
+    "schema_version": "ai-delivery-template-identity/v1"
+  }
+}

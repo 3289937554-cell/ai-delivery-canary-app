@@ -1,0 +1,224 @@
+{
+  "result": "PASS",
+  "installed_at": "2026-07-13T07:42:34Z",
+  "pack_root": "/Users/jiangli/总控库/软件开发",
+  "target_repo": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app",
+  "project_id": "project-0007-ai-delivery-canary-app",
+  "mode": "thin",
+  "dry_run": false,
+  "overwrite": false,
+  "registry_path": "/Users/jiangli/总控库/软件开发/registry/projects.jsonl",
+  "registry_requested": true,
+  "registry_upsert_order": "registry_upsert_before_install_report",
+  "registry_upsert_planned": true,
+  "registered": true,
+  "owners": {
+    "default_owner": "@3289937554-cell",
+    "platform_owner": "@3289937554-cell",
+    "security_owner": "@3289937554-cell",
+    "data_owner": "@3289937554-cell"
+  },
+  "template_identity": {
+    "schema_version": "ai-delivery-template-identity/v1",
+    "installer_version": "ai-delivery-installer/v1",
+    "control_mode": "thin",
+    "control_plane_root": "/Users/jiangli/总控库/软件开发",
+    "files": [
+      {
+        "kind": "rendered-codeowners",
+        "source": "templates/github/CODEOWNERS.example",
+        "destination": ".github/CODEOWNERS",
+        "source_sha256": "b6e339048e5e0afc4bf39905b8ea48e4c49848bca1bf0393eb76ff1cfb3d1d80",
+        "expected_sha256": "c8326ce6310aec5b5e77b397d99a155356357705365494832545dd90419a1907"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/github/ISSUE_TEMPLATE/ai-delivery.yml",
+        "destination": ".github/ISSUE_TEMPLATE/ai-delivery.yml",
+        "source_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf",
+        "expected_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/github/pull_request_template.md",
+        "destination": ".github/pull_request_template.md",
+        "source_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee",
+        "expected_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/github/workflows/ai-delivery-ci.yml",
+        "destination": ".github/workflows/ai-delivery-ci.yml",
+        "source_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a",
+        "expected_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a"
+      },
+      {
+        "kind": "copy",
+        "source": "scripts/generate_evidence_manifest.py",
+        "destination": "scripts/generate_evidence_manifest.py",
+        "source_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01",
+        "expected_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01"
+      },
+      {
+        "kind": "copy",
+        "source": "scripts/validate_evidence_manifest.py",
+        "destination": "scripts/validate_evidence_manifest.py",
+        "source_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520",
+        "expected_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520"
+      }
+    ],
+    "identity_sha256": "e0c64b8bf61ca23adf399651dd6654e28b09bc4cbe0fb5b666af46e49ea0ac53"
+  },
+  "files": [
+    {
+      "source": "/Users/jiangli/总控库/软件开发/templates/github/workflows/ai-delivery-ci.yml",
+      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.github/workflows/ai-delivery-ci.yml",
+      "status": "copied"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/templates/github/ISSUE_TEMPLATE/ai-delivery.yml",
+      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.github/ISSUE_TEMPLATE/ai-delivery.yml",
+      "status": "copied"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/templates/github/pull_request_template.md",
+      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.github/pull_request_template.md",
+      "status": "copied"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/scripts/generate_evidence_manifest.py",
+      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/scripts/generate_evidence_manifest.py",
+      "status": "copied"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/scripts/validate_evidence_manifest.py",
+      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/scripts/validate_evidence_manifest.py",
+      "status": "copied"
+    },
+    {
+      "source": "templates/github/CODEOWNERS.example rendered",
+      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.github/CODEOWNERS",
+      "status": "written"
+    },
+    {
+      "source": "generated project config",
+      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/docs/ai-delivery/project-config.json",
+      "status": "written"
+    },
+    {
+      "source": "generated target lock",
+      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.ai-delivery/lock.json",
+      "status": "written"
+    },
+    {
+      "source": "generated onboarding status",
+      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/docs/ai-delivery/onboarding-status.md",
+      "status": "written"
+    },
+    {
+      "source": "generated memory registry seed",
+      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/docs/ai-delivery/memory/registry.jsonl",
+      "status": "written"
+    }
+  ],
+  "enabled_validation": {
+    "command": [
+      "/Users/jiangli/总控库/软件开发/.venv/bin/python",
+      "/Users/jiangli/总控库/软件开发/scripts/validate_ai_delivery_pack.py",
+      "--enabled-repo",
+      "--repo-root",
+      "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app"
+    ],
+    "exit_code": 0,
+    "stdout": "AI delivery enabled repository validation\nroot: /Users/jiangli/项目库/project-0007-ai-delivery-canary-app\nenabled_repo_mode: thin\nenabled_repo_required_files_checked: true\nenabled_repo_full_files_checked: skipped\nenabled_repo_codeowners_checked: true\nlegacy_patterns_checked: true\nci_gates_checked: lint,typecheck,test,build,smoke,validate-evidence\nresult: PASS\n",
+    "stderr": "",
+    "passed": true
+  },
+  "registry_record": {
+    "schema_version": "ai-delivery-registry/v1",
+    "project_id": "project-0007-ai-delivery-canary-app",
+    "repo_path": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app",
+    "control_mode": "thin",
+    "status": "onboarded_pending_bootstrap_pr",
+    "github": {
+      "origin": "https://github.com/3289937554-cell/ai-delivery-canary-app.git",
+      "name_with_owner": "3289937554-cell/ai-delivery-canary-app"
+    },
+    "git": {
+      "current_branch": "main"
+    },
+    "owners": {
+      "default_owner": "@3289937554-cell",
+      "platform_owner": "@3289937554-cell",
+      "security_owner": "@3289937554-cell",
+      "data_owner": "@3289937554-cell"
+    },
+    "control_plane": {
+      "path": "/Users/jiangli/总控库/软件开发",
+      "check_command": "python3 '/Users/jiangli/总控库/软件开发/scripts/check_ai_delivery_target_repo.py' --target-repo '/Users/jiangli/项目库/project-0007-ai-delivery-canary-app'",
+      "install_command": "python3 '/Users/jiangli/总控库/软件开发/scripts/install_ai_delivery_to_target_repo.py' --target-repo '/Users/jiangli/项目库/project-0007-ai-delivery-canary-app' --mode thin"
+    },
+    "lock_path": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.ai-delivery/lock.json",
+    "project_config_path": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/docs/ai-delivery/project-config.json",
+    "created_or_updated_at": "2026-07-13T07:42:34Z",
+    "last_checked_at": null,
+    "template_identity": {
+      "schema_version": "ai-delivery-template-identity/v1",
+      "installer_version": "ai-delivery-installer/v1",
+      "control_mode": "thin",
+      "control_plane_root": "/Users/jiangli/总控库/软件开发",
+      "files": [
+        {
+          "kind": "rendered-codeowners",
+          "source": "templates/github/CODEOWNERS.example",
+          "destination": ".github/CODEOWNERS",
+          "source_sha256": "b6e339048e5e0afc4bf39905b8ea48e4c49848bca1bf0393eb76ff1cfb3d1d80",
+          "expected_sha256": "c8326ce6310aec5b5e77b397d99a155356357705365494832545dd90419a1907"
+        },
+        {
+          "kind": "copy",
+          "source": "templates/github/ISSUE_TEMPLATE/ai-delivery.yml",
+          "destination": ".github/ISSUE_TEMPLATE/ai-delivery.yml",
+          "source_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf",
+          "expected_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf"
+        },
+        {
+          "kind": "copy",
+          "source": "templates/github/pull_request_template.md",
+          "destination": ".github/pull_request_template.md",
+          "source_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee",
+          "expected_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee"
+        },
+        {
+          "kind": "copy",
+          "source": "templates/github/workflows/ai-delivery-ci.yml",
+          "destination": ".github/workflows/ai-delivery-ci.yml",
+          "source_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a",
+          "expected_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a"
+        },
+        {
+          "kind": "copy",
+          "source": "scripts/generate_evidence_manifest.py",
+          "destination": "scripts/generate_evidence_manifest.py",
+          "source_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01",
+          "expected_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01"
+        },
+        {
+          "kind": "copy",
+          "source": "scripts/validate_evidence_manifest.py",
+          "destination": "scripts/validate_evidence_manifest.py",
+          "source_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520",
+          "expected_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520"
+        }
+      ],
+      "identity_sha256": "e0c64b8bf61ca23adf399651dd6654e28b09bc4cbe0fb5b666af46e49ea0ac53"
+    }
+  },
+  "next_commands": [
+    "git checkout -b chore/ai-delivery-bootstrap",
+    "git add .github .ai-delivery scripts/generate_evidence_manifest.py scripts/validate_evidence_manifest.py docs/ai-delivery evidence/AI-DELIVERY-BOOTSTRAP",
+    "git commit -m \"chore: enable AI delivery orchestration\"",
+    "git push -u origin chore/ai-delivery-bootstrap",
+    "gh pr create --title \"chore: enable AI delivery orchestration\" --body \"Bootstrap AI Delivery governance, agents, workflows, and evidence validation.\""
+  ]
+}

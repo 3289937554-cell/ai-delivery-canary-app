@@ -1,0 +1,256 @@
+name: AI Delivery CI
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+env:
+  EVIDENCE_DIR: evidence
+
+# lint/typecheck/test/build/smoke use the default pull_request checkout and
+# therefore validate GitHub's PR merge result. validate-evidence checks out the
+# PR head because it must verify the HEAD^ implementation commit plus the final
+# evidence-only commit protocol.
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: lint
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR/ci/logs"
+          if [ -f package.json ] && npm run 2>/dev/null | grep -Eq '^[[:space:]]+lint$|^[[:space:]]+lint:'; then
+            npm run lint 2>&1 | tee "$EVIDENCE_DIR/ci/logs/lint.log"
+          elif [ -x scripts/lint.sh ]; then
+            bash scripts/lint.sh 2>&1 | tee "$EVIDENCE_DIR/ci/logs/lint.log"
+          else
+            printf '%s\n' "No lint adapter detected. Add npm lint or executable scripts/lint.sh before enabling AI Delivery CI." | tee "$EVIDENCE_DIR/ci/logs/lint.log"
+            exit 1
+          fi
+      - name: upload lint evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-delivery-lint-evidence
+          path: evidence/ci
+          if-no-files-found: warn
+
+  typecheck:
+    name: typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: typecheck
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR/ci/logs"
+          if [ -f package.json ] && npm run 2>/dev/null | grep -Eq '^[[:space:]]+typecheck$|^[[:space:]]+typecheck:'; then
+            npm run typecheck 2>&1 | tee "$EVIDENCE_DIR/ci/logs/typecheck.log"
+          elif [ -x scripts/typecheck.sh ]; then
+            bash scripts/typecheck.sh 2>&1 | tee "$EVIDENCE_DIR/ci/logs/typecheck.log"
+          else
+            printf '%s\n' "No typecheck adapter detected. Add npm typecheck or executable scripts/typecheck.sh; do not replace typecheck with file listing." | tee "$EVIDENCE_DIR/ci/logs/typecheck.log"
+            exit 1
+          fi
+      - name: upload typecheck evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-delivery-typecheck-evidence
+          path: evidence/ci
+          if-no-files-found: warn
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: test
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR/ci/tests"
+          if [ -f package.json ] && npm run 2>/dev/null | grep -Eq '^[[:space:]]+test$|^[[:space:]]+test:'; then
+            npm test 2>&1 | tee "$EVIDENCE_DIR/ci/tests/test.log"
+          elif [ -x scripts/test.sh ]; then
+            bash scripts/test.sh 2>&1 | tee "$EVIDENCE_DIR/ci/tests/test.log"
+          elif [ -d tests ]; then
+            python3 -m unittest discover -s tests 2>&1 | tee "$EVIDENCE_DIR/ci/tests/test.log"
+          else
+            printf '%s\n' "No test adapter detected. Add npm test, executable scripts/test.sh, or tests/ before requiring this check." | tee "$EVIDENCE_DIR/ci/tests/test.log"
+            exit 1
+          fi
+      - name: upload test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-delivery-test-evidence
+          path: evidence/ci
+          if-no-files-found: warn
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: build
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR/ci/logs"
+          if [ -f package.json ] && npm run 2>/dev/null | grep -Eq '^[[:space:]]+build$|^[[:space:]]+build:'; then
+            npm run build 2>&1 | tee "$EVIDENCE_DIR/ci/logs/build.log"
+          elif [ -x scripts/build.sh ]; then
+            bash scripts/build.sh 2>&1 | tee "$EVIDENCE_DIR/ci/logs/build.log"
+          else
+            printf '%s\n' "No build adapter detected. Add npm build or executable scripts/build.sh; do not replace build with repository status output." | tee "$EVIDENCE_DIR/ci/logs/build.log"
+            exit 1
+          fi
+      - name: upload build evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-delivery-build-evidence
+          path: evidence/ci
+          if-no-files-found: warn
+
+  smoke:
+    name: smoke
+    runs-on: ubuntu-latest
+    needs:
+      - lint
+      - typecheck
+      - test
+      - build
+    steps:
+      - uses: actions/checkout@v4
+      - name: smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$EVIDENCE_DIR/ci/logs"
+          if [ -x scripts/smoke.sh ]; then
+            bash scripts/smoke.sh 2>&1 | tee "$EVIDENCE_DIR/ci/logs/smoke.log"
+          elif [ -f package.json ] && npm run 2>/dev/null | grep -Eq '^[[:space:]]+smoke$|^[[:space:]]+smoke:'; then
+            npm run smoke 2>&1 | tee "$EVIDENCE_DIR/ci/logs/smoke.log"
+          else
+            printf '%s\n' "No smoke adapter detected. Add executable scripts/smoke.sh or npm smoke for required PR checks." | tee "$EVIDENCE_DIR/ci/logs/smoke.log"
+            exit 1
+          fi
+      - name: upload smoke evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-delivery-smoke-evidence
+          path: evidence/ci
+          if-no-files-found: warn
+
+  validate-evidence:
+    name: validate-evidence
+    runs-on: ubuntu-latest
+    needs:
+      - smoke
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: validate-evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            printf '%s\n' "AI Delivery CI only supports pull_request events."
+            exit 1
+          fi
+          BRANCH_NAME="${{ github.head_ref }}"
+          if [ -z "$BRANCH_NAME" ]; then
+            BRANCH_NAME="${{ github.ref_name }}"
+          fi
+          if [[ ! "$BRANCH_NAME" =~ ^ai/(GH-[0-9]+)-[-A-Za-z0-9._]+$ ]]; then
+            printf '%s\n' "AI delivery branch must match ai/GH-<number>-<slug>; actual: $BRANCH_NAME"
+            exit 1
+          fi
+          ISSUE_ID="${BASH_REMATCH[1]}"
+          printf 'ISSUE_ID=%s\n' "$ISSUE_ID" >> "$GITHUB_ENV"
+          EVIDENCE_MANIFEST="$EVIDENCE_DIR/$ISSUE_ID/manifest.json"
+          PR_HEAD_SHA="$(git rev-parse HEAD)"
+          if ! git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+            printf '%s\n' "AI delivery PR must end with an evidence-only final commit; HEAD has no parent."
+            exit 1
+          fi
+          EXPECTED_COMMIT_SHA="$(git rev-parse HEAD^)"
+          EXPECTED_BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          if [ -z "$EXPECTED_BASE_SHA" ]; then
+            printf '%s\n' "AI delivery PR validation requires github.event.pull_request.base.sha."
+            exit 1
+          fi
+
+          if [ ! -f scripts/validate_evidence_manifest.py ]; then
+            printf '%s\n' "scripts/validate_evidence_manifest.py is required for AI delivery PRs."
+            exit 1
+          fi
+          if [ ! -f "$EVIDENCE_MANIFEST" ]; then
+            printf '%s\n' "Expected evidence manifest not found: $EVIDENCE_MANIFEST"
+            exit 1
+          fi
+
+          implementation_evidence_files=$(git diff --name-only "$EXPECTED_BASE_SHA" "$EXPECTED_COMMIT_SHA" -- 'evidence/GH-*' || true)
+          if [ -n "$implementation_evidence_files" ]; then
+            printf '%s\n' "AI delivery implementation commit range must not modify evidence files; attach evidence only in the final evidence-only commit."
+            printf '%s\n' "$implementation_evidence_files"
+            exit 1
+          fi
+          implementation_non_evidence_files=$(git diff --name-only "$EXPECTED_BASE_SHA" "$EXPECTED_COMMIT_SHA" | awk 'index($0,"evidence/")!=1')
+          if [ -z "$implementation_non_evidence_files" ]; then
+            printf '%s\n' "AI delivery implementation commit range must include non-evidence changes."
+            exit 1
+          fi
+
+          changed_after_implementation=$(git diff --name-only "$EXPECTED_COMMIT_SHA" "$PR_HEAD_SHA" || true)
+          if [ -z "$changed_after_implementation" ]; then
+            printf '%s\n' "AI delivery PR final commit must contain refreshed evidence files."
+            exit 1
+          fi
+          allowed_prefix="$EVIDENCE_DIR/$ISSUE_ID/"
+          while IFS= read -r changed_path; do
+            if [ -z "$changed_path" ]; then
+              continue
+            fi
+            case "$changed_path" in
+              "$allowed_prefix"*) ;;
+              *)
+                printf '%s\n' "AI delivery PR final commit must be evidence-only for $ISSUE_ID; disallowed path after implementation commit: $changed_path"
+                exit 1
+                ;;
+            esac
+          done <<< "$changed_after_implementation"
+
+          args=("$EVIDENCE_MANIFEST" "--repo-root" "." "--strict" "--expected-commit-sha" "$EXPECTED_COMMIT_SHA" "--expected-issue-id" "$ISSUE_ID")
+          if [ -n "$EXPECTED_BASE_SHA" ]; then
+            args+=("--expected-base-sha" "$EXPECTED_BASE_SHA")
+          fi
+          if [ -n "$PR_NUMBER" ]; then
+            args+=("--expected-pr-id" "PR-$PR_NUMBER")
+          fi
+          python3 scripts/validate_evidence_manifest.py "${args[@]}"
+
+          manifest_count=$(find "$EVIDENCE_DIR" -path '*/manifest.json' -type f | wc -l | tr -d ' ')
+          printf '%s\n' "validated_manifest=$EVIDENCE_MANIFEST"
+          printf '%s\n' "manifest_count_detected=$manifest_count"
+      - name: upload validate-evidence logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-delivery-validate-evidence
+          path: evidence/${{ env.ISSUE_ID }}
+          if-no-files-found: warn

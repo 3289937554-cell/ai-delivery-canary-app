@@ -1,0 +1,94 @@
+name: AI Delivery Request
+description: Create a governed Claude/Codex delivery request.
+title: "[AI Delivery] "
+labels:
+  - ai-delivery
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for work that should enter the S0-S10 Claude/Codex delivery loop. GitHub Issue, PR, CI, manifest, and artifacts remain the audit source of truth.
+  - type: input
+    id: objective
+    attributes:
+      label: Objective
+      description: One measurable product or engineering outcome.
+      placeholder: Add the import preview screen and verify it with desktop and mobile smoke evidence.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Relevant repository, user, technical, and operational context.
+    validations:
+      required: true
+  - type: textarea
+    id: non_goals
+    attributes:
+      label: Non-goals
+      description: Scope that Claude and Codex must not implement in this round.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Each item must be provable by command output, CI, surface evidence, smoke artifact, or human review.
+      value: |
+        - [ ] Criterion 1:
+        - [ ] Criterion 2:
+        - [ ] Criterion 3:
+    validations:
+      required: true
+  - type: dropdown
+    id: risk_level
+    attributes:
+      label: Risk Level
+      options:
+        - low
+        - medium
+        - high
+        - critical
+    validations:
+      required: true
+  - type: checkboxes
+    id: human_approval
+    attributes:
+      label: Human Approval Required For
+      options:
+        - label: Production deployment
+        - label: Secrets or credentials
+        - label: Database migration or irreversible data change
+        - label: Billing, paid resource expansion, or external vendor change
+        - label: Protected branch or CI policy change
+        - label: Security-sensitive code path
+  - type: textarea
+    id: validation
+    attributes:
+      label: Required Validation
+      description: Map project commands to the required gates. Keep the gate names stable.
+      value: |
+        lint:
+        typecheck:
+        test:
+        build:
+        smoke:
+        validate-evidence: python3 scripts/validate_evidence_manifest.py evidence/GH-<number>/manifest.json --repo-root .
+    validations:
+      required: true
+  - type: textarea
+    id: expected_artifacts
+    attributes:
+      label: Expected Evidence Artifacts
+      value: |
+        - evidence/GH-<number>/handoff.md
+        - evidence/GH-<number>/codex-plan.md
+        - evidence/GH-<number>/logs/
+        - evidence/GH-<number>/reports/
+        - evidence/GH-<number>/surface-evidence/ or smoke artifact
+        - evidence/GH-<number>/rollback.md
+        - evidence/GH-<number>/manifest.json
+    validations:
+      required: true
