@@ -15,12 +15,14 @@ class CanaryAppTests(unittest.TestCase):
 
         payload = aid_canary_app.health()
         self.assertEqual(payload["status"], "ok")
+        self.assertEqual(payload["managed_delivery"], "enabled")
         self.assertIn("AI Delivery", payload["app"])
 
     def test_smoke_cli_outputs_ok_json(self):
         result = subprocess.run([sys.executable, str(SRC), "--smoke"], text=True, capture_output=True, check=True)
         payload = json.loads(result.stdout)
         self.assertEqual(payload["status"], "ok")
+        self.assertEqual(payload["managed_delivery"], "enabled")
 
 
 if __name__ == "__main__":
