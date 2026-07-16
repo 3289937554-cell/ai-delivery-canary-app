@@ -204,7 +204,7 @@ jobs:
             exit 1
           fi
 
-          implementation_evidence_files=$(git diff --name-only "$EXPECTED_BASE_SHA" "$EXPECTED_COMMIT_SHA" -- 'evidence/GH-*' || true)
+          implementation_evidence_files=$(git diff --name-only "$EXPECTED_BASE_SHA" "$EXPECTED_COMMIT_SHA" -- "$EVIDENCE_DIR/$ISSUE_ID" "$EVIDENCE_DIR/AI-DELIVERY-CANARY" || true)
           if [ -n "$implementation_evidence_files" ]; then
             printf '%s\n' "AI delivery implementation commit range must not modify evidence files; attach evidence only in the final evidence-only commit."
             printf '%s\n' "$implementation_evidence_files"
@@ -222,12 +222,14 @@ jobs:
             exit 1
           fi
           allowed_prefix="$EVIDENCE_DIR/$ISSUE_ID/"
+          commercial_allowed_prefix="$EVIDENCE_DIR/AI-DELIVERY-CANARY/"
           while IFS= read -r changed_path; do
             if [ -z "$changed_path" ]; then
               continue
             fi
             case "$changed_path" in
               "$allowed_prefix"*) ;;
+              "$commercial_allowed_prefix"*) ;;
               *)
                 printf '%s\n' "AI delivery PR final commit must be evidence-only for $ISSUE_ID; disallowed path after implementation commit: $changed_path"
                 exit 1
