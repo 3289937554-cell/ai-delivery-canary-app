@@ -4,16 +4,15 @@
 from __future__ import annotations
 
 import argparse
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
 import hashlib
 import json
-from pathlib import Path
 import re
 import subprocess
 import sys
+from dataclasses import dataclass, field
+from datetime import UTC, datetime
+from pathlib import Path
 from urllib.parse import urlparse
-
 
 REQUIRED_TOP_LEVEL = [
     "manifest_version",
@@ -92,11 +91,11 @@ def validate_created_at(value: object, result: ValidationResult) -> None:
     if UTC_CREATED_AT_RE.match(value) is None:
         return
     try:
-        parsed = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+        parsed = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=UTC)
     except ValueError as exc:
         result.failures.append(f"created_at is not a valid UTC timestamp: {exc}")
         return
-    result.require(parsed.tzinfo == timezone.utc, "created_at must be UTC")
+    result.require(parsed.tzinfo == UTC, "created_at must be UTC")
 
 
 def validate_local_path(
@@ -279,8 +278,7 @@ def run_git_bytes(repo_root: Path, *args: str) -> subprocess.CompletedProcess[by
     return subprocess.run(
         ["git", *args],
         cwd=repo_root,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        capture_output=True,
         text=False,
     )
 
@@ -339,9 +337,7 @@ def validate_diff_matches_git_range(
 def numeric_field(payload: dict, names: list[str]) -> int | None:
     for name in names:
         value = payload.get(name)
-        if isinstance(value, bool):
-            return int(value)
-        if isinstance(value, int):
+        if isinstance(value, int) and not isinstance(value, bool):
             return value
     return None
 
@@ -350,9 +346,7 @@ def numeric_fields(payload: dict, names: list[str]) -> dict[str, int]:
     values: dict[str, int] = {}
     for name in names:
         value = payload.get(name)
-        if isinstance(value, bool):
-            values[name] = int(value)
-        elif isinstance(value, int):
+        if isinstance(value, int) and not isinstance(value, bool):
             values[name] = value
     return values
 
@@ -372,6 +366,11 @@ def validate_test_summary(path: Path, result: ValidationResult) -> None:
     if not isinstance(payload, dict):
         result.failures.append(f"tests artifact JSON root must be an object: {path}")
         return
+
+    count_fields = ["failed", "failures", "errors", "passed", "passes", "successes", "tests", "total", "total_tests"]
+    for field_name in count_fields:
+        if isinstance(payload.get(field_name), bool):
+            result.failures.append(f"tests artifact field {field_name} must be an integer, not a boolean: {path}")
 
     status = payload.get("status")
     failure_counts = numeric_fields(payload, ["failed", "failures", "errors"])

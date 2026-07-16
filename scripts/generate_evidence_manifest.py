@@ -4,15 +4,14 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timezone
 import hashlib
 import json
-from pathlib import Path
 import re
 import sys
+from datetime import UTC, datetime
+from pathlib import Path
 
 from validate_evidence_manifest import validate_manifest
-
 
 REQUIRED_COMMAND_LOGS = {
     "lint": "logs/lint.log",
@@ -130,7 +129,7 @@ def main() -> int:
             print(f"- {failure}")
         return 1
 
-    created_at = args.created_at or datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    created_at = args.created_at or datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     pr_number = args.pr_id.removeprefix("PR-")
     rollback_command = args.rollback_command or f"gh pr revert {pr_number}"
 
