@@ -1,0 +1,17 @@
+issue_id: GH-1
+pr_id: PR-2
+base_sha: b9d802e839ede065fc681b3eb6c30a8c30724a65
+commit_sha: 4977986ab6fc83bf86d6125c8baf6e4b1ee6db06
+actual_head_sha: 4977986ab6fc83bf86d6125c8baf6e4b1ee6db06
+clean_except_issue_evidence: true
+dirty_issue_evidence_allowed: 
+command_name: smoke
+exit_code: 0
+command: bash scripts/smoke.sh
+summary: smoke gate completed with exit_code=0 in 0.025s.
+started_at: 2026-07-16T00:50:01Z
+duration_seconds: 0.025
+stdout:
+{"app": "AI Delivery Canary App", "managed_delivery": "enabled", "status": "ok", "version": "0.1.0"}
+stderr:
+

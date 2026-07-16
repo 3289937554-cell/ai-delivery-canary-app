@@ -14,7 +14,7 @@
     ".archon/workflows/plan-to-pr.yaml",
     ".archon/workflows/pr-review-fix-loop.yaml"
   ],
-  "installed_at": "2026-07-13T07:42:34Z",
+  "installed_at": "2026-07-16T00:48:16Z",
   "installer_version": "ai-delivery-installer/v1",
   "mode": "thin",
   "owners": {
@@ -65,10 +65,10 @@
       },
       {
         "destination": ".github/workflows/ai-delivery-ci.yml",
-        "expected_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a",
+        "expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
         "kind": "copy",
         "source": "templates/github/workflows/ai-delivery-ci.yml",
-        "source_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a"
+        "source_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a"
       },
       {
         "destination": "scripts/generate_evidence_manifest.py",
@@ -85,7 +85,7 @@
         "source_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520"
       }
     ],
-    "identity_sha256": "e0c64b8bf61ca23adf399651dd6654e28b09bc4cbe0fb5b666af46e49ea0ac53",
+    "identity_sha256": "8754f0301ac88f3edea054350c4cd99bf0731ab7f8b95a3dfc3669ca4593f475",
     "installer_version": "ai-delivery-installer/v1",
     "schema_version": "ai-delivery-template-identity/v1"
   }
