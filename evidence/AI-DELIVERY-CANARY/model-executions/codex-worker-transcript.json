@@ -1,0 +1,19 @@
+{
+  "completed_at": "2026-07-16T14:26:07.000Z",
+  "exit_code": 0,
+  "implementation_commit": "1b7eaab8343a42280f672cf05133fb67bc0ae6e4",
+  "interface": "Codex Desktop",
+  "model": "gpt-5.5",
+  "provider": "openai",
+  "role": "codex-worker",
+  "run_id": "019f6b32-638d-7a80-960f-4414e8ae2639",
+  "schema_version": "ai-delivery-model-transcript/v1",
+  "source_audit_event_count": 7,
+  "source_audit_path": "evidence/AI-DELIVERY-CANARY/model-executions/codex-worker-source-audit.json",
+  "source_audit_retained_locally": true,
+  "source_audit_sha256": "4c47c2c36c2968153ed84f22f5f48cba6f3586935945e7c9982ac0de78e6c0ee",
+  "source_log_path": "/Users/jiangli/.codex/source-log-snapshots/ai-delivery-canary-app/GH-3/codex-worker-rollout-019f6b32-638d-7a80-960f-4414e8ae2639.jsonl",
+  "source_log_sha256": "8a52c9469d946f3e1e247b94efec8f4e353825a5bee9fa248a5067f9f5077fb2",
+  "started_at": "2026-07-16T13:51:32.000Z",
+  "thread_id": "019f6b32-638d-7a80-960f-4414e8ae2639"
+}

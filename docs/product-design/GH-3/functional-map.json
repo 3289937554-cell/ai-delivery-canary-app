@@ -1,0 +1,175 @@
+{
+  "capabilities": [
+    {
+      "acceptance_criteria": [
+        "An operator can create, search, select, edit, and transition a release using only repository-defined statuses.",
+        "A release cannot move to ready while required gates are uncleared or blocking open risks remain.",
+        "Desktop and mobile views expose title, version, status, gate clearance, and open risk counts without horizontal overflow."
+      ],
+      "entities": [
+        "release",
+        "release-status",
+        "release-summary"
+      ],
+      "errors": [
+        "validation_error",
+        "conflict",
+        "permission_denied",
+        "offline"
+      ],
+      "id": "CAP-001",
+      "name": "Release portfolio and lifecycle control",
+      "permissions": [
+        "release:read",
+        "release:write"
+      ],
+      "roles": [
+        "release-operator"
+      ],
+      "states": [
+        "planned",
+        "validating",
+        "blocked",
+        "ready",
+        "released",
+        "rolled_back"
+      ]
+    },
+    {
+      "acceptance_criteria": [
+        "An operator can add a required gate and update it through pending, passed, failed, or waived states.",
+        "Gate actions preserve selected release context and immediately update gate clearance counts.",
+        "Invalid gate transitions return a readable conflict without losing the pending form state."
+      ],
+      "entities": [
+        "delivery-gate",
+        "gate-status",
+        "gate-waiver"
+      ],
+      "errors": [
+        "validation_error",
+        "conflict",
+        "permission_denied"
+      ],
+      "id": "CAP-002",
+      "name": "Delivery gate management",
+      "permissions": [
+        "gate:read",
+        "gate:write"
+      ],
+      "roles": [
+        "release-operator"
+      ],
+      "states": [
+        "pending",
+        "passed",
+        "failed",
+        "waived"
+      ]
+    },
+    {
+      "acceptance_criteria": [
+        "An operator can add low, medium, high, or critical risks and mark whether each risk blocks readiness.",
+        "Open blocking risks prevent ready status until they are closed, accepted, or mitigated according to the domain rules.",
+        "Risk cards expose severity, blocking status, and allowed next actions without requiring source-code knowledge."
+      ],
+      "entities": [
+        "risk",
+        "risk-severity",
+        "risk-status"
+      ],
+      "errors": [
+        "validation_error",
+        "conflict",
+        "permission_denied"
+      ],
+      "id": "CAP-003",
+      "name": "Risk register and mitigation control",
+      "permissions": [
+        "risk:read",
+        "risk:write"
+      ],
+      "roles": [
+        "release-operator"
+      ],
+      "states": [
+        "open",
+        "mitigated",
+        "accepted",
+        "closed"
+      ]
+    },
+    {
+      "acceptance_criteria": [
+        "The selected release audit view shows ordered events for release, gate, and risk actions.",
+        "The all-releases audit mode reads the repository API and does not require mutation authorization.",
+        "Audit entries expose prior and new status so final review can reconstruct the delivery path."
+      ],
+      "entities": [
+        "audit-event",
+        "audit-scope",
+        "actor"
+      ],
+      "errors": [
+        "offline",
+        "not_found"
+      ],
+      "id": "CAP-004",
+      "name": "Append-only audit inspection",
+      "permissions": [
+        "audit:read"
+      ],
+      "roles": [
+        "release-operator",
+        "final-reviewer"
+      ],
+      "states": [
+        "empty",
+        "populated",
+        "filtered",
+        "error"
+      ]
+    },
+    {
+      "acceptance_criteria": [
+        "Read-only health, release, and audit views load locally without a bearer token.",
+        "Mutation forms surface unauthorized responses and preserve operator context.",
+        "Security headers, loopback binding, bounded request bodies, and token redaction are verified by tests and smoke evidence."
+      ],
+      "entities": [
+        "runtime-token",
+        "local-service",
+        "security-header"
+      ],
+      "errors": [
+        "permission_denied",
+        "unsupported_media_type",
+        "payload_too_large",
+        "malformed_json"
+      ],
+      "id": "CAP-005",
+      "name": "Local runtime safety boundary",
+      "permissions": [
+        "runtime:read",
+        "runtime:mutate-with-token"
+      ],
+      "roles": [
+        "release-operator"
+      ],
+      "states": [
+        "connected",
+        "offline",
+        "authorized",
+        "unauthorized"
+      ]
+    }
+  ],
+  "core_flow_ids": [
+    "FLOW-001",
+    "FLOW-002",
+    "FLOW-003",
+    "FLOW-004"
+  ],
+  "issue_id": "GH-3",
+  "schema_version": "functional-map/v1"
+}

@@ -1,0 +1,18 @@
+{
+  "artifact_path": "evidence/AI-DELIVERY-CANARY/claude-final.md",
+  "artifact_sha256": "b75a4f12b5f555ce398e5a73e35a8dc9fa3ef03e38b12a48b77e76d21db565ad",
+  "completed_at": "2026-07-18T11:43:28Z",
+  "exit_code": 0,
+  "interface": "Claude Code CLI",
+  "model": "claude-opus-4-7",
+  "placeholder": false,
+  "prompt_path": "evidence/AI-DELIVERY-CANARY/model-executions/claude-final-prompt.md",
+  "prompt_sha256": "1b59940b5a37752d724834abe7194969123866fa4f818057b9128b8d5b1bb91a",
+  "provider": "anthropic",
+  "role": "claude-final",
+  "run_id": "local_c25abba7-e1b1-403e-86c0-2df7ae2b5d91",
+  "schema_version": "ai-delivery-model-execution/v1",
+  "started_at": "2026-07-18T11:42:52.207000Z",
+  "transcript_path": "evidence/AI-DELIVERY-CANARY/model-executions/claude-final-transcript.json",
+  "transcript_sha256": "44a4db00f27d1996f1c1007977a622a9d43e465d606c6476c8f6703277fb578f"
+}

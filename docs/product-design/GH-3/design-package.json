@@ -1,0 +1,91 @@
+{
+  "artifacts": [
+    {
+      "path": "docs/product-design/GH-3/DESIGN.md",
+      "sha256": "7fc6c02781622a8b439e02897320c75919e41e9265d9bcd0fca2553ce86d0fcc"
+    },
+    {
+      "path": "docs/product-design/GH-3/approvals/concept.json",
+      "sha256": "0846ddfb660f888b3b53c554f482a75c34dae84d922deb0c874f10fa43afb1dc"
+    },
+    {
+      "path": "docs/product-design/GH-3/approvals/functional.json",
+      "sha256": "b30ce83a72cc6a31cbe97609fd98a2b48c42f0a296263ac4a79b63a75ed5d05f"
+    },
+    {
+      "path": "docs/product-design/GH-3/asset-inventory.json",
+      "sha256": "77b6d42d95a0e2d4f2060982fa00aabb6a2916cefaf71257aee14c21717d6f31"
+    },
+    {
+      "path": "docs/product-design/GH-3/component-catalog.json",
+      "sha256": "ae2b06080bbd5350eae7515d574fa57c1c4e93ad2d9a508408415b34e417f511"
+    },
+    {
+      "path": "docs/product-design/GH-3/functional-map.json",
+      "sha256": "8c4b60214c5e319daff2efd074186e713d670da83876270023ba969eef372b66"
+    },
+    {
+      "path": "docs/product-design/GH-3/handoff.json",
+      "sha256": "c697691fdebb4c2c2dc02ef16674f99c0bf91ae79cfdda1ee81118915a0c3f6e"
+    },
+    {
+      "path": "docs/product-design/GH-3/product-brief.md",
+      "sha256": "dd4a8dbd208647256078439589201027e6339153f156607d78965349bf82e5d5"
+    },
+    {
+      "path": "docs/product-design/GH-3/reviews/accessibility.md",
+      "sha256": "c4238977b9c318f4dec86eeb47f73d4415bc26915f9108d5e7ad4b30f0c06dae"
+    },
+    {
+      "path": "docs/product-design/GH-3/reviews/design-system.md",
+      "sha256": "38ba84ecc871c0f64aecb52d631406199680669ad20af188d4eb35ed57e49abe"
+    },
+    {
+      "path": "docs/product-design/GH-3/reviews/usability.md",
+      "sha256": "2e34710d046ac2b3ffebd4e2a64fc5f941af04c82b8d4800c13286381531cd16"
+    },
+    {
+      "path": "docs/product-design/GH-3/reviews/ux-copy.md",
+      "sha256": "2489815a192ccc03a3e95ae1e619701b8a9246d343a9061c28bf500de8e86dac"
+    },
+    {
+      "path": "docs/product-design/GH-3/screen-state-matrix.json",
+      "sha256": "0445170667fe0ecee8751af62d4265a50133586e7c521212a41e20d92799094b"
+    },
+    {
+      "path": "docs/product-design/GH-3/tokens.json",
+      "sha256": "8591f4f0d572bcd7e3cf5a23ed724efea97b77363fdcb9801294efba59469b30"
+    },
+    {
+      "path": "docs/product-design/GH-3/user-flows.md",
+      "sha256": "1b5944685cc13e92014bf3baa034bcc8b57ed08d326ac9f2209d161b22aa2612"
+    },
+    {
+      "path": "docs/product-design/GH-3/variants.json",
+      "sha256": "3d183143928d2bcece8157b1d531c88c0819c4e83722671713867dacb287a4f2"
+    },
+    {
+      "path": "docs/product-design/GH-3/variants/variant-a.md",
+      "sha256": "0b9c1b3a7d27293b4db39d2413cf0c0a81ecdcfe0ec83d44e2f79a72fc9e2edf"
+    },
+    {
+      "path": "docs/product-design/GH-3/variants/variant-b.md",
+      "sha256": "f888c0585bc72d581d4efcac0fad0bcf5b6537676515e16db5784a219b44b013"
+    },
+    {
+      "path": "docs/product-design/GH-3/variants/variant-c.md",
+      "sha256": "4bd02087a3970b133ba301a63a532069318695bc9a7b02c99bbe758e7fd6aaef"
+    }
+  ],
+  "design_version": "1.0.0",
+  "generated_at": "2026-07-18T07:45:56Z",
+  "generator_version": "product-design-package/v1",
+  "issue_id": "GH-3",
+  "profile": "operations",
+  "schema_version": "product-design-package/v1",
+  "selected_variant_id": "variant-b",
+  "standards": {
+    "accessibility": "WCAG 2.2 AA",
+    "token_format": "DTCG 2025.10"
+  }
+}

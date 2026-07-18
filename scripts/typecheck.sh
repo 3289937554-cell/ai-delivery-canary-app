@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
-python3 - <<'PY'
-from pathlib import Path
-for root in (Path('src'), Path('tests')):
-    for path in sorted(root.rglob('*.py')):
-        compile(path.read_text(encoding='utf-8'), str(path), 'exec')
-PY
+
+if [ -x .venv/bin/python3 ]; then
+  export PATH="$(pwd)/.venv/bin:${PATH}"
+fi
+
+python3 -m mypy src/delivery_ops src/aid_canary_app.py scripts/validate_model_execution.py
+printf '%s\n' "typecheck: ok"

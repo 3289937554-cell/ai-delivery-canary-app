@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+.ai-delivery/runtime/
+.ai-delivery/build/
+.ai-delivery/smoke-run-*/

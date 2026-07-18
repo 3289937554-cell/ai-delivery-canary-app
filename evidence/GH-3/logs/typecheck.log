@@ -1,0 +1,18 @@
+issue_id: GH-3
+pr_id: PR-4
+base_sha: 9abade1930293e19b86c08e65c817c439fe84b21
+commit_sha: 6bb9497b3e4d19866e7201aca08c20b8d180033a
+actual_head_sha: 6bb9497b3e4d19866e7201aca08c20b8d180033a
+clean_except_issue_evidence: true
+dirty_issue_evidence_allowed: evidence/AI-DELIVERY-CANARY/claude-final.md, evidence/AI-DELIVERY-CANARY/claude-planner.md, evidence/AI-DELIVERY-CANARY/claude-reviewer.md, evidence/AI-DELIVERY-CANARY/codeowners-review.json, evidence/AI-DELIVERY-CANARY/codex-explorer.md, evidence/AI-DELIVERY-CANARY/codex-plan.md, evidence/AI-DELIVERY-CANARY/codex-reviser.md, evidence/AI-DELIVERY-CANARY/codex-worker.md, evidence/AI-DELIVERY-CANARY/commercial-readiness.json, evidence/AI-DELIVERY-CANARY/final-check.json, evidence/AI-DELIVERY-CANARY/goal-boundary.md, evidence/AI-DELIVERY-CANARY/human-checklist.md, evidence/AI-DELIVERY-CANARY/prd-architecture.md, evidence/AI-DELIVERY-CANARY/task-breakdown.md, evidence/AI-DELIVERY-CANARY/model-executions/claude-final-prompt.md, evidence/AI-DELIVERY-CANARY/model-executions/claude-final-source-audit.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-final-transcript.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-final.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-planner-prompt.md, evidence/AI-DELIVERY-CANARY/model-executions/claude-planner-transcript.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-planner.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-reviewer-prompt.md, evidence/AI-DELIVERY-CANARY/model-executions/claude-reviewer-source-audit.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-reviewer-transcript.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-reviewer.json, evidence/AI-DELIVERY-CANARY/model-executions/codex-worker-prompt.md, evidence/AI-DELIVERY-CANARY/model-executions/codex-worker-source-audit.json, evidence/AI-DELIVERY-CANARY/model-executions/codex-worker-transcript.json, evidence/AI-DELIVERY-CANARY/model-executions/codex-worker.json, evidence/AI-DELIVERY-CANARY/product/acceptance-desktop.png, evidence/AI-DELIVERY-CANARY/product/acceptance-mobile.png, evidence/AI-DELIVERY-CANARY/product/acceptance.md, evidence/AI-DELIVERY-CANARY/product/design-concept-desktop.png, evidence/AI-DELIVERY-CANARY/product/design-concept-mobile.png, evidence/AI-DELIVERY-CANARY/product/persistence.md, evidence/AI-DELIVERY-CANARY/product/security-review.md, evidence/AI-DELIVERY-CANARY/product/ui-surface.md, evidence/AI-DELIVERY-CANARY/source-logs/claude-final-result.json, evidence/AI-DELIVERY-CANARY/source-logs/claude-reviewer-result.json, evidence/GH-3/diff.patch, evidence/GH-3/logs/build.log, evidence/GH-3/logs/lint.log, evidence/GH-3/logs/smoke.log, evidence/GH-3/logs/test.log, evidence/GH-3/logs/typecheck.log, evidence/GH-3/manifest.json, evidence/GH-3/product-design/accessibility-report.md, evidence/GH-3/product-design/product-design-package.md, evidence/GH-3/product-design/visual-regression.md, evidence/GH-3/reports/test-summary.json, evidence/GH-3/rollback.md, evidence/GH-3/run-log.md, evidence/GH-3/surface-evidence/browser-acceptance.md, evidence/GH-3/surface-evidence/smoke-observation.txt
+command_name: typecheck
+exit_code: 0
+command: scripts/typecheck.sh
+summary: typecheck gate completed with exit_code=0 in 0.351s.
+started_at: 2026-07-18T11:34:53Z
+duration_seconds: 0.351
+stdout:
+Success: no issues found in 6 source files
+typecheck: ok
+stderr:
+

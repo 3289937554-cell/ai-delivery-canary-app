@@ -1,8 +1,8 @@
 {
   "control_mode": "thin",
   "control_plane": {
-    "path": "/Users/jiangli/总控库/软件开发",
-    "type": "local-path"
+    "type": "local-path",
+    "path": "/Users/jiangli/总控库/软件开发/.worktrees/commercial-readiness-source-provenance"
   },
   "owners": {
     "data_owner": "@3289937554-cell",
@@ -21,55 +21,64 @@
   },
   "schema_version": "ai-delivery-project/v1",
   "template_identity": {
+    "schema_version": "ai-delivery-template-identity/v1",
+    "installer_version": "ai-delivery-installer/v1",
     "control_mode": "thin",
-    "control_plane_root": "/Users/jiangli/总控库/软件开发",
+    "control_plane_root": "/Users/jiangli/总控库/软件开发/.worktrees/commercial-readiness-source-provenance",
     "files": [
       {
-        "destination": ".github/CODEOWNERS",
-        "expected_sha256": "c8326ce6310aec5b5e77b397d99a155356357705365494832545dd90419a1907",
         "kind": "rendered-codeowners",
         "source": "templates/github/CODEOWNERS.example",
-        "source_sha256": "b6e339048e5e0afc4bf39905b8ea48e4c49848bca1bf0393eb76ff1cfb3d1d80"
+        "destination": ".github/CODEOWNERS",
+        "source_sha256": "b6e339048e5e0afc4bf39905b8ea48e4c49848bca1bf0393eb76ff1cfb3d1d80",
+        "expected_sha256": "c8326ce6310aec5b5e77b397d99a155356357705365494832545dd90419a1907"
       },
       {
-        "destination": ".github/ISSUE_TEMPLATE/ai-delivery.yml",
-        "expected_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf",
         "kind": "copy",
         "source": "templates/github/ISSUE_TEMPLATE/ai-delivery.yml",
-        "source_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf"
+        "destination": ".github/ISSUE_TEMPLATE/ai-delivery.yml",
+        "source_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf",
+        "expected_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf"
       },
       {
-        "destination": ".github/pull_request_template.md",
-        "expected_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee",
         "kind": "copy",
         "source": "templates/github/pull_request_template.md",
-        "source_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee"
+        "destination": ".github/pull_request_template.md",
+        "source_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee",
+        "expected_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee"
       },
       {
-        "destination": ".github/workflows/ai-delivery-ci.yml",
-        "expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
         "kind": "copy",
         "source": "templates/github/workflows/ai-delivery-ci.yml",
-        "source_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a"
+        "destination": ".github/workflows/ai-delivery-ci.yml",
+        "source_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
+        "expected_sha256": "0acf907e7fc8a876a6dd8a56eb72b99f3253694d09e6b4e8443d9616c9d598d9"
       },
       {
-        "destination": "scripts/generate_evidence_manifest.py",
-        "expected_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01",
         "kind": "copy",
         "source": "scripts/generate_evidence_manifest.py",
-        "source_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01"
+        "destination": "scripts/generate_evidence_manifest.py",
+        "source_sha256": "8ff4436fd4138b0dc73b0fc435421badaaa08b731dfea6a5507832ac881cf868",
+        "expected_sha256": "8ff4436fd4138b0dc73b0fc435421badaaa08b731dfea6a5507832ac881cf868"
       },
       {
-        "destination": "scripts/validate_evidence_manifest.py",
-        "expected_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520",
         "kind": "copy",
         "source": "scripts/validate_evidence_manifest.py",
-        "source_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520"
+        "destination": "scripts/validate_evidence_manifest.py",
+        "source_sha256": "da79bc752549bdabc0a2655352079e75f0ab0e9990be5daf8e56bd9b91dc52d4",
+        "expected_sha256": "da79bc752549bdabc0a2655352079e75f0ab0e9990be5daf8e56bd9b91dc52d4"
       }
     ],
-    "identity_sha256": "8754f0301ac88f3edea054350c4cd99bf0731ab7f8b95a3dfc3669ca4593f475",
-    "installer_version": "ai-delivery-installer/v1",
-    "schema_version": "ai-delivery-template-identity/v1"
+    "identity_sha256": "4ac628733059914d152690403d48de0a44039b94435002cbc80cee851786069f",
+    "target_template_overrides": [
+      {
+        "policy": "ci-template-specialization/v1",
+        "destination": ".github/workflows/ai-delivery-ci.yml",
+        "base_expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
+        "actual_sha256": "0acf907e7fc8a876a6dd8a56eb72b99f3253694d09e6b4e8443d9616c9d598d9",
+        "reason": "Commercial canary CI pins GitHub Actions and requires model execution validation for all retained role records."
+      }
+    ]
   },
   "verification": {
     "build": "project adapter selected by .github/workflows/ai-delivery-ci.yml",
@@ -84,5 +93,30 @@
     "evidence_manifest": "evidence/GH-<number>/manifest.json",
     "lifecycle": "S0-S10",
     "worktree_pattern": "../worktrees/GH-<number>-<slug>"
+  },
+  "experience": {
+    "contract_version": "experience/v2",
+    "applicability": "confirmed",
+    "surface_type": "web",
+    "rationale": "Delivery Operations Console is a responsive browser application for managing releases, delivery gates, risks, and audit history.",
+    "design_required": true,
+    "design_status": "required",
+    "design_root": "docs/product-design",
+    "visual_breakpoints": [
+      1440,
+      1280,
+      1024,
+      768,
+      390
+    ],
+    "accessibility_standard": "WCAG 2.2 AA",
+    "design_provider": {
+      "name": "repository",
+      "authority": "non_authoritative_adapter"
+    },
+    "privacy_gate": {
+      "private_artifacts_upload": "forbidden",
+      "training_opt_out_confirmed": false
+    }
   }
 }

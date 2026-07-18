@@ -1,0 +1,18 @@
+{
+  "artifact_path": "evidence/AI-DELIVERY-CANARY/codex-worker.md",
+  "artifact_sha256": "3d24aee630ff0c5c6e244ca657db878d33947380bc27e60103bf44926335b1f7",
+  "completed_at": "2026-07-16T14:26:07.000Z",
+  "exit_code": 0,
+  "interface": "Codex Desktop",
+  "model": "gpt-5.5",
+  "placeholder": false,
+  "prompt_path": "evidence/AI-DELIVERY-CANARY/model-executions/codex-worker-prompt.md",
+  "prompt_sha256": "f3705b1770ce966bf923affc3944007d0986e6406c02d67bffc873f4840c198f",
+  "provider": "openai",
+  "role": "codex-worker",
+  "run_id": "019f6b32-638d-7a80-960f-4414e8ae2639",
+  "schema_version": "ai-delivery-model-execution/v1",
+  "started_at": "2026-07-16T13:51:32.000Z",
+  "transcript_path": "evidence/AI-DELIVERY-CANARY/model-executions/codex-worker-transcript.json",
+  "transcript_sha256": "8895dc93534d4c70e790d158a0a625bcac29a2f0e5bda3e3975c9f2cbccee842"
+}

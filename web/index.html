@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Delivery Operations Console</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="topbar__title">
+          <h1>Delivery Operations Console</h1>
+        </div>
+        <div class="topbar__status">
+          <p class="status-chip" id="connection-indicator">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span id="connection-text">Connected</span>
+          </p>
+          <form class="token-panel" id="token-form">
+            <label class="token-panel__label" for="token-input">Token</label>
+            <input id="token-input" name="token" type="password" autocomplete="off" spellcheck="false">
+            <button type="submit" class="button button--secondary">Save token</button>
+            <button type="button" class="button button--ghost" id="clear-token">Clear</button>
+          </form>
+        </div>
+      </header>
+
+      <div class="flash flash--hidden" id="flash-banner" role="status" aria-live="polite"></div>
+      <div class="sr-only" id="live-region" aria-live="polite"></div>
+
+      <main class="workspace">
+        <aside class="rail">
+          <section class="panel panel--dense">
+            <div class="section-heading">
+              <h2>Releases</h2>
+            </div>
+            <form class="search-form" id="release-search-form">
+              <label for="release-search">Search releases</label>
+              <input id="release-search" name="query" type="search" autocomplete="off">
+            </form>
+            <div class="release-list" id="release-list" aria-live="polite">
+              <table class="release-table" id="release-table">
+                <caption class="sr-only">Release delivery status</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Version</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Gates</th>
+                    <th scope="col">Open risks</th>
+                  </tr>
+                </thead>
+                <tbody id="release-table-body"></tbody>
+              </table>
+              <div id="release-list-state"></div>
+            </div>
+          </section>
+
+          <section class="panel panel--dense">
+            <div class="section-heading">
+              <h2>Create release</h2>
+            </div>
+            <form class="stack-form" id="create-release-form" novalidate>
+              <label for="create-title">Release title</label>
+              <input id="create-title" name="title" type="text" maxlength="200" required aria-describedby="create-title-error">
+              <p class="field-error" id="create-title-error" data-field-error></p>
+
+              <label for="create-version">Version</label>
+              <input id="create-version" name="version" type="text" maxlength="80" required aria-describedby="create-version-error">
+              <p class="field-error" id="create-version-error" data-field-error></p>
+
+              <button type="submit" class="button button--primary">Create release</button>
+            </form>
+          </section>
+        </aside>
+
+        <section class="detail">
+          <section class="panel" id="release-detail">
+            <div class="section-heading section-heading--detail">
+              <div>
+                <p class="eyebrow">Selected release</p>
+                <h2 id="release-title">No release selected</h2>
+              </div>
+              <span class="status-badge status-badge--planned" id="release-status-badge">planned</span>
+            </div>
+            <div class="meta-grid" id="release-meta">
+              <div>
+                <dt>Version</dt>
+                <dd id="release-version">-</dd>
+              </div>
+              <div>
+                <dt>Created</dt>
+                <dd id="release-created">-</dd>
+              </div>
+              <div>
+                <dt>Updated</dt>
+                <dd id="release-updated">-</dd>
+              </div>
+            </div>
+
+            <form class="stack-form stack-form--compact" id="update-release-form" novalidate>
+              <div class="field-row">
+                <div>
+                  <label for="update-title">Release title</label>
+                  <input id="update-title" name="title" type="text" maxlength="200" required aria-describedby="update-title-error">
+                  <p class="field-error" id="update-title-error" data-field-error></p>
+                </div>
+                <div>
+                  <label for="update-version">Version</label>
+                  <input id="update-version" name="version" type="text" maxlength="80" required aria-describedby="update-version-error">
+                  <p class="field-error" id="update-version-error" data-field-error></p>
+                </div>
+                <div>
+                  <label for="update-status">Status</label>
+                  <select id="update-status" name="status" aria-describedby="update-status-error">
+                    <option value="planned">planned</option>
+                    <option value="validating">validating</option>
+                    <option value="blocked">blocked</option>
+                    <option value="ready">ready</option>
+                    <option value="released">released</option>
+                    <option value="rolled_back">rolled_back</option>
+                  </select>
+                  <p class="field-error" id="update-status-error" data-field-error></p>
+                </div>
+              </div>
+              <button type="submit" class="button button--secondary">Save release</button>
+            </form>
+          </section>
+
+          <section class="detail-grid">
+            <section class="panel">
+              <div class="section-heading section-heading--detail">
+                <h2>Delivery gates</h2>
+              </div>
+              <div class="gate-rail" id="gate-list"></div>
+              <form class="stack-form stack-form--compact" id="create-gate-form" novalidate>
+                <div class="field-row field-row--align-end">
+                  <div class="field-grow">
+                    <label for="gate-name">Gate name</label>
+                    <input id="gate-name" name="name" type="text" maxlength="120" required aria-describedby="gate-name-error">
+                    <p class="field-error" id="gate-name-error" data-field-error></p>
+                  </div>
+                  <label class="checkbox">
+                    <input id="gate-required" name="required" type="checkbox" checked>
+                    <span>Required gate</span>
+                  </label>
+                </div>
+                <button type="submit" class="button button--primary">Add gate</button>
+              </form>
+            </section>
+
+            <section class="panel">
+              <div class="section-heading section-heading--detail">
+                <h2>Risks</h2>
+              </div>
+              <div class="risk-register" id="risk-list"></div>
+              <form class="stack-form stack-form--compact" id="create-risk-form" novalidate>
+                <label for="risk-description">Risk description</label>
+                <input id="risk-description" name="description" type="text" maxlength="500" required aria-describedby="risk-description-error">
+                <p class="field-error" id="risk-description-error" data-field-error></p>
+                <div class="field-row">
+                  <div>
+                    <label for="risk-severity">Severity</label>
+                    <select id="risk-severity" name="severity" aria-describedby="risk-severity-error">
+                      <option value="low">low</option>
+                      <option value="medium">medium</option>
+                      <option value="high">high</option>
+                      <option value="critical">critical</option>
+                    </select>
+                    <p class="field-error" id="risk-severity-error" data-field-error></p>
+                  </div>
+                  <label class="checkbox">
+                    <input id="risk-blocking" name="blocking" type="checkbox">
+                    <span>Blocking risk</span>
+                  </label>
+                </div>
+                <button type="submit" class="button button--primary">Add risk</button>
+              </form>
+            </section>
+          </section>
+
+          <section class="panel">
+            <div class="section-heading section-heading--detail">
+              <div>
+                <label for="audit-scope">Audit scope</label>
+                <select id="audit-scope" name="audit_scope">
+                  <option value="release">Selected release</option>
+                  <option value="all">All releases</option>
+                </select>
+              </div>
+              <h2>Audit history</h2>
+            </div>
+            <div class="audit-timeline" id="audit-list"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

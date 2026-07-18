@@ -9,22 +9,21 @@
       "login": "3289937554-cell",
       "role": "sole_maintainer_codeowner",
       "review_type": "self_review",
-      "reviewed_at": "2026-07-16T00:50:00Z"
+      "reviewed_at": "2026-07-16T14:46:58Z"
     }
   ],
-  "pr_id": "PR-2",
-  "pull_request": "https://github.com/3289937554-cell/ai-delivery-canary-app/pull/2",
+  "pr_id": "PR-4",
+  "pull_request": "https://github.com/3289937554-cell/ai-delivery-canary-app/pull/4",
   "repository": "3289937554-cell/ai-delivery-canary-app",
-  "evidence_commit_sha": "4977986ab6fc83bf86d6125c8baf6e4b1ee6db06",
-  "live_pr_head_sha": "final-evidence-commit-after-force-with-lease-push",
-  "head_delta_note": "Evidence packet is anchored at 4977986. The live PR head final-evidence-commit-after-force-with-lease-push adds only evidence/GH-1/* files on top of 4977986 (no product-code change); 4977986 is a verified ancestor of final-evidence-commit-after-force-with-lease-push, so the self-review of the code holds for the live head.",
+  "implementation_commit_sha": "6bb9497b3e4d19866e7201aca08c20b8d180033a",
   "review_basis": [
-    "evidence/GH-1/diff.patch",
-    "evidence/GH-1/packets/claude-reviewer.md",
-    "evidence/GH-1/packets/claude-final.md"
+    "evidence/GH-3/diff.patch",
+    "evidence/AI-DELIVERY-CANARY/claude-reviewer.md",
+    "evidence/AI-DELIVERY-CANARY/claude-final.md",
+    "https://github.com/3289937554-cell/ai-delivery-canary-app/actions/runs/29638834475"
   ],
   "reviews_api_observed": [],
-  "attestation": "Sole maintainer 3289937554-cell self-reviewed PR-2 under single_maintainer governance mode. No independent code-owner review exists and none is claimed; independent_review is recorded as false. This artifact is a transparent self-review, not a fabricated independent approval.",
-  "checked_at": "2026-07-16T00:50:00Z",
+  "attestation": "Sole maintainer 3289937554-cell self-reviewed PR-4 under single_maintainer governance mode. No independent code-owner review exists and none is claimed; independent_review is false. The grounded Claude review is model evidence and is not presented as a human GitHub approval.",
+  "checked_at": "2026-07-18T11:31:00Z",
   "evidence_status": "self_reviewed_single_maintainer"
 }

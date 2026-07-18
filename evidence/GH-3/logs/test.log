@@ -1,0 +1,153 @@
+issue_id: GH-3
+pr_id: PR-4
+base_sha: 9abade1930293e19b86c08e65c817c439fe84b21
+commit_sha: 6bb9497b3e4d19866e7201aca08c20b8d180033a
+actual_head_sha: 6bb9497b3e4d19866e7201aca08c20b8d180033a
+clean_except_issue_evidence: true
+dirty_issue_evidence_allowed: evidence/AI-DELIVERY-CANARY/claude-final.md, evidence/AI-DELIVERY-CANARY/claude-planner.md, evidence/AI-DELIVERY-CANARY/claude-reviewer.md, evidence/AI-DELIVERY-CANARY/codeowners-review.json, evidence/AI-DELIVERY-CANARY/codex-explorer.md, evidence/AI-DELIVERY-CANARY/codex-plan.md, evidence/AI-DELIVERY-CANARY/codex-reviser.md, evidence/AI-DELIVERY-CANARY/codex-worker.md, evidence/AI-DELIVERY-CANARY/commercial-readiness.json, evidence/AI-DELIVERY-CANARY/final-check.json, evidence/AI-DELIVERY-CANARY/goal-boundary.md, evidence/AI-DELIVERY-CANARY/human-checklist.md, evidence/AI-DELIVERY-CANARY/prd-architecture.md, evidence/AI-DELIVERY-CANARY/task-breakdown.md, evidence/AI-DELIVERY-CANARY/model-executions/claude-final-prompt.md, evidence/AI-DELIVERY-CANARY/model-executions/claude-final-source-audit.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-final-transcript.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-final.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-planner-prompt.md, evidence/AI-DELIVERY-CANARY/model-executions/claude-planner-transcript.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-planner.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-reviewer-prompt.md, evidence/AI-DELIVERY-CANARY/model-executions/claude-reviewer-source-audit.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-reviewer-transcript.json, evidence/AI-DELIVERY-CANARY/model-executions/claude-reviewer.json, evidence/AI-DELIVERY-CANARY/model-executions/codex-worker-prompt.md, evidence/AI-DELIVERY-CANARY/model-executions/codex-worker-source-audit.json, evidence/AI-DELIVERY-CANARY/model-executions/codex-worker-transcript.json, evidence/AI-DELIVERY-CANARY/model-executions/codex-worker.json, evidence/AI-DELIVERY-CANARY/product/acceptance-desktop.png, evidence/AI-DELIVERY-CANARY/product/acceptance-mobile.png, evidence/AI-DELIVERY-CANARY/product/acceptance.md, evidence/AI-DELIVERY-CANARY/product/design-concept-desktop.png, evidence/AI-DELIVERY-CANARY/product/design-concept-mobile.png, evidence/AI-DELIVERY-CANARY/product/persistence.md, evidence/AI-DELIVERY-CANARY/product/security-review.md, evidence/AI-DELIVERY-CANARY/product/ui-surface.md, evidence/AI-DELIVERY-CANARY/source-logs/claude-final-result.json, evidence/AI-DELIVERY-CANARY/source-logs/claude-reviewer-result.json, evidence/GH-3/diff.patch, evidence/GH-3/logs/build.log, evidence/GH-3/logs/lint.log, evidence/GH-3/logs/smoke.log, evidence/GH-3/logs/test.log, evidence/GH-3/logs/typecheck.log, evidence/GH-3/manifest.json, evidence/GH-3/product-design/accessibility-report.md, evidence/GH-3/product-design/product-design-package.md, evidence/GH-3/product-design/visual-regression.md, evidence/GH-3/reports/test-summary.json, evidence/GH-3/rollback.md, evidence/GH-3/run-log.md, evidence/GH-3/surface-evidence/browser-acceptance.md, evidence/GH-3/surface-evidence/smoke-observation.txt
+command_name: test
+exit_code: 0
+command: python3 -m unittest discover -s tests -v
+summary: test gate completed with exit_code=0 in 10.650s.
+started_at: 2026-07-18T11:34:53Z
+duration_seconds: 10.650
+stdout:
+
+stderr:
+test_cli_starts_without_token_and_serves_read_endpoints (test_aid_canary_app.CanaryAppTests.test_cli_starts_without_token_and_serves_read_endpoints) ... ok
+test_cli_startup_test_closes_subprocess_pipes (test_aid_canary_app.CanaryAppTests.test_cli_startup_test_closes_subprocess_pipes) ... ok
+test_health_payload (test_aid_canary_app.CanaryAppTests.test_health_payload) ... ok
+test_smoke_cli_outputs_ok_json (test_aid_canary_app.CanaryAppTests.test_smoke_cli_outputs_ok_json) ... ok
+test_token_is_environment_only_and_cli_rejects_token_option (test_aid_canary_app.CanaryAppTests.test_token_is_environment_only_and_cli_rejects_token_option) ... usage: python3 -m unittest [-h] [--smoke] [--host HOST] [--port PORT]
+                           [--data-dir DATA_DIR] [--web-root WEB_ROOT]
+python3 -m unittest: error: unrecognized arguments: --token command-line-secret
+ok
+test_accepted_risk_requires_reason (test_domain.DomainTests.test_accepted_risk_requires_reason) ... ok
+test_audit_events_capture_entity_and_status_facts (test_domain.DomainTests.test_audit_events_capture_entity_and_status_facts) ... ok
+test_create_assigns_initial_status_and_ignores_client_ids (test_domain.DomainTests.test_create_assigns_initial_status_and_ignores_client_ids) ... ok
+test_create_release_initializes_expected_shape_and_audit_event (test_domain.DomainTests.test_create_release_initializes_expected_shape_and_audit_event) ... ok
+test_field_boundaries_unknown_fields_unique_ids_and_time_ordering (test_domain.DomainTests.test_field_boundaries_unknown_fields_unique_ids_and_time_ordering) ... ok
+test_gate_and_risk_create_reject_lifecycle_fields (test_domain.DomainTests.test_gate_and_risk_create_reject_lifecycle_fields) ... ok
+test_gate_transition_matrix_is_exhaustive (test_domain.DomainTests.test_gate_transition_matrix_is_exhaustive) ... ok
+test_gate_transitions_only_allow_reset_to_pending_after_passed_or_waived (test_domain.DomainTests.test_gate_transitions_only_allow_reset_to_pending_after_passed_or_waived) ... ok
+test_gate_waiver_requires_reason (test_domain.DomainTests.test_gate_waiver_requires_reason) ... ok
+test_mutations_reject_timestamps_earlier_than_current_updated_at (test_domain.DomainTests.test_mutations_reject_timestamps_earlier_than_current_updated_at) ... ok
+test_ready_release_allows_non_blocking_gate_and_risk_metadata (test_domain.DomainTests.test_ready_release_allows_non_blocking_gate_and_risk_metadata) ... ok
+test_ready_release_rejects_gate_or_risk_changes_that_break_readiness (test_domain.DomainTests.test_ready_release_rejects_gate_or_risk_changes_that_break_readiness) ... ok
+test_release_status_transitions_are_limited (test_domain.DomainTests.test_release_status_transitions_are_limited) ... ok
+test_release_transition_matrix_is_exhaustive (test_domain.DomainTests.test_release_transition_matrix_is_exhaustive) ... ok
+test_release_transition_to_ready_requires_clear_gates_and_risks (test_domain.DomainTests.test_release_transition_to_ready_requires_clear_gates_and_risks) ... ok
+test_risk_transition_matrix_is_exhaustive (test_domain.DomainTests.test_risk_transition_matrix_is_exhaustive) ... ok
+test_validate_release_rejects_duplicate_nested_ids_and_backdated_update (test_domain.DomainTests.test_validate_release_rejects_duplicate_nested_ids_and_backdated_update) ... ok
+test_validate_release_rejects_mutated_ids_and_invalid_timestamps (test_domain.DomainTests.test_validate_release_rejects_mutated_ids_and_invalid_timestamps) ... ok
+test_validate_state_rejects_duplicate_release_ids (test_domain.DomainTests.test_validate_state_rejects_duplicate_release_ids) ... ok
+test_boolean_test_counts_are_rejected (test_evidence_manifest_validator.EvidenceManifestValidatorTests.test_boolean_test_counts_are_rejected) ... ok
+test_discovery_ignores_non_record_sidecar_json (test_model_execution_validator.ModelExecutionValidatorTests.test_discovery_ignores_non_record_sidecar_json) ... ok
+test_empty_discovery_is_optional_until_evidence_is_finished (test_model_execution_validator.ModelExecutionValidatorTests.test_empty_discovery_is_optional_until_evidence_is_finished) ... ok
+test_invalid_records_report_each_contract_violation (test_model_execution_validator.ModelExecutionValidatorTests.test_invalid_records_report_each_contract_violation) ... ok
+test_nonzero_exit_code_is_rejected (test_model_execution_validator.ModelExecutionValidatorTests.test_nonzero_exit_code_is_rejected) ... ok
+test_unstructured_transcript_is_rejected_even_when_hash_matches (test_model_execution_validator.ModelExecutionValidatorTests.test_unstructured_transcript_is_rejected_even_when_hash_matches) ... ok
+test_valid_complete_role_set_and_cli_discovery (test_model_execution_validator.ModelExecutionValidatorTests.test_valid_complete_role_set_and_cli_discovery) ... ok
+test_authentication_precedes_body_parsing_and_wrong_token_is_refused (test_server.ServerTests.test_authentication_precedes_body_parsing_and_wrong_token_is_refused) ... {"method": "POST", "path": "/api/releases", "status": 401}
+{"method": "POST", "path": "/api/releases", "status": 401}
+ok
+test_create_ignores_client_ids_and_assigns_new_entity_ids (test_server.ServerTests.test_create_ignores_client_ids_and_assigns_new_entity_ids) ... {"method": "POST", "path": "/api/releases", "status": 201}
+{"method": "POST", "path": "/api/releases/d5c99012-cf10-4163-a9e1-e9762d862fe7/gates", "status": 201}
+{"method": "POST", "path": "/api/releases/d5c99012-cf10-4163-a9e1-e9762d862fe7/risks", "status": 201}
+ok
+test_health_and_static_assets_include_security_headers (test_server.ServerTests.test_health_and_static_assets_include_security_headers) ... {"method": "GET", "path": "/api/health", "status": 200}
+{"method": "GET", "path": "/", "status": 200}
+{"method": "GET", "path": "/app.js", "status": 200}
+{"method": "GET", "path": "/styles.css", "status": 200}
+{"method": "GET", "path": "/favicon.ico", "status": 204}
+{"method": "GET", "path": "/../README.md", "status": 404}
+ok
+test_incomplete_body_and_read_timeout_return_400_without_mutation (test_server.ServerTests.test_incomplete_body_and_read_timeout_return_400_without_mutation) ... {"method": "POST", "path": "/api/releases", "status": 400}
+{"method": "GET", "path": "/api/releases", "status": 200}
+{"method": "POST", "path": "/api/releases", "status": 400}
+{"method": "GET", "path": "/api/releases", "status": 200}
+ok
+test_invalid_entity_ids_return_404_and_all_refusals_have_security_headers (test_server.ServerTests.test_invalid_entity_ids_return_404_and_all_refusals_have_security_headers) ... {"method": "GET", "path": "/api/releases/not-a-uuid", "status": 404}
+{"method": "GET", "path": "/api/releases/not-a-uuid/audit", "status": 404}
+{"method": "PATCH", "path": "/api/releases/not-a-uuid", "status": 404}
+{"method": "PATCH", "path": "/api/releases/00000000-0000-0000-0000-000000000000/gates/not-a-uuid", "status": 404}
+{"method": "POST", "path": "/api/releases", "status": 201}
+{"method": "PATCH", "path": "/api/releases/cfb5b636-6a6f-4a05-bec8-231d6e274fef", "status": 409}
+{"method": "POST", "path": "/api/releases", "status": 400}
+{"method": "POST", "path": "/api/releases", "status": 401}
+{"method": "GET", "path": "/api/releases/00000000-0000-0000-0000-000000000000", "status": 404}
+{"method": "DELETE", "path": "/api/releases", "status": 405}
+{"method": "POST", "path": "/api/releases", "status": 415}
+ok
+test_logs_only_method_normalized_path_and_status (test_server.ServerTests.test_logs_only_method_normalized_path_and_status) ... ok
+test_mutation_endpoints_require_bearer_token_using_compare_digest (test_server.ServerTests.test_mutation_endpoints_require_bearer_token_using_compare_digest) ... {"method": "POST", "path": "/api/releases", "status": 401}
+{"method": "POST", "path": "/api/releases", "status": 201}
+ok
+test_put_options_and_head_return_405_with_allow_and_security_headers (test_server.ServerTests.test_put_options_and_head_return_405_with_allow_and_security_headers) ... {"method": "PUT", "path": "/api/releases", "status": 405}
+{"method": "OPTIONS", "path": "/api/releases", "status": 405}
+{"method": "HEAD", "path": "/api/releases", "status": 405}
+ok
+test_read_endpoints_work_without_runtime_token_but_mutations_return_401 (test_server.ServerTests.test_read_endpoints_work_without_runtime_token_but_mutations_return_401) ... {"method": "GET", "path": "/api/health", "status": 200}
+{"method": "GET", "path": "/api/releases", "status": 200}
+{"method": "POST", "path": "/api/releases", "status": 401}
+ok
+test_release_gate_risk_and_audit_end_to_end (test_server.ServerTests.test_release_gate_risk_and_audit_end_to_end) ... {"method": "POST", "path": "/api/releases", "status": 201}
+{"method": "GET", "path": "/api/releases", "status": 200}
+{"method": "PATCH", "path": "/api/releases/293f97c6-aef3-4f30-a82b-b0d488961a29", "status": 200}
+{"method": "POST", "path": "/api/releases/293f97c6-aef3-4f30-a82b-b0d488961a29/gates", "status": 201}
+{"method": "PATCH", "path": "/api/releases/293f97c6-aef3-4f30-a82b-b0d488961a29/gates/a26a5da2-f448-453b-a702-70ea28c093a6", "status": 200}
+{"method": "POST", "path": "/api/releases/293f97c6-aef3-4f30-a82b-b0d488961a29/risks", "status": 201}
+{"method": "PATCH", "path": "/api/releases/293f97c6-aef3-4f30-a82b-b0d488961a29/risks/084653be-648b-41e7-aac1-4c506506dcf9", "status": 200}
+{"method": "PATCH", "path": "/api/releases/293f97c6-aef3-4f30-a82b-b0d488961a29", "status": 200}
+{"method": "GET", "path": "/api/releases/293f97c6-aef3-4f30-a82b-b0d488961a29/audit", "status": 200}
+{"method": "GET", "path": "/api/audit", "status": 200}
+ok
+test_request_body_limit_and_invalid_content_length (test_server.ServerTests.test_request_body_limit_and_invalid_content_length) ... {"method": "POST", "path": "/api/releases", "status": 413}
+{"method": "POST", "path": "/api/releases", "status": 400}
+ok
+test_request_body_reader_rechecks_stream_limit (test_server.ServerTests.test_request_body_reader_rechecks_stream_limit) ... ok
+test_server_factory_rejects_non_loopback_bindings (test_server.ServerTests.test_server_factory_rejects_non_loopback_bindings) ... ok
+test_trace_connect_unknown_method_and_parser_errors_use_security_headers (test_server.ServerTests.test_trace_connect_unknown_method_and_parser_errors_use_security_headers) ... {"method": "TRACE", "path": "/api/releases", "status": 405}
+{"method": "CONNECT", "path": "/api/releases", "status": 405}
+{"method": "BREW", "path": "/api/releases", "status": 501}
+{"method": "UNKNOWN", "path": "", "status": 505}
+ok
+test_validation_and_not_found_errors_are_json (test_server.ServerTests.test_validation_and_not_found_errors_are_json) ... {"method": "POST", "path": "/api/releases", "status": 415}
+{"method": "POST", "path": "/api/releases", "status": 400}
+{"method": "GET", "path": "/api/releases/00000000-0000-0000-0000-000000000000", "status": 404}
+{"method": "POST", "path": "/api/releases", "status": 201}
+{"method": "PATCH", "path": "/api/releases/7b507b24-44e6-4f28-9ecb-6c4d2dbb5d01", "status": 409}
+{"method": "DELETE", "path": "/api/releases", "status": 405}
+ok
+test_durable_audit_append_error_rolls_forward_exactly_once (test_store.StoreTests.test_durable_audit_append_error_rolls_forward_exactly_once) ... ok
+test_each_accepted_mutation_appends_exactly_one_audit_event_and_reads_newest_first (test_store.StoreTests.test_each_accepted_mutation_appends_exactly_one_audit_event_and_reads_newest_first) ... ok
+test_journal_staging_failure_leaves_state_and_audit_unchanged (test_store.StoreTests.test_journal_staging_failure_leaves_state_and_audit_unchanged) ... ok
+test_list_releases_uses_read_lock_for_snapshot_reads (test_store.StoreTests.test_list_releases_uses_read_lock_for_snapshot_reads) ... ok
+test_malformed_state_raises_clear_error (test_store.StoreTests.test_malformed_state_raises_clear_error) ... ok
+test_missing_state_loads_empty_and_removes_leftover_sidecar (test_store.StoreTests.test_missing_state_loads_empty_and_removes_leftover_sidecar) ... ok
+test_mutations_persist_state_and_audit_across_restart (test_store.StoreTests.test_mutations_persist_state_and_audit_across_restart) ... ok
+test_partial_audit_append_rolls_back_and_preserves_prior_bytes (test_store.StoreTests.test_partial_audit_append_rolls_back_and_preserves_prior_bytes) ... ok
+test_restart_recovers_journal_after_interrupted_transaction (test_store.StoreTests.test_restart_recovers_journal_after_interrupted_transaction) ... ok
+test_restart_rolls_forward_durable_event_without_duplicate (test_store.StoreTests.test_restart_rolls_forward_durable_event_without_duplicate) ... ok
+test_state_and_audit_writes_flush_and_replace_files (test_store.StoreTests.test_state_and_audit_writes_flush_and_replace_files) ... ok
+test_state_replace_failure_rolls_back_memory_and_restart (test_store.StoreTests.test_state_replace_failure_rolls_back_memory_and_restart) ... ok
+test_store_accepts_exact_state_schema_on_restart (test_store.StoreTests.test_store_accepts_exact_state_schema_on_restart) ... ok
+test_two_store_instances_serialize_and_reload_each_mutation (test_store.StoreTests.test_two_store_instances_serialize_and_reload_each_mutation) ... ok
+test_ci_actions_are_pinned_to_immutable_commits (test_tooling_contract.ToolingContractTests.test_ci_actions_are_pinned_to_immutable_commits) ... ok
+test_ci_installs_pinned_tools_before_lint_and_typecheck (test_tooling_contract.ToolingContractTests.test_ci_installs_pinned_tools_before_lint_and_typecheck) ... ok
+test_dev_tools_are_pinned_and_real_adapters_invoke_them (test_tooling_contract.ToolingContractTests.test_dev_tools_are_pinned_and_real_adapters_invoke_them) ... ok
+test_runtime_imports_remain_standard_library_only (test_tooling_contract.ToolingContractTests.test_runtime_imports_remain_standard_library_only) ... ok
+test_app_uses_session_storage_and_retains_pending_mutations (test_web_contract.WebContractTests.test_app_uses_session_storage_and_retains_pending_mutations) ... ok
+test_audit_and_form_errors_render_required_operator_context (test_web_contract.WebContractTests.test_audit_and_form_errors_render_required_operator_context) ... ok
+test_build_script_emits_compile_output_and_asset_manifest (test_web_contract.WebContractTests.test_build_script_emits_compile_output_and_asset_manifest) ... ok
+test_create_forms_do_not_offer_lifecycle_state_or_reason_fields (test_web_contract.WebContractTests.test_create_forms_do_not_offer_lifecycle_state_or_reason_fields) ... ok
+test_cross_release_audit_mode_is_wired_to_api_audit (test_web_contract.WebContractTests.test_cross_release_audit_mode_is_wired_to_api_audit) ... ok
+test_release_surface_is_semantic_and_responsive_at_640_pixels (test_web_contract.WebContractTests.test_release_surface_is_semantic_and_responsive_at_640_pixels) ... ok
+test_runbook_covers_required_operations_topics (test_web_contract.WebContractTests.test_runbook_covers_required_operations_topics) ... ok
+test_runbook_documents_sanitized_structured_logging (test_web_contract.WebContractTests.test_runbook_documents_sanitized_structured_logging) ... ok
+test_status_controls_are_restricted_to_allowed_transitions (test_web_contract.WebContractTests.test_status_controls_are_restricted_to_allowed_transitions) ... ok
+
+----------------------------------------------------------------------
+Ran 73 tests in 10.547s
+
+OK

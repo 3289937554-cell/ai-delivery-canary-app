@@ -1,0 +1,54 @@
+{
+  "api_key_source": "none",
+  "claude_code_version": "2.1.121",
+  "client_platform": "desktop_app",
+  "completed_at": "2026-07-16T11:04:26.569Z",
+  "exit_code": 0,
+  "interface": "Claude Agent SDK (Cowork)",
+  "model": "claude-opus-4-8",
+  "provider": "anthropic",
+  "role": "claude-planner",
+  "run_id": "local_e1b11f63-b8ee-4e53-8065-063f5539408d",
+  "schema_version": "ai-delivery-model-transcript/v1",
+  "sdk_session_id": "190655fa-234f-4170-8f33-58b19153eadd",
+  "source_audit_event_count": 70,
+  "source_audit_projection": [
+    {
+      "audit_hmac": "f6d3428677032a8bd3d4184df0b76f86e0092af0862d4f669d89ac13d4f497ba",
+      "audit_timestamp": "2026-07-16T10:54:01.430Z",
+      "client_platform": "desktop_app",
+      "conversation_session_id": "e1b11f63-b8ee-4e53-8065-063f5539408d",
+      "type": "user"
+    },
+    {
+      "api_key_source": "none",
+      "audit_hmac": "afd885b4c0e7eac4327606ff429dd6b88dab3efa0f8b860d5ae81374064baf5e",
+      "audit_timestamp": "2026-07-16T10:54:11.028Z",
+      "claude_code_version": "2.1.121",
+      "client_platform": "desktop_app",
+      "model": "claude-opus-4-8",
+      "sdk_session_id": "190655fa-234f-4170-8f33-58b19153eadd",
+      "subtype": "init",
+      "type": "system"
+    },
+    {
+      "artifact_line_count": 357,
+      "artifact_sha256_at_completion": "79b682eb33f7d3406179a372099c51653f130365653b785fa46936ac7b905cef",
+      "artifact_written": "delivery-operations-console-plan.md",
+      "model": "claude-opus-4-8",
+      "type": "assistant",
+      "verification": "all 14 sections and all 10 repository paths present; evidence schema marker present; unfinished-content scan clean"
+    },
+    {
+      "completed_at": "2026-07-16T11:04:26.569Z",
+      "displayed_model": "Opus 4.8",
+      "status": "completed",
+      "type": "desktop_task"
+    }
+  ],
+  "source_audit_retained_locally": true,
+  "source_audit_sha256": "00fc13649eef608af25693af1c91e7ac24d8c1ea79c232c7bc5682925769d745",
+  "source_log_path": "/Users/jiangli/Library/Application Support/Claude/local-agent-mode-sessions/d4610102-c819-45f6-8bda-203ab7c25f59/0317355c-65db-4572-a388-98fa8265da8d/local_e1b11f63-b8ee-4e53-8065-063f5539408d/audit.jsonl",
+  "source_log_sha256": "00fc13649eef608af25693af1c91e7ac24d8c1ea79c232c7bc5682925769d745",
+  "started_at": "2026-07-16T10:54:01.430Z"
+}
