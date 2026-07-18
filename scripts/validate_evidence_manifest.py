@@ -30,6 +30,13 @@ REQUIRED_TOP_LEVEL = [
 
 REQUIRED_COMMANDS = ["lint", "typecheck", "test", "build", "smoke"]
 REQUIRED_ARTIFACT_TYPES = ["diff", "logs", "tests", "surface-evidence", "rollback"]
+PRODUCT_DESIGN_ARTIFACT_PATHS = {
+    "product-design-package": "product-design/product-design-package.md",
+    "accessibility": "product-design/accessibility-report.md",
+    "visual-regression": "product-design/visual-regression.md",
+}
+PRODUCT_DESIGN_ARTIFACT_TYPES = list(PRODUCT_DESIGN_ARTIFACT_PATHS)
+ALLOWED_ARTIFACT_TYPES = REQUIRED_ARTIFACT_TYPES + PRODUCT_DESIGN_ARTIFACT_TYPES
 LEGACY_ARTIFACT_ALIASES = {"screenshots": "surface-evidence"}
 ALLOWED_APPROVAL_STATUS = {
     "draft",
@@ -70,6 +77,18 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def project_requires_product_design_evidence(repo_root: Path) -> bool:
+    config_path = repo_root.resolve() / "docs" / "ai-delivery" / "project-config.json"
+    if not config_path.is_file():
+        return False
+    try:
+        payload = json.loads(config_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    experience = payload.get("experience") if isinstance(payload, dict) else None
+    return isinstance(experience, dict) and experience.get("design_required") is True
 
 
 def is_relative_to(path: Path, root: Path) -> bool:
@@ -334,19 +353,24 @@ def validate_diff_matches_git_range(
         )
 
 
-def numeric_field(payload: dict, names: list[str]) -> int | None:
+def numeric_field(payload: dict, names: list[str], result: ValidationResult) -> int | None:
     for name in names:
         value = payload.get(name)
-        if isinstance(value, int) and not isinstance(value, bool):
+        if isinstance(value, bool):
+            result.failures.append(f"tests artifact field {name} must be an integer, not a boolean")
+            continue
+        if isinstance(value, int):
             return value
     return None
 
 
-def numeric_fields(payload: dict, names: list[str]) -> dict[str, int]:
+def numeric_fields(payload: dict, names: list[str], result: ValidationResult) -> dict[str, int]:
     values: dict[str, int] = {}
     for name in names:
         value = payload.get(name)
-        if isinstance(value, int) and not isinstance(value, bool):
+        if isinstance(value, bool):
+            result.failures.append(f"tests artifact field {name} must be an integer, not a boolean")
+        elif isinstance(value, int):
             values[name] = value
     return values
 
@@ -367,16 +391,11 @@ def validate_test_summary(path: Path, result: ValidationResult) -> None:
         result.failures.append(f"tests artifact JSON root must be an object: {path}")
         return
 
-    count_fields = ["failed", "failures", "errors", "passed", "passes", "successes", "tests", "total", "total_tests"]
-    for field_name in count_fields:
-        if isinstance(payload.get(field_name), bool):
-            result.failures.append(f"tests artifact field {field_name} must be an integer, not a boolean: {path}")
-
     status = payload.get("status")
-    failure_counts = numeric_fields(payload, ["failed", "failures", "errors"])
+    failure_counts = numeric_fields(payload, ["failed", "failures", "errors"], result)
     failed = next(iter(failure_counts.values()), None)
-    passed = numeric_field(payload, ["passed", "passes", "successes"])
-    total = numeric_field(payload, ["tests", "total", "total_tests"])
+    passed = numeric_field(payload, ["passed", "passes", "successes"], result)
+    total = numeric_field(payload, ["tests", "total", "total_tests"], result)
 
     has_explicit_result = status is not None or failed is not None or passed is not None
     if not has_explicit_result:
@@ -460,6 +479,66 @@ def validate_surface_evidence_artifact(path: Path, result: ValidationResult) -> 
         result.failures.append(f"surface evidence text looks like a stub or placeholder: {path}")
 
 
+def validate_product_design_artifact(path: Path, artifact_type: str, result: ValidationResult) -> None:
+    text = read_text_artifact(path, result, f"{artifact_type} artifact")
+    if text is None:
+        return
+    if len(text.strip()) < 40:
+        result.failures.append(
+            f"{artifact_type} artifact must contain concrete observations, decisions, or results: {path}"
+        )
+    if SURFACE_PLACEHOLDER_RE.search(text):
+        result.failures.append(f"{artifact_type} artifact looks like a stub or placeholder: {path}")
+
+
+def validate_product_design_package_evidence(
+    path: Path,
+    *,
+    repo_root: Path,
+    issue_id: str,
+    result: ValidationResult,
+) -> None:
+    text = read_text_artifact(path, result, "product-design-package artifact")
+    if text is None:
+        return
+    expected_paths = {
+        "design_package_path": f"docs/product-design/{issue_id}/design-package.json",
+        "functional_approval_path": f"docs/product-design/{issue_id}/approvals/functional.json",
+        "concept_approval_path": f"docs/product-design/{issue_id}/approvals/concept.json",
+        "final_approval_path": f"docs/product-design/{issue_id}/approvals/final.json",
+    }
+    required_values = {
+        "schema_version": "product-design-evidence/v1",
+        "issue_id": issue_id,
+        "assessment_ready": "true",
+        "current_state": "D7",
+        **expected_paths,
+    }
+    for key, expected in required_values.items():
+        if not has_key_value(text, key, expected):
+            result.failures.append(
+                f"product-design-package artifact must contain {key}={expected}: {path}"
+            )
+    for key in ("selected_variant", "profile"):
+        if re.search(rf"(?im)^\s*{key}\s*:\s*\S+\s*$", text) is None:
+            result.failures.append(
+                f"product-design-package artifact must contain non-empty {key}: {path}"
+            )
+    for path_key, artifact_path in expected_paths.items():
+        source = repo_root / artifact_path
+        if not source.is_file():
+            result.failures.append(
+                f"product-design-package source artifact is missing: {artifact_path}"
+            )
+            continue
+        hash_key = path_key.removesuffix("_path") + "_sha256"
+        expected_hash = sha256_file(source)
+        if not has_key_value(text, hash_key, expected_hash):
+            result.failures.append(
+                f"product-design-package artifact must bind {hash_key}={expected_hash}: {path}"
+            )
+
+
 def validate_strict_artifact_file(
     *,
     path: Path,
@@ -467,6 +546,7 @@ def validate_strict_artifact_file(
     repo_root: Path,
     base_sha: str | None,
     commit_sha: str | None,
+    issue_id: str | None,
     result: ValidationResult,
 ) -> None:
     if artifact_type == "tests":
@@ -489,6 +569,15 @@ def validate_strict_artifact_file(
         text = read_text_artifact(path, result, "logs artifact")
         if text is not None and not text.strip():
             result.failures.append(f"logs artifact must be non-empty: {path}")
+    elif artifact_type == "product-design-package" and issue_id is not None:
+        validate_product_design_package_evidence(
+            path,
+            repo_root=repo_root,
+            issue_id=issue_id,
+            result=result,
+        )
+    elif artifact_type in PRODUCT_DESIGN_ARTIFACT_TYPES:
+        validate_product_design_artifact(path, artifact_type, result)
 
 
 def canonical_artifact_type(value: object, strict: bool, result: ValidationResult) -> str | object:
@@ -638,6 +727,10 @@ def validate_manifest(
     artifacts = manifest.get("artifacts")
     result.require(isinstance(artifacts, list) and bool(artifacts), "artifacts must be a non-empty list")
     artifact_types: list[object] = []
+    product_design_required = project_requires_product_design_evidence(repo_root)
+    required_artifact_types = REQUIRED_ARTIFACT_TYPES + (
+        PRODUCT_DESIGN_ARTIFACT_TYPES if product_design_required else []
+    )
     if isinstance(artifacts, list):
         for index, artifact in enumerate(artifacts):
             result.require(isinstance(artifact, dict), f"artifacts[{index}] must be an object")
@@ -645,14 +738,28 @@ def validate_manifest(
                 continue
             artifact_type = canonical_artifact_type(artifact.get("type"), strict, result)
             artifact_types.append(artifact_type)
-            result.require(artifact_type in REQUIRED_ARTIFACT_TYPES, f"unknown artifact type: {artifact.get('type')}")
+            result.require(
+                artifact_type in ALLOWED_ARTIFACT_TYPES,
+                f"unsupported artifact type: {artifact.get('type')}",
+            )
+            if (
+                product_design_required
+                and isinstance(issue_id, str)
+                and isinstance(artifact_type, str)
+                and artifact_type in PRODUCT_DESIGN_ARTIFACT_PATHS
+            ):
+                expected_path = f"evidence/{issue_id}/{PRODUCT_DESIGN_ARTIFACT_PATHS[artifact_type]}"
+                result.require(
+                    artifact.get("path") == expected_path,
+                    f"{artifact_type} artifact path must be {expected_path}",
+                )
             artifact_path = validate_sha_field(artifact, "path", repo_root, schema_only, strict, issue_evidence_root, result)
             if (
                 strict
                 and not schema_only
                 and artifact_path is not None
                 and isinstance(artifact_type, str)
-                and artifact_type in REQUIRED_ARTIFACT_TYPES
+                and artifact_type in ALLOWED_ARTIFACT_TYPES
             ):
                 validate_strict_artifact_file(
                     path=artifact_path,
@@ -660,10 +767,11 @@ def validate_manifest(
                     repo_root=repo_root,
                     base_sha=base_sha_value,
                     commit_sha=commit_sha_value,
+                    issue_id=issue_id if isinstance(issue_id, str) else None,
                     result=result,
                 )
 
-    for required in REQUIRED_ARTIFACT_TYPES:
+    for required in required_artifact_types:
         result.require(required in artifact_types, f"missing artifact type: {required}")
 
     rollback = manifest.get("rollback")
@@ -708,7 +816,12 @@ def main() -> int:
     print(f"repo_root: {repo_root}")
     print(f"strict_mode: {str(args.strict).lower()}")
     print("required_commands_checked: " + ",".join(REQUIRED_COMMANDS))
-    print("required_artifacts_checked: " + ",".join(REQUIRED_ARTIFACT_TYPES))
+    required_artifacts = REQUIRED_ARTIFACT_TYPES + (
+        PRODUCT_DESIGN_ARTIFACT_TYPES
+        if project_requires_product_design_evidence(repo_root)
+        else []
+    )
+    print("required_artifacts_checked: " + ",".join(required_artifacts))
 
     if result.warnings:
         print("warnings:")

@@ -1,0 +1,9 @@
+{
+  "artifact_path": "docs/product-design/GH-3/functional-map.json",
+  "artifact_sha256": "8c4b60214c5e319daff2efd074186e713d670da83876270023ba969eef372b66",
+  "decided_at": "2026-07-18T07:45:22Z",
+  "gate": "functional",
+  "owner": "@3289937554-cell",
+  "schema_version": "product-design-approval/v1",
+  "status": "approved"
+}

@@ -1,0 +1,37 @@
+{
+  "issue_id": "GH-3",
+  "schema_version": "product-design-handoff/v1",
+  "screens": [
+    {
+      "accessibility": "Preserve H1, semantic release table, explicit labels, field-associated errors, visible focus, flash status, and live-region announcements.",
+      "component_ids": ["COMP-001", "COMP-002", "COMP-003"],
+      "content_constraints": "Release titles up to 200 characters and versions up to 80 characters must wrap without resizing tables or hiding controls.",
+      "functional_ids": ["CAP-001", "CAP-005"],
+      "responsive_behavior": "Use a two-column workspace above 640px and a single-column sequence at mobile width; no element may exceed the viewport.",
+      "screen_id": "SCREEN-001",
+      "target_files": ["web/index.html", "web/styles.css", "web/app.js", "tests/test_web_contract.py"],
+      "verification_commands": ["python3 -m unittest tests.test_web_contract -v", "./scripts/smoke.sh"]
+    },
+    {
+      "accessibility": "Gate and risk controls must keep allowed action buttons reachable by keyboard and expose status text independent of color.",
+      "component_ids": ["COMP-003", "COMP-004", "COMP-005"],
+      "content_constraints": "Gate names up to 120 characters and risk descriptions up to 500 characters must wrap inside cards and preserve action placement.",
+      "functional_ids": ["CAP-001", "CAP-002", "CAP-003"],
+      "responsive_behavior": "Gate and risk panels may sit side by side on desktop and stack on mobile while preserving selected-release context.",
+      "screen_id": "SCREEN-002",
+      "target_files": ["web/index.html", "web/styles.css", "web/app.js", "src/delivery_ops/domain.py", "tests/test_domain.py"],
+      "verification_commands": ["python3 -m unittest tests.test_domain tests.test_web_contract -v", "./scripts/smoke.sh"]
+    },
+    {
+      "accessibility": "Audit timeline entries must expose prior status, new status, entity, action, and timestamp in reading order.",
+      "component_ids": ["COMP-006"],
+      "content_constraints": "Audit history must remain readable for at least seven ordered events and preserve long actor or action details with wrapping.",
+      "functional_ids": ["CAP-004", "CAP-005"],
+      "responsive_behavior": "The audit section stays full width in the detail column on desktop and follows gate/risk work on mobile.",
+      "screen_id": "SCREEN-003",
+      "target_files": ["web/index.html", "web/app.js", "src/delivery_ops/store.py", "tests/test_store.py", "tests/test_server.py"],
+      "verification_commands": ["python3 -m unittest tests.test_store tests.test_server tests.test_web_contract -v", "./scripts/smoke.sh"]
+    }
+  ],
+  "selected_variant_id": "variant-b"
+}

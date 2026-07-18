@@ -1,0 +1,118 @@
+{
+  "components": [
+    {
+      "accessibility": "Exposes the H1, connection status, token fields, flash status, and live region with visible focus and no color-only status.",
+      "functional_ids": [
+        "CAP-001",
+        "CAP-005"
+      ],
+      "id": "COMP-001",
+      "name": "Application shell and runtime status",
+      "states": [
+        "connected",
+        "offline",
+        "unauthorized",
+        "success",
+        "validation"
+      ],
+      "variants": [
+        "desktop",
+        "mobile"
+      ]
+    },
+    {
+      "accessibility": "Uses a semantic table with caption, column headers, row buttons, wrap-safe cells, and keyboard-reachable selection.",
+      "functional_ids": [
+        "CAP-001"
+      ],
+      "id": "COMP-002",
+      "name": "Release table and search",
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "selected",
+        "extreme-content"
+      ],
+      "variants": [
+        "dense",
+        "stacked"
+      ]
+    },
+    {
+      "accessibility": "Every input has a label, errors are field-associated, save actions are keyboard reachable, and status choices are constrained to domain transitions.",
+      "functional_ids": [
+        "CAP-001"
+      ],
+      "id": "COMP-003",
+      "name": "Release detail and lifecycle form",
+      "states": [
+        "default",
+        "disabled"
+      ],
+      "variants": [
+        "default",
+        "compact"
+      ]
+    },
+    {
+      "accessibility": "Gate cards expose required status, allowed actions, and state text without relying on color alone.",
+      "functional_ids": [
+        "CAP-002"
+      ],
+      "id": "COMP-004",
+      "name": "Delivery gate rail",
+      "states": [
+        "empty",
+        "pending",
+        "passed",
+        "failed",
+        "waived"
+      ],
+      "variants": [
+        "card-list",
+        "compact-card-list"
+      ]
+    },
+    {
+      "accessibility": "Risk cards expose severity, blocking state, allowed actions, and recovery messaging with readable contrast and wrap-safe descriptions.",
+      "functional_ids": [
+        "CAP-003"
+      ],
+      "id": "COMP-005",
+      "name": "Risk register",
+      "states": [
+        "empty",
+        "open",
+        "mitigated",
+        "accepted",
+        "closed"
+      ],
+      "variants": [
+        "card-list",
+        "compact-card-list"
+      ]
+    },
+    {
+      "accessibility": "Timeline entries expose entity, action, prior status, new status, and timestamp in reading order.",
+      "functional_ids": [
+        "CAP-004"
+      ],
+      "id": "COMP-006",
+      "name": "Audit timeline",
+      "states": [
+        "empty",
+        "populated",
+        "filtered",
+        "error"
+      ],
+      "variants": [
+        "release-scope",
+        "all-scope"
+      ]
+    }
+  ],
+  "issue_id": "GH-3",
+  "profile": "operations",
+  "schema_version": "component-catalog/v1"
+}

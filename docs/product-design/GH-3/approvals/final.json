@@ -1,0 +1,9 @@
+{
+  "artifact_path": "docs/product-design/GH-3/design-package.json",
+  "artifact_sha256": "a863e41723183abe0762dfed7cf15f57eec647f075e4bde40be3f07db177dd98",
+  "decided_at": "2026-07-18T07:46:04Z",
+  "gate": "final",
+  "owner": "@3289937554-cell",
+  "schema_version": "product-design-approval/v1",
+  "status": "approved"
+}

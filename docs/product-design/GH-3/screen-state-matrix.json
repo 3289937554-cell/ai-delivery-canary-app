@@ -1,0 +1,72 @@
+{
+  "issue_id": "GH-3",
+  "schema_version": "screen-state-matrix/v1",
+  "screens": [
+    {
+      "flow_ids": [
+        "FLOW-001",
+        "FLOW-002",
+        "FLOW-003"
+      ],
+      "functional_ids": [
+        "CAP-001",
+        "CAP-002",
+        "CAP-003",
+        "CAP-005"
+      ],
+      "id": "SCREEN-001",
+      "name": "Release command workspace",
+      "states": [
+        {"name": "default", "status": "required"},
+        {"name": "loading", "status": "required"},
+        {"name": "empty", "status": "required"},
+        {"name": "error", "status": "required"},
+        {"name": "permission-denied", "status": "required"},
+        {"name": "disabled", "status": "required"},
+        {"name": "extreme-content", "status": "required"}
+      ]
+    },
+    {
+      "flow_ids": [
+        "FLOW-002",
+        "FLOW-003"
+      ],
+      "functional_ids": [
+        "CAP-001",
+        "CAP-002",
+        "CAP-003"
+      ],
+      "id": "SCREEN-002",
+      "name": "Selected release execution detail",
+      "states": [
+        {"name": "default", "status": "required"},
+        {"name": "loading", "status": "required"},
+        {"name": "empty", "status": "required"},
+        {"name": "error", "status": "required"},
+        {"name": "permission-denied", "status": "required"},
+        {"name": "disabled", "status": "required"},
+        {"name": "extreme-content", "status": "required"}
+      ]
+    },
+    {
+      "flow_ids": [
+        "FLOW-004"
+      ],
+      "functional_ids": [
+        "CAP-004",
+        "CAP-005"
+      ],
+      "id": "SCREEN-003",
+      "name": "Audit history inspection",
+      "states": [
+        {"name": "default", "status": "required"},
+        {"name": "loading", "status": "required"},
+        {"name": "empty", "status": "required"},
+        {"name": "error", "status": "required"},
+        {"name": "permission-denied", "status": "not_applicable", "reason": "Audit read endpoints are local read-only views and do not require mutation authorization."},
+        {"name": "disabled", "status": "required"},
+        {"name": "extreme-content", "status": "required"}
+      ]
+    }
+  ]
+}
