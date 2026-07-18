@@ -1,8 +1,27 @@
 {
   "control_mode": "thin",
   "control_plane": {
-    "path": "/Users/jiangli/总控库/软件开发",
+    "path": "/Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate",
     "type": "local-path"
+  },
+  "experience": {
+    "accessibility_standard": "not_applicable",
+    "applicability": "confirmed",
+    "contract_version": "experience/v2",
+    "design_provider": {
+      "authority": "non_authoritative_adapter",
+      "name": "none"
+    },
+    "design_required": false,
+    "design_root": "",
+    "design_status": "not_applicable",
+    "privacy_gate": {
+      "private_artifacts_upload": "forbidden",
+      "training_opt_out_confirmed": false
+    },
+    "rationale": "Headless governance canary repository with no product user interface; UI design gate is not applicable for this control-plane readiness canary.",
+    "surface_type": "none",
+    "visual_breakpoints": []
   },
   "owners": {
     "data_owner": "@3289937554-cell",
@@ -12,17 +31,17 @@
   },
   "project_id": "project-0007-ai-delivery-canary-app",
   "repo": {
-    "default_branch": "main",
+    "default_branch": "ai/GH-1-managed-status",
     "github": {
       "name_with_owner": "3289937554-cell/ai-delivery-canary-app",
       "origin": "https://github.com/3289937554-cell/ai-delivery-canary-app.git"
     },
-    "path": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app"
+    "path": "/Users/jiangli/项目库/worktrees/GH-1-managed-status"
   },
   "schema_version": "ai-delivery-project/v1",
   "template_identity": {
     "control_mode": "thin",
-    "control_plane_root": "/Users/jiangli/总控库/软件开发",
+    "control_plane_root": "/Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate",
     "files": [
       {
         "destination": ".github/CODEOWNERS",
@@ -54,20 +73,20 @@
       },
       {
         "destination": "scripts/generate_evidence_manifest.py",
-        "expected_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01",
+        "expected_sha256": "c4b1c7a44e7753c64d907d8c5a442f29c4b030422083be3bcca2cc4727c6bf27",
         "kind": "copy",
         "source": "scripts/generate_evidence_manifest.py",
-        "source_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01"
+        "source_sha256": "c4b1c7a44e7753c64d907d8c5a442f29c4b030422083be3bcca2cc4727c6bf27"
       },
       {
         "destination": "scripts/validate_evidence_manifest.py",
-        "expected_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520",
+        "expected_sha256": "3d880b13dad2b7c995c029f39f29b131dbd2af15e9212666d10303caf4ec8e87",
         "kind": "copy",
         "source": "scripts/validate_evidence_manifest.py",
-        "source_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520"
+        "source_sha256": "3d880b13dad2b7c995c029f39f29b131dbd2af15e9212666d10303caf4ec8e87"
       }
     ],
-    "identity_sha256": "8754f0301ac88f3edea054350c4cd99bf0731ab7f8b95a3dfc3669ca4593f475",
+    "identity_sha256": "879b108d6603a5536be27e819263b1beb591a3acf6d8e3b99de526f189c987c3",
     "installer_version": "ai-delivery-installer/v1",
     "schema_version": "ai-delivery-template-identity/v1"
   },
