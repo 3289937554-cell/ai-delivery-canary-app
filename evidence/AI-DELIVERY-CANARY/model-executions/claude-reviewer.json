@@ -1,0 +1,18 @@
+{
+  "artifact_path": "evidence/AI-DELIVERY-CANARY/claude-reviewer.md",
+  "artifact_sha256": "72493aa8975945300078580b5b510de0476cab72901cec5a7d569f4249126df9",
+  "completed_at": "2026-07-18T11:42:11Z",
+  "exit_code": 0,
+  "interface": "Claude Code CLI",
+  "model": "claude-opus-4-7",
+  "placeholder": false,
+  "prompt_path": "evidence/AI-DELIVERY-CANARY/model-executions/claude-reviewer-prompt.md",
+  "prompt_sha256": "756b1beee6ebd8cbf20712adba06918a6258ba590127c0c710c529465a768768",
+  "provider": "anthropic",
+  "role": "claude-reviewer",
+  "run_id": "local_ba662d7f-7060-43ff-b8b0-8c4a38c51a4f",
+  "schema_version": "ai-delivery-model-execution/v1",
+  "started_at": "2026-07-18T11:41:23.562000Z",
+  "transcript_path": "evidence/AI-DELIVERY-CANARY/model-executions/claude-reviewer-transcript.json",
+  "transcript_sha256": "546366495ff5a57acaef8b95db7bdb60b0c7e219f72ba905d1ed980336d99590"
+}

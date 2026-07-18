@@ -1,0 +1,19 @@
+# Product Design Package Evidence
+
+schema_version: product-design-evidence/v1
+issue_id: GH-3
+assessment_ready: true
+current_state: D7
+selected_variant: variant-b
+profile: operations
+design_package_path: docs/product-design/GH-3/design-package.json
+design_package_sha256: a863e41723183abe0762dfed7cf15f57eec647f075e4bde40be3f07db177dd98
+functional_approval_path: docs/product-design/GH-3/approvals/functional.json
+functional_approval_sha256: b30ce83a72cc6a31cbe97609fd98a2b48c42f0a296263ac4a79b63a75ed5d05f
+concept_approval_path: docs/product-design/GH-3/approvals/concept.json
+concept_approval_sha256: 0846ddfb660f888b3b53c554f482a75c34dae84d922deb0c874f10fa43afb1dc
+final_approval_path: docs/product-design/GH-3/approvals/final.json
+final_approval_sha256: 9aa069419d355a5ece31854f4701002541bf3bbab1d89538ca088296bd166c81
+functional_approval_fresh: true
+concept_approval_fresh: true
+final_approval_fresh: true

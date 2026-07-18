@@ -1,0 +1,21 @@
+{
+  "completed_at": "2026-07-18T11:43:28Z",
+  "exit_code": 0,
+  "interface": "Claude Code CLI",
+  "model": "claude-opus-4-7",
+  "provider": "anthropic",
+  "role": "claude-final",
+  "run_id": "local_c25abba7-e1b1-403e-86c0-2df7ae2b5d91",
+  "schema_version": "ai-delivery-model-transcript/v1",
+  "sdk_session_id": "c25abba7-e1b1-403e-86c0-2df7ae2b5d91",
+  "source_audit_event_count": 1,
+  "source_audit_path": "evidence/AI-DELIVERY-CANARY/source-logs/claude-final-result.json",
+  "source_audit_retained_locally": true,
+  "source_audit_sha256": "0627e5961608514bc00f2e7765d530191d6da374efaea5b4cbf48cd6eded2525",
+  "source_log_path": "evidence/AI-DELIVERY-CANARY/source-logs/claude-final-result.json",
+  "source_log_sha256": "0627e5961608514bc00f2e7765d530191d6da374efaea5b4cbf48cd6eded2525",
+  "started_at": "2026-07-18T11:42:52.207000Z",
+  "stop_reason": "end_turn",
+  "terminal_reason": "completed",
+  "total_cost_usd": 0.038353
+}
