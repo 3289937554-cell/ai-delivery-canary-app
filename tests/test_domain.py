@@ -150,6 +150,120 @@ class DomainTests(unittest.TestCase):
         self.assertEqual(updated["updated_at"], "2026-07-16T08:11:00Z")
         self.assertEqual(event["action"], "release.updated")
 
+    def test_ready_release_rejects_gate_or_risk_changes_that_break_readiness(self) -> None:
+        release, _ = domain.create_release(
+            {"title": "Canary", "version": "1.0.0"},
+            actor="local-operator",
+            now="2026-07-16T08:00:00Z",
+        )
+        release = domain.transition_release(
+            release,
+            {"status": "validating"},
+            actor="local-operator",
+            now="2026-07-16T08:01:00Z",
+        )[0]
+        release, gate, _ = domain.add_gate(
+            release,
+            {"name": "Build", "required": True},
+            actor="local-operator",
+            now="2026-07-16T08:02:00Z",
+        )
+        release = domain.update_gate(
+            release,
+            gate["id"],
+            {"status": "passed"},
+            actor="local-operator",
+            now="2026-07-16T08:03:00Z",
+        )[0]
+        release, risk, _ = domain.add_risk(
+            release,
+            {"description": "Rollback readiness", "severity": "high", "blocking": True},
+            actor="local-operator",
+            now="2026-07-16T08:04:00Z",
+        )
+        release = domain.update_risk(
+            release,
+            risk["id"],
+            {"status": "accepted", "acceptance_reason": "Owner accepted for canary"},
+            actor="local-operator",
+            now="2026-07-16T08:05:00Z",
+        )[0]
+        release = domain.transition_release(
+            release,
+            {"status": "ready"},
+            actor="local-operator",
+            now="2026-07-16T08:06:00Z",
+        )[0]
+
+        invalid_operations = (
+            lambda: domain.add_gate(
+                release,
+                {"name": "Security", "required": True},
+                actor="local-operator",
+                now="2026-07-16T08:07:00Z",
+            ),
+            lambda: domain.update_gate(
+                release,
+                gate["id"],
+                {"status": "pending"},
+                actor="local-operator",
+                now="2026-07-16T08:07:00Z",
+            ),
+            lambda: domain.add_risk(
+                release,
+                {"description": "Capacity regression", "severity": "critical", "blocking": True},
+                actor="local-operator",
+                now="2026-07-16T08:07:00Z",
+            ),
+            lambda: domain.update_risk(
+                release,
+                risk["id"],
+                {"status": "open"},
+                actor="local-operator",
+                now="2026-07-16T08:07:00Z",
+            ),
+        )
+        for operation in invalid_operations:
+            with self.subTest(operation=operation):
+                with self.assertRaises(domain.ConflictError):
+                    operation()
+
+    def test_ready_release_allows_non_blocking_gate_and_risk_metadata(self) -> None:
+        release, _ = domain.create_release(
+            {"title": "Canary", "version": "1.0.0"},
+            actor="local-operator",
+            now="2026-07-16T08:00:00Z",
+        )
+        release = domain.transition_release(
+            release,
+            {"status": "validating"},
+            actor="local-operator",
+            now="2026-07-16T08:01:00Z",
+        )[0]
+        release = domain.transition_release(
+            release,
+            {"status": "ready"},
+            actor="local-operator",
+            now="2026-07-16T08:02:00Z",
+        )[0]
+
+        release, gate, _ = domain.add_gate(
+            release,
+            {"name": "Post-release observation", "required": False},
+            actor="local-operator",
+            now="2026-07-16T08:03:00Z",
+        )
+        release, risk, _ = domain.add_risk(
+            release,
+            {"description": "Non-blocking follow-up", "severity": "low", "blocking": False},
+            actor="local-operator",
+            now="2026-07-16T08:04:00Z",
+        )
+
+        self.assertEqual(release["status"], "ready")
+        self.assertFalse(gate["required"])
+        self.assertFalse(risk["blocking"])
+
     def test_gate_transitions_only_allow_reset_to_pending_after_passed_or_waived(self) -> None:
         release, _ = domain.create_release(
             {"title": "Canary", "version": "1.0.0"},

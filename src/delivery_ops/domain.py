@@ -247,6 +247,7 @@ def add_gate(
     updated = copy.deepcopy(current)
     updated["gates"].append(gate)
     updated["updated_at"] = timestamp
+    _ensure_ready_requirements(updated, updated["status"])
     validate_release(updated)
     return updated, copy.deepcopy(gate), _event(
         updated["id"],
@@ -296,6 +297,7 @@ def update_gate(
     elif "waiver_reason" in payload:
         gate["waiver_reason"] = None if payload["waiver_reason"] is None else _ensure_string(payload["waiver_reason"], "waiver_reason", 500)
     updated["updated_at"] = timestamp
+    _ensure_ready_requirements(updated, updated["status"])
     validate_release(updated)
     return updated, copy.deepcopy(gate), _event(
         updated["id"],
@@ -335,6 +337,7 @@ def add_risk(
     updated = copy.deepcopy(current)
     updated["risks"].append(risk)
     updated["updated_at"] = timestamp
+    _ensure_ready_requirements(updated, updated["status"])
     validate_release(updated)
     return updated, copy.deepcopy(risk), _event(
         updated["id"],
@@ -394,6 +397,7 @@ def update_risk(
             500,
         )
     updated["updated_at"] = timestamp
+    _ensure_ready_requirements(updated, updated["status"])
     validate_release(updated)
     return updated, copy.deepcopy(risk), _event(
         updated["id"],
@@ -541,7 +545,7 @@ def _ensure_unique_ids(items: list[dict[str, Any]], item_name: str) -> None:
 
 
 def _ensure_ready_requirements(release: dict[str, Any], target: str) -> None:
-    if target != "ready":
+    if target not in {"ready", "released"}:
         return
     for gate in release["gates"]:
         if gate["required"] and gate["status"] not in {"passed", "waived"}:
