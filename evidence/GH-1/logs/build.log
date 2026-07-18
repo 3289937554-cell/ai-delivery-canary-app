@@ -1,0 +1,9 @@
+issue_id=GH-1
+pr_id=PR-2
+base_sha=b9d802e839ede065fc681b3eb6c30a8c30724a65
+commit_sha=9f7beabdaeea39c006d575c606e4eb55829cce28
+actual_head_sha=9f7beabdaeea39c006d575c606e4eb55829cce28
+clean_except_issue_evidence=true
+command_name=build
+$ bash scripts/build.sh
+exit_code=0

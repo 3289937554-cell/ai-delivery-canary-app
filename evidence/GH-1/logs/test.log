@@ -1,0 +1,16 @@
+issue_id=GH-1
+pr_id=PR-2
+base_sha=b9d802e839ede065fc681b3eb6c30a8c30724a65
+commit_sha=9f7beabdaeea39c006d575c606e4eb55829cce28
+actual_head_sha=9f7beabdaeea39c006d575c606e4eb55829cce28
+clean_except_issue_evidence=true
+command_name=test
+$ python3 -B -m unittest discover -s tests -v
+test_health_payload (test_aid_canary_app.CanaryAppTests.test_health_payload) ... ok
+test_smoke_cli_outputs_ok_json (test_aid_canary_app.CanaryAppTests.test_smoke_cli_outputs_ok_json) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.022s
+
+OK
+exit_code=0

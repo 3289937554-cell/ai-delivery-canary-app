@@ -1,0 +1,30 @@
+{
+  "codeowners_review_required": true,
+  "governance_mode": "single_maintainer",
+  "independent_review": false,
+  "review_state": "SELF_REVIEW_SINGLE_MAINTAINER",
+  "codeowners_review_state": "SELF_REVIEW_SINGLE_MAINTAINER",
+  "reviewers": [
+    {
+      "login": "3289937554-cell",
+      "role": "sole_maintainer_codeowner",
+      "review_type": "self_review",
+      "reviewed_at": "2026-07-18T01:40:06Z"
+    }
+  ],
+  "pr_id": "PR-2",
+  "pull_request": "https://github.com/3289937554-cell/ai-delivery-canary-app/pull/2",
+  "repository": "3289937554-cell/ai-delivery-canary-app",
+  "evidence_commit_sha": "9f7beabdaeea39c006d575c606e4eb55829cce28",
+  "live_pr_head_sha": "final evidence commit created from this packet",
+  "head_delta_note": "Evidence packet is anchored at 9f7beabdaeea39c006d575c606e4eb55829cce28. The live PR head adds only evidence/GH-1/* and evidence/AI-DELIVERY-CANARY/* files on top of that implementation commit; 9f7beabdaeea39c006d575c606e4eb55829cce28 is the direct parent required by the final evidence topology gate, so the self-review of the code holds for the live head.",
+  "review_basis": [
+    "evidence/GH-1/diff.patch",
+    "evidence/GH-1/packets/claude-reviewer.md",
+    "evidence/GH-1/packets/claude-final.md"
+  ],
+  "reviews_api_observed": [],
+  "attestation": "Sole maintainer 3289937554-cell self-reviewed PR-2 under single_maintainer governance mode. No independent code-owner review exists and none is claimed; independent_review is recorded as false. This artifact is a transparent self-review, not a fabricated independent approval.",
+  "checked_at": "2026-07-18T01:40:06Z",
+  "evidence_status": "self_reviewed_single_maintainer"
+}

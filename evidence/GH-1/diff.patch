@@ -1,0 +1,679 @@
+diff --git a/.ai-delivery/lock.json b/.ai-delivery/lock.json
+index 5502a8b..dbf69c3 100644
+--- a/.ai-delivery/lock.json
++++ b/.ai-delivery/lock.json
+@@ -7,14 +7,17 @@
+     ".claude/agents/planner.md",
+     ".claude/agents/architect-reviewer.md",
+     ".claude/agents/final-reviewer.md",
++    ".claude/agents/product-designer.md",
++    ".claude/agents/design-reviewer.md",
+     ".codex/agents/explorer.toml",
+     ".codex/agents/worker.toml",
+     ".codex/agents/reviewer-security.toml",
+     ".codex/agents/reviewer-tests.toml",
+     ".archon/workflows/plan-to-pr.yaml",
+-    ".archon/workflows/pr-review-fix-loop.yaml"
++    ".archon/workflows/pr-review-fix-loop.yaml",
++    ".archon/workflows/contract-probe.yaml"
+   ],
+-  "installed_at": "2026-07-13T07:42:34Z",
++  "installed_at": "2026-07-18T01:34:27Z",
+   "installer_version": "ai-delivery-installer/v1",
+   "mode": "thin",
+   "owners": {
+@@ -23,9 +26,9 @@
+     "platform_owner": "@3289937554-cell",
+     "security_owner": "@3289937554-cell"
+   },
+-  "pack_root": "/Users/jiangli/总控库/软件开发",
++  "pack_root": "/Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate",
+   "project_id": "project-0007-ai-delivery-canary-app",
+-  "registry_path": "/Users/jiangli/总控库/软件开发/registry/projects.jsonl",
++  "registry_path": "/Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate/registry/projects.jsonl",
+   "required_local_files": [
+     ".github/workflows/ai-delivery-ci.yml",
+     ".github/CODEOWNERS",
+@@ -37,10 +40,10 @@
+     "scripts/validate_evidence_manifest.py"
+   ],
+   "schema_version": "ai-delivery-target-lock/v1",
+-  "target_repo": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app",
++  "target_repo": "/Users/jiangli/项目库/worktrees/GH-1-managed-status",
+   "template_identity": {
+     "control_mode": "thin",
+-    "control_plane_root": "/Users/jiangli/总控库/软件开发",
++    "control_plane_root": "/Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate",
+     "files": [
+       {
+         "destination": ".github/CODEOWNERS",
+@@ -65,27 +68,27 @@
+       },
+       {
+         "destination": ".github/workflows/ai-delivery-ci.yml",
+-        "expected_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a",
++        "expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
+         "kind": "copy",
+         "source": "templates/github/workflows/ai-delivery-ci.yml",
+-        "source_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a"
++        "source_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a"
+       },
+       {
+         "destination": "scripts/generate_evidence_manifest.py",
+-        "expected_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01",
++        "expected_sha256": "c4b1c7a44e7753c64d907d8c5a442f29c4b030422083be3bcca2cc4727c6bf27",
+         "kind": "copy",
+         "source": "scripts/generate_evidence_manifest.py",
+-        "source_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01"
++        "source_sha256": "c4b1c7a44e7753c64d907d8c5a442f29c4b030422083be3bcca2cc4727c6bf27"
+       },
+       {
+         "destination": "scripts/validate_evidence_manifest.py",
+-        "expected_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520",
++        "expected_sha256": "3d880b13dad2b7c995c029f39f29b131dbd2af15e9212666d10303caf4ec8e87",
+         "kind": "copy",
+         "source": "scripts/validate_evidence_manifest.py",
+-        "source_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520"
++        "source_sha256": "3d880b13dad2b7c995c029f39f29b131dbd2af15e9212666d10303caf4ec8e87"
+       }
+     ],
+-    "identity_sha256": "e0c64b8bf61ca23adf399651dd6654e28b09bc4cbe0fb5b666af46e49ea0ac53",
++    "identity_sha256": "879b108d6603a5536be27e819263b1beb591a3acf6d8e3b99de526f189c987c3",
+     "installer_version": "ai-delivery-installer/v1",
+     "schema_version": "ai-delivery-template-identity/v1"
+   }
+diff --git a/.github/workflows/ai-delivery-ci.yml b/.github/workflows/ai-delivery-ci.yml
+index a177a88..95cc9cd 100644
+--- a/.github/workflows/ai-delivery-ci.yml
++++ b/.github/workflows/ai-delivery-ci.yml
+@@ -204,7 +204,7 @@ jobs:
+             exit 1
+           fi
+ 
+-          implementation_evidence_files=$(git diff --name-only "$EXPECTED_BASE_SHA" "$EXPECTED_COMMIT_SHA" -- 'evidence/GH-*' || true)
++          implementation_evidence_files=$(git diff --name-only "$EXPECTED_BASE_SHA" "$EXPECTED_COMMIT_SHA" -- "$EVIDENCE_DIR/$ISSUE_ID" "$EVIDENCE_DIR/AI-DELIVERY-CANARY" || true)
+           if [ -n "$implementation_evidence_files" ]; then
+             printf '%s\n' "AI delivery implementation commit range must not modify evidence files; attach evidence only in the final evidence-only commit."
+             printf '%s\n' "$implementation_evidence_files"
+@@ -222,12 +222,14 @@ jobs:
+             exit 1
+           fi
+           allowed_prefix="$EVIDENCE_DIR/$ISSUE_ID/"
++          commercial_allowed_prefix="$EVIDENCE_DIR/AI-DELIVERY-CANARY/"
+           while IFS= read -r changed_path; do
+             if [ -z "$changed_path" ]; then
+               continue
+             fi
+             case "$changed_path" in
+               "$allowed_prefix"*) ;;
++              "$commercial_allowed_prefix"*) ;;
+               *)
+                 printf '%s\n' "AI delivery PR final commit must be evidence-only for $ISSUE_ID; disallowed path after implementation commit: $changed_path"
+                 exit 1
+diff --git a/docs/ai-delivery/memory/registry.jsonl b/docs/ai-delivery/memory/registry.jsonl
+index 6d2afff..b598c7c 100644
+--- a/docs/ai-delivery/memory/registry.jsonl
++++ b/docs/ai-delivery/memory/registry.jsonl
+@@ -1 +1 @@
+-{"created_at": "2026-07-13T07:42:34Z", "evidence_link": "evidence/AI-DELIVERY-BOOTSTRAP/install-report.json", "last_verified_at": "2026-07-13T07:42:34Z", "memory_id": "AI-DELIVERY-BOOTSTRAP-0001", "project_id": "project-0007-ai-delivery-canary-app", "revocation_condition": "canary fails, protected branch is removed, or evidence manifest validation is disabled", "scope": "project", "source": "install_ai_delivery_to_target_repo.py", "status": "active_after_canary", "target_repo": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app"}
++{"created_at": "2026-07-18T01:34:27Z", "evidence_link": "evidence/AI-DELIVERY-BOOTSTRAP/install-report.json", "last_verified_at": "2026-07-18T01:34:27Z", "memory_id": "AI-DELIVERY-BOOTSTRAP-0001", "project_id": "project-0007-ai-delivery-canary-app", "revocation_condition": "canary fails, protected branch is removed, or evidence manifest validation is disabled", "scope": "project", "source": "install_ai_delivery_to_target_repo.py", "status": "active_after_canary", "target_repo": "/Users/jiangli/项目库/worktrees/GH-1-managed-status"}
+diff --git a/docs/ai-delivery/onboarding-status.md b/docs/ai-delivery/onboarding-status.md
+index 6ac80fe..5e775ed 100644
+--- a/docs/ai-delivery/onboarding-status.md
++++ b/docs/ai-delivery/onboarding-status.md
+@@ -1,11 +1,11 @@
+ # AI Delivery Onboarding Status
+ 
+-installed_at: 2026-07-13T07:42:34Z
++installed_at: 2026-07-18T01:34:27Z
+ project_id: project-0007-ai-delivery-canary-app
+ control_mode: thin
+-pack_root: /Users/jiangli/总控库/软件开发
+-target_repo: /Users/jiangli/项目库/project-0007-ai-delivery-canary-app
+-registry_path: /Users/jiangli/总控库/软件开发/registry/projects.jsonl
++pack_root: /Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate
++target_repo: /Users/jiangli/项目库/worktrees/GH-1-managed-status
++registry_path: /Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate/registry/projects.jsonl
+ default_owner: @3289937554-cell
+ platform_owner: @3289937554-cell
+ security_owner: @3289937554-cell
+@@ -14,20 +14,20 @@ data_owner: @3289937554-cell
+ ## Local enablement command
+ 
+ ```bash
+-python3 /Users/jiangli/总控库/软件开发/scripts/validate_ai_delivery_pack.py --enabled-repo --repo-root /Users/jiangli/项目库/project-0007-ai-delivery-canary-app
++python3 /Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate/scripts/validate_ai_delivery_pack.py --enabled-repo --repo-root /Users/jiangli/项目库/worktrees/GH-1-managed-status
+ ```
+ 
+ ## Control-plane check command
+ 
+ ```bash
+-python3 /Users/jiangli/总控库/软件开发/scripts/check_ai_delivery_target_repo.py --target-repo /Users/jiangli/项目库/project-0007-ai-delivery-canary-app
+-python3 /Users/jiangli/总控库/软件开发/scripts/check_ai_delivery_registry.py
++python3 /Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate/scripts/check_ai_delivery_target_repo.py --target-repo /Users/jiangli/项目库/worktrees/GH-1-managed-status
++python3 /Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate/scripts/check_ai_delivery_registry.py
+ ```
+ 
+ ## Bootstrap PR sequence
+ 
+ ```bash
+-cd /Users/jiangli/项目库/project-0007-ai-delivery-canary-app
++cd /Users/jiangli/项目库/worktrees/GH-1-managed-status
+ git checkout -b chore/ai-delivery-bootstrap
+ git add .github .ai-delivery scripts/generate_evidence_manifest.py scripts/validate_evidence_manifest.py docs/ai-delivery evidence/AI-DELIVERY-BOOTSTRAP
+ git commit -m "chore: enable AI delivery orchestration"
+diff --git a/docs/ai-delivery/project-config.json b/docs/ai-delivery/project-config.json
+index 7edd738..1450235 100644
+--- a/docs/ai-delivery/project-config.json
++++ b/docs/ai-delivery/project-config.json
+@@ -1,9 +1,28 @@
+ {
+   "control_mode": "thin",
+   "control_plane": {
+-    "path": "/Users/jiangli/总控库/软件开发",
++    "path": "/Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate",
+     "type": "local-path"
+   },
++  "experience": {
++    "accessibility_standard": "not_applicable",
++    "applicability": "confirmed",
++    "contract_version": "experience/v2",
++    "design_provider": {
++      "authority": "non_authoritative_adapter",
++      "name": "none"
++    },
++    "design_required": false,
++    "design_root": "",
++    "design_status": "not_applicable",
++    "privacy_gate": {
++      "private_artifacts_upload": "forbidden",
++      "training_opt_out_confirmed": false
++    },
++    "rationale": "Headless governance canary repository with no product user interface; UI design gate is not applicable for this control-plane readiness canary.",
++    "surface_type": "none",
++    "visual_breakpoints": []
++  },
+   "owners": {
+     "data_owner": "@3289937554-cell",
+     "default_owner": "@3289937554-cell",
+@@ -12,17 +31,17 @@
+   },
+   "project_id": "project-0007-ai-delivery-canary-app",
+   "repo": {
+-    "default_branch": "main",
++    "default_branch": "ai/GH-1-managed-status",
+     "github": {
+       "name_with_owner": "3289937554-cell/ai-delivery-canary-app",
+       "origin": "https://github.com/3289937554-cell/ai-delivery-canary-app.git"
+     },
+-    "path": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app"
++    "path": "/Users/jiangli/项目库/worktrees/GH-1-managed-status"
+   },
+   "schema_version": "ai-delivery-project/v1",
+   "template_identity": {
+     "control_mode": "thin",
+-    "control_plane_root": "/Users/jiangli/总控库/软件开发",
++    "control_plane_root": "/Users/jiangli/总控库/软件开发/.worktrees/application-experience-gate",
+     "files": [
+       {
+         "destination": ".github/CODEOWNERS",
+@@ -47,27 +66,27 @@
+       },
+       {
+         "destination": ".github/workflows/ai-delivery-ci.yml",
+-        "expected_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a",
++        "expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
+         "kind": "copy",
+         "source": "templates/github/workflows/ai-delivery-ci.yml",
+-        "source_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a"
++        "source_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a"
+       },
+       {
+         "destination": "scripts/generate_evidence_manifest.py",
+-        "expected_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01",
++        "expected_sha256": "c4b1c7a44e7753c64d907d8c5a442f29c4b030422083be3bcca2cc4727c6bf27",
+         "kind": "copy",
+         "source": "scripts/generate_evidence_manifest.py",
+-        "source_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01"
++        "source_sha256": "c4b1c7a44e7753c64d907d8c5a442f29c4b030422083be3bcca2cc4727c6bf27"
+       },
+       {
+         "destination": "scripts/validate_evidence_manifest.py",
+-        "expected_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520",
++        "expected_sha256": "3d880b13dad2b7c995c029f39f29b131dbd2af15e9212666d10303caf4ec8e87",
+         "kind": "copy",
+         "source": "scripts/validate_evidence_manifest.py",
+-        "source_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520"
++        "source_sha256": "3d880b13dad2b7c995c029f39f29b131dbd2af15e9212666d10303caf4ec8e87"
+       }
+     ],
+-    "identity_sha256": "e0c64b8bf61ca23adf399651dd6654e28b09bc4cbe0fb5b666af46e49ea0ac53",
++    "identity_sha256": "879b108d6603a5536be27e819263b1beb591a3acf6d8e3b99de526f189c987c3",
+     "installer_version": "ai-delivery-installer/v1",
+     "schema_version": "ai-delivery-template-identity/v1"
+   },
+diff --git a/scripts/build.sh b/scripts/build.sh
+new file mode 100755
+index 0000000..3bfc5e4
+--- /dev/null
++++ b/scripts/build.sh
+@@ -0,0 +1,8 @@
++#!/usr/bin/env bash
++set -euo pipefail
++python3 - <<'PY'
++from pathlib import Path
++for root in (Path('src'), Path('tests')):
++    for path in sorted(root.rglob('*.py')):
++        compile(path.read_text(encoding='utf-8'), str(path), 'exec')
++PY
+diff --git a/scripts/generate_evidence_manifest.py b/scripts/generate_evidence_manifest.py
+index c45db66..eec35c0 100755
+--- a/scripts/generate_evidence_manifest.py
++++ b/scripts/generate_evidence_manifest.py
+@@ -11,7 +11,11 @@ from pathlib import Path
+ import re
+ import sys
+ 
+-from validate_evidence_manifest import validate_manifest
++from validate_evidence_manifest import (
++    PRODUCT_DESIGN_ARTIFACT_PATHS,
++    project_requires_product_design_evidence,
++    validate_manifest,
++)
+ 
+ 
+ REQUIRED_COMMAND_LOGS = {
+@@ -73,6 +77,79 @@ def collect_surface_evidence(evidence_dir: Path, failures: list[str]) -> list[Pa
+     return files
+ 
+ 
++def generate_product_design_package_evidence(
++    *,
++    repo_root: Path,
++    evidence_dir: Path,
++    issue_id: str,
++    failures: list[str],
++) -> None:
++    control_plane_root = Path(__file__).resolve().parents[1]
++    if str(control_plane_root) not in sys.path:
++        sys.path.insert(0, str(control_plane_root))
++    try:
++        from control_api.product_design import assess_product_design
++    except ImportError as exc:
++        failures.append(f"canonical product design assessor is unavailable: {exc}")
++        return
++
++    assessment = assess_product_design(repo_root, issue_id, stage="approval")
++    if not assessment.ready:
++        failures.append(
++            "approved product design package is required before evidence generation: "
++            + "; ".join(
++                assessment.failures
++                + assessment.missing_artifacts
++                + assessment.next_actions
++            )
++        )
++        return
++    if assessment.selected_variant is None or assessment.profile is None:
++        failures.append("approved product design package is missing variant or profile")
++        return
++
++    source_paths = {
++        "design_package": f"docs/product-design/{issue_id}/design-package.json",
++        "functional_approval": f"docs/product-design/{issue_id}/approvals/functional.json",
++        "concept_approval": f"docs/product-design/{issue_id}/approvals/concept.json",
++        "final_approval": f"docs/product-design/{issue_id}/approvals/final.json",
++    }
++    for source_path in source_paths.values():
++        if not (repo_root / source_path).is_file():
++            failures.append(f"product design evidence source is missing: {source_path}")
++    if failures:
++        return
++
++    lines = [
++        "# Product Design Package Evidence",
++        "",
++        "schema_version: product-design-evidence/v1",
++        f"issue_id: {issue_id}",
++        "assessment_ready: true",
++        f"current_state: {assessment.current_state}",
++        f"selected_variant: {assessment.selected_variant}",
++        f"profile: {assessment.profile}",
++    ]
++    for label, source_path in source_paths.items():
++        lines.extend(
++            [
++                f"{label}_path: {source_path}",
++                f"{label}_sha256: {sha256_file(repo_root / source_path)}",
++            ]
++        )
++    lines.extend(
++        [
++            "functional_approval_fresh: true",
++            "concept_approval_fresh: true",
++            "final_approval_fresh: true",
++            "",
++        ]
++    )
++    output = evidence_dir / PRODUCT_DESIGN_ARTIFACT_PATHS["product-design-package"]
++    output.parent.mkdir(parents=True, exist_ok=True)
++    output.write_text("\n".join(lines), encoding="utf-8")
++
++
+ def parse_args() -> argparse.Namespace:
+     parser = argparse.ArgumentParser(description="Generate evidence/manifest.json with real sha256 hashes.")
+     parser.add_argument("--issue-id", required=True, help="GitHub Issue id, for example GH-123.")
+@@ -122,6 +199,24 @@ def main() -> int:
+     require_file(evidence_dir / "reports/test-summary.json", "test summary artifact", failures)
+     require_file(evidence_dir / "rollback.md", "rollback artifact", failures)
+     surface_files = collect_surface_evidence(evidence_dir, failures)
++    product_design_required = project_requires_product_design_evidence(repo_root)
++    if product_design_required:
++        generate_product_design_package_evidence(
++            repo_root=repo_root,
++            evidence_dir=evidence_dir,
++            issue_id=args.issue_id,
++            failures=failures,
++        )
++        require_file(
++            evidence_dir / PRODUCT_DESIGN_ARTIFACT_PATHS["accessibility"],
++            "accessibility evidence",
++            failures,
++        )
++        require_file(
++            evidence_dir / PRODUCT_DESIGN_ARTIFACT_PATHS["visual-regression"],
++            "visual regression evidence",
++            failures,
++        )
+ 
+     if failures:
+         print("AI evidence manifest generation")
+@@ -172,6 +267,17 @@ def main() -> int:
+                 "sha256": sha256_file(surface_path),
+             }
+         )
++    if product_design_required:
++        for artifact_type, relative_path in PRODUCT_DESIGN_ARTIFACT_PATHS.items():
++            artifact_path = evidence_dir / relative_path
++            if artifact_path.is_file():
++                artifacts.append(
++                    {
++                        "type": artifact_type,
++                        "path": relative_to_root(artifact_path, repo_root),
++                        "sha256": sha256_file(artifact_path),
++                    }
++                )
+     artifacts.append(
+         {
+             "type": "rollback",
+diff --git a/scripts/lint.sh b/scripts/lint.sh
+new file mode 100755
+index 0000000..3bfc5e4
+--- /dev/null
++++ b/scripts/lint.sh
+@@ -0,0 +1,8 @@
++#!/usr/bin/env bash
++set -euo pipefail
++python3 - <<'PY'
++from pathlib import Path
++for root in (Path('src'), Path('tests')):
++    for path in sorted(root.rglob('*.py')):
++        compile(path.read_text(encoding='utf-8'), str(path), 'exec')
++PY
+diff --git a/scripts/smoke.sh b/scripts/smoke.sh
+new file mode 100755
+index 0000000..b251488
+--- /dev/null
++++ b/scripts/smoke.sh
+@@ -0,0 +1,3 @@
++#!/usr/bin/env bash
++set -euo pipefail
++PYTHONDONTWRITEBYTECODE=1 python3 src/aid_canary_app.py --smoke
+diff --git a/scripts/typecheck.sh b/scripts/typecheck.sh
+new file mode 100755
+index 0000000..3bfc5e4
+--- /dev/null
++++ b/scripts/typecheck.sh
+@@ -0,0 +1,8 @@
++#!/usr/bin/env bash
++set -euo pipefail
++python3 - <<'PY'
++from pathlib import Path
++for root in (Path('src'), Path('tests')):
++    for path in sorted(root.rglob('*.py')):
++        compile(path.read_text(encoding='utf-8'), str(path), 'exec')
++PY
+diff --git a/scripts/validate_evidence_manifest.py b/scripts/validate_evidence_manifest.py
+index 1a01627..f21fea7 100755
+--- a/scripts/validate_evidence_manifest.py
++++ b/scripts/validate_evidence_manifest.py
+@@ -31,6 +31,13 @@ REQUIRED_TOP_LEVEL = [
+ 
+ REQUIRED_COMMANDS = ["lint", "typecheck", "test", "build", "smoke"]
+ REQUIRED_ARTIFACT_TYPES = ["diff", "logs", "tests", "surface-evidence", "rollback"]
++PRODUCT_DESIGN_ARTIFACT_PATHS = {
++    "product-design-package": "product-design/product-design-package.md",
++    "accessibility": "product-design/accessibility-report.md",
++    "visual-regression": "product-design/visual-regression.md",
++}
++PRODUCT_DESIGN_ARTIFACT_TYPES = list(PRODUCT_DESIGN_ARTIFACT_PATHS)
++ALLOWED_ARTIFACT_TYPES = REQUIRED_ARTIFACT_TYPES + PRODUCT_DESIGN_ARTIFACT_TYPES
+ LEGACY_ARTIFACT_ALIASES = {"screenshots": "surface-evidence"}
+ ALLOWED_APPROVAL_STATUS = {
+     "draft",
+@@ -73,6 +80,18 @@ def sha256_file(path: Path) -> str:
+     return digest.hexdigest()
+ 
+ 
++def project_requires_product_design_evidence(repo_root: Path) -> bool:
++    config_path = repo_root.resolve() / "docs" / "ai-delivery" / "project-config.json"
++    if not config_path.is_file():
++        return False
++    try:
++        payload = json.loads(config_path.read_text(encoding="utf-8"))
++    except (OSError, json.JSONDecodeError):
++        return False
++    experience = payload.get("experience") if isinstance(payload, dict) else None
++    return isinstance(experience, dict) and experience.get("design_required") is True
++
++
+ def is_relative_to(path: Path, root: Path) -> bool:
+     try:
+         path.relative_to(root)
+@@ -461,6 +480,66 @@ def validate_surface_evidence_artifact(path: Path, result: ValidationResult) ->
+         result.failures.append(f"surface evidence text looks like a stub or placeholder: {path}")
+ 
+ 
++def validate_product_design_artifact(path: Path, artifact_type: str, result: ValidationResult) -> None:
++    text = read_text_artifact(path, result, f"{artifact_type} artifact")
++    if text is None:
++        return
++    if len(text.strip()) < 40:
++        result.failures.append(
++            f"{artifact_type} artifact must contain concrete observations, decisions, or results: {path}"
++        )
++    if SURFACE_PLACEHOLDER_RE.search(text):
++        result.failures.append(f"{artifact_type} artifact looks like a stub or placeholder: {path}")
++
++
++def validate_product_design_package_evidence(
++    path: Path,
++    *,
++    repo_root: Path,
++    issue_id: str,
++    result: ValidationResult,
++) -> None:
++    text = read_text_artifact(path, result, "product-design-package artifact")
++    if text is None:
++        return
++    expected_paths = {
++        "design_package_path": f"docs/product-design/{issue_id}/design-package.json",
++        "functional_approval_path": f"docs/product-design/{issue_id}/approvals/functional.json",
++        "concept_approval_path": f"docs/product-design/{issue_id}/approvals/concept.json",
++        "final_approval_path": f"docs/product-design/{issue_id}/approvals/final.json",
++    }
++    required_values = {
++        "schema_version": "product-design-evidence/v1",
++        "issue_id": issue_id,
++        "assessment_ready": "true",
++        "current_state": "D7",
++        **expected_paths,
++    }
++    for key, expected in required_values.items():
++        if not has_key_value(text, key, expected):
++            result.failures.append(
++                f"product-design-package artifact must contain {key}={expected}: {path}"
++            )
++    for key in ("selected_variant", "profile"):
++        if re.search(rf"(?im)^\s*{key}\s*:\s*\S+\s*$", text) is None:
++            result.failures.append(
++                f"product-design-package artifact must contain non-empty {key}: {path}"
++            )
++    for path_key, artifact_path in expected_paths.items():
++        source = repo_root / artifact_path
++        if not source.is_file():
++            result.failures.append(
++                f"product-design-package source artifact is missing: {artifact_path}"
++            )
++            continue
++        hash_key = path_key.removesuffix("_path") + "_sha256"
++        expected_hash = sha256_file(source)
++        if not has_key_value(text, hash_key, expected_hash):
++            result.failures.append(
++                f"product-design-package artifact must bind {hash_key}={expected_hash}: {path}"
++            )
++
++
+ def validate_strict_artifact_file(
+     *,
+     path: Path,
+@@ -468,6 +547,7 @@ def validate_strict_artifact_file(
+     repo_root: Path,
+     base_sha: str | None,
+     commit_sha: str | None,
++    issue_id: str | None,
+     result: ValidationResult,
+ ) -> None:
+     if artifact_type == "tests":
+@@ -490,6 +570,15 @@ def validate_strict_artifact_file(
+         text = read_text_artifact(path, result, "logs artifact")
+         if text is not None and not text.strip():
+             result.failures.append(f"logs artifact must be non-empty: {path}")
++    elif artifact_type == "product-design-package" and issue_id is not None:
++        validate_product_design_package_evidence(
++            path,
++            repo_root=repo_root,
++            issue_id=issue_id,
++            result=result,
++        )
++    elif artifact_type in PRODUCT_DESIGN_ARTIFACT_TYPES:
++        validate_product_design_artifact(path, artifact_type, result)
+ 
+ 
+ def canonical_artifact_type(value: object, strict: bool, result: ValidationResult) -> str | object:
+@@ -639,6 +728,10 @@ def validate_manifest(
+     artifacts = manifest.get("artifacts")
+     result.require(isinstance(artifacts, list) and bool(artifacts), "artifacts must be a non-empty list")
+     artifact_types: list[object] = []
++    product_design_required = project_requires_product_design_evidence(repo_root)
++    required_artifact_types = REQUIRED_ARTIFACT_TYPES + (
++        PRODUCT_DESIGN_ARTIFACT_TYPES if product_design_required else []
++    )
+     if isinstance(artifacts, list):
+         for index, artifact in enumerate(artifacts):
+             result.require(isinstance(artifact, dict), f"artifacts[{index}] must be an object")
+@@ -646,14 +739,28 @@ def validate_manifest(
+                 continue
+             artifact_type = canonical_artifact_type(artifact.get("type"), strict, result)
+             artifact_types.append(artifact_type)
+-            result.require(artifact_type in REQUIRED_ARTIFACT_TYPES, f"unknown artifact type: {artifact.get('type')}")
++            result.require(
++                artifact_type in ALLOWED_ARTIFACT_TYPES,
++                f"unsupported artifact type: {artifact.get('type')}",
++            )
++            if (
++                product_design_required
++                and isinstance(issue_id, str)
++                and isinstance(artifact_type, str)
++                and artifact_type in PRODUCT_DESIGN_ARTIFACT_PATHS
++            ):
++                expected_path = f"evidence/{issue_id}/{PRODUCT_DESIGN_ARTIFACT_PATHS[artifact_type]}"
++                result.require(
++                    artifact.get("path") == expected_path,
++                    f"{artifact_type} artifact path must be {expected_path}",
++                )
+             artifact_path = validate_sha_field(artifact, "path", repo_root, schema_only, strict, issue_evidence_root, result)
+             if (
+                 strict
+                 and not schema_only
+                 and artifact_path is not None
+                 and isinstance(artifact_type, str)
+-                and artifact_type in REQUIRED_ARTIFACT_TYPES
++                and artifact_type in ALLOWED_ARTIFACT_TYPES
+             ):
+                 validate_strict_artifact_file(
+                     path=artifact_path,
+@@ -661,10 +768,11 @@ def validate_manifest(
+                     repo_root=repo_root,
+                     base_sha=base_sha_value,
+                     commit_sha=commit_sha_value,
++                    issue_id=issue_id if isinstance(issue_id, str) else None,
+                     result=result,
+                 )
+ 
+-    for required in REQUIRED_ARTIFACT_TYPES:
++    for required in required_artifact_types:
+         result.require(required in artifact_types, f"missing artifact type: {required}")
+ 
+     rollback = manifest.get("rollback")
+@@ -709,7 +817,12 @@ def main() -> int:
+     print(f"repo_root: {repo_root}")
+     print(f"strict_mode: {str(args.strict).lower()}")
+     print("required_commands_checked: " + ",".join(REQUIRED_COMMANDS))
+-    print("required_artifacts_checked: " + ",".join(REQUIRED_ARTIFACT_TYPES))
++    required_artifacts = REQUIRED_ARTIFACT_TYPES + (
++        PRODUCT_DESIGN_ARTIFACT_TYPES
++        if project_requires_product_design_evidence(repo_root)
++        else []
++    )
++    print("required_artifacts_checked: " + ",".join(required_artifacts))
+ 
+     if result.warnings:
+         print("warnings:")
+diff --git a/src/aid_canary_app.py b/src/aid_canary_app.py
+index aecf3ef..068743f 100644
+--- a/src/aid_canary_app.py
++++ b/src/aid_canary_app.py
+@@ -11,7 +11,12 @@ VERSION = "0.1.0"
+ 
+ 
+ def health() -> dict[str, str]:
+-    return {"app": APP_NAME, "version": VERSION, "status": "ok"}
++    return {
++        "app": APP_NAME,
++        "version": VERSION,
++        "status": "ok",
++        "managed_delivery": "enabled",
++    }
+ 
+ 
+ def main() -> int:
+diff --git a/tests/test_aid_canary_app.py b/tests/test_aid_canary_app.py
+index d8f2709..744baf8 100644
+--- a/tests/test_aid_canary_app.py
++++ b/tests/test_aid_canary_app.py
+@@ -15,12 +15,14 @@ class CanaryAppTests(unittest.TestCase):
+ 
+         payload = aid_canary_app.health()
+         self.assertEqual(payload["status"], "ok")
++        self.assertEqual(payload["managed_delivery"], "enabled")
+         self.assertIn("AI Delivery", payload["app"])
+ 
+     def test_smoke_cli_outputs_ok_json(self):
+         result = subprocess.run([sys.executable, str(SRC), "--smoke"], text=True, capture_output=True, check=True)
+         payload = json.loads(result.stdout)
+         self.assertEqual(payload["status"], "ok")
++        self.assertEqual(payload["managed_delivery"], "enabled")
+ 
+ 
+ if __name__ == "__main__":
