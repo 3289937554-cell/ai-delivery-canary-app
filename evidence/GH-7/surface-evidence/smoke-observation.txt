@@ -1,0 +1,1 @@
+Observed on implementation commit 4cd26b2 (4cd26b2): smoke command returned the canary health payload with status=ok, managed_delivery=enabled, and version=0.1.0. The result was produced locally from the checked-out source and did not contact external services.

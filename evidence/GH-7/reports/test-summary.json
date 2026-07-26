@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "tests": 2,
+  "passed": 2,
+  "failed": 0,
+  "errors": 0,
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v",
+  "commit_sha": "4cd26b2"
+}

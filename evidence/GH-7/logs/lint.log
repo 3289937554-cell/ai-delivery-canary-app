@@ -1,0 +1,10 @@
+issue_id=GH-7
+pr_id=PR-6
+base_sha=9abade1930293e19b86c08e65c817c439fe84b21
+commit_sha=4cd26b21092d9ffad160cac615b30a7ec99b6042
+actual_head_sha=4cd26b21092d9ffad160cac615b30a7ec99b6042
+clean_except_issue_evidence=true
+command_name=lint
+command=bash scripts/lint.sh 
+--- output ---
+exit_code=0
