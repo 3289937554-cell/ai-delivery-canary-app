@@ -4,15 +4,18 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, timezone
 import hashlib
 import json
-from pathlib import Path
 import re
 import sys
+from datetime import UTC, datetime
+from pathlib import Path
 
-from validate_evidence_manifest import validate_manifest
-
+from validate_evidence_manifest import (
+    PRODUCT_DESIGN_ARTIFACT_PATHS,
+    project_requires_product_design_evidence,
+    validate_manifest,
+)
 
 REQUIRED_COMMAND_LOGS = {
     "lint": "logs/lint.log",
@@ -73,6 +76,79 @@ def collect_surface_evidence(evidence_dir: Path, failures: list[str]) -> list[Pa
     return files
 
 
+def generate_product_design_package_evidence(
+    *,
+    repo_root: Path,
+    evidence_dir: Path,
+    issue_id: str,
+    failures: list[str],
+) -> None:
+    control_plane_root = Path(__file__).resolve().parents[1]
+    if str(control_plane_root) not in sys.path:
+        sys.path.insert(0, str(control_plane_root))
+    try:
+        from control_api.product_design import assess_product_design
+    except ImportError as exc:
+        failures.append(f"canonical product design assessor is unavailable: {exc}")
+        return
+
+    assessment = assess_product_design(repo_root, issue_id, stage="approval")
+    if not assessment.ready:
+        failures.append(
+            "approved product design package is required before evidence generation: "
+            + "; ".join(
+                assessment.failures
+                + assessment.missing_artifacts
+                + assessment.next_actions
+            )
+        )
+        return
+    if assessment.selected_variant is None or assessment.profile is None:
+        failures.append("approved product design package is missing variant or profile")
+        return
+
+    source_paths = {
+        "design_package": f"docs/product-design/{issue_id}/design-package.json",
+        "functional_approval": f"docs/product-design/{issue_id}/approvals/functional.json",
+        "concept_approval": f"docs/product-design/{issue_id}/approvals/concept.json",
+        "final_approval": f"docs/product-design/{issue_id}/approvals/final.json",
+    }
+    for source_path in source_paths.values():
+        if not (repo_root / source_path).is_file():
+            failures.append(f"product design evidence source is missing: {source_path}")
+    if failures:
+        return
+
+    lines = [
+        "# Product Design Package Evidence",
+        "",
+        "schema_version: product-design-evidence/v1",
+        f"issue_id: {issue_id}",
+        "assessment_ready: true",
+        f"current_state: {assessment.current_state}",
+        f"selected_variant: {assessment.selected_variant}",
+        f"profile: {assessment.profile}",
+    ]
+    for label, source_path in source_paths.items():
+        lines.extend(
+            [
+                f"{label}_path: {source_path}",
+                f"{label}_sha256: {sha256_file(repo_root / source_path)}",
+            ]
+        )
+    lines.extend(
+        [
+            "functional_approval_fresh: true",
+            "concept_approval_fresh: true",
+            "final_approval_fresh: true",
+            "",
+        ]
+    )
+    output = evidence_dir / PRODUCT_DESIGN_ARTIFACT_PATHS["product-design-package"]
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text("\n".join(lines), encoding="utf-8")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate evidence/manifest.json with real sha256 hashes.")
     parser.add_argument("--issue-id", required=True, help="GitHub Issue id, for example GH-123.")
@@ -122,6 +198,24 @@ def main() -> int:
     require_file(evidence_dir / "reports/test-summary.json", "test summary artifact", failures)
     require_file(evidence_dir / "rollback.md", "rollback artifact", failures)
     surface_files = collect_surface_evidence(evidence_dir, failures)
+    product_design_required = project_requires_product_design_evidence(repo_root)
+    if product_design_required:
+        generate_product_design_package_evidence(
+            repo_root=repo_root,
+            evidence_dir=evidence_dir,
+            issue_id=args.issue_id,
+            failures=failures,
+        )
+        require_file(
+            evidence_dir / PRODUCT_DESIGN_ARTIFACT_PATHS["accessibility"],
+            "accessibility evidence",
+            failures,
+        )
+        require_file(
+            evidence_dir / PRODUCT_DESIGN_ARTIFACT_PATHS["visual-regression"],
+            "visual regression evidence",
+            failures,
+        )
 
     if failures:
         print("AI evidence manifest generation")
@@ -130,7 +224,7 @@ def main() -> int:
             print(f"- {failure}")
         return 1
 
-    created_at = args.created_at or datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    created_at = args.created_at or datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     pr_number = args.pr_id.removeprefix("PR-")
     rollback_command = args.rollback_command or f"gh pr revert {pr_number}"
 
@@ -172,6 +266,17 @@ def main() -> int:
                 "sha256": sha256_file(surface_path),
             }
         )
+    if product_design_required:
+        for artifact_type, relative_path in PRODUCT_DESIGN_ARTIFACT_PATHS.items():
+            artifact_path = evidence_dir / relative_path
+            if artifact_path.is_file():
+                artifacts.append(
+                    {
+                        "type": artifact_type,
+                        "path": relative_to_root(artifact_path, repo_root),
+                        "sha256": sha256_file(artifact_path),
+                    }
+                )
     artifacts.append(
         {
             "type": "rollback",
