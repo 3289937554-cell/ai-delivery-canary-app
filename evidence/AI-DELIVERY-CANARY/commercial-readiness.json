@@ -1,0 +1,125 @@
+{
+  "branch_protection_evidence": "evidence/AI-DELIVERY-CANARY/branch-protection.json",
+  "claude_final_artifact": "evidence/GH-1/packets/claude-final.md",
+  "claude_planner_artifact": "evidence/GH-1/packets/claude-planner.md",
+  "claude_reviewer_artifact": "evidence/GH-1/packets/claude-reviewer.md",
+  "codeowners_review_evidence": "evidence/AI-DELIVERY-CANARY/codeowners-review.json",
+  "codex_explorer_artifact": "evidence/GH-1/packets/codex-explorer.md",
+  "codex_plan": "evidence/GH-1/codex-plan.md",
+  "codex_reviser_artifact": "evidence/GH-1/packets/codex-reviser.md",
+  "codex_worker_artifact": "evidence/GH-1/packets/codex-worker.md",
+  "diff_patch_path": "evidence/GH-1/diff.patch",
+  "final_check_artifact": "evidence/AI-DELIVERY-CANARY/final-check.json",
+  "github_ci_run_url": "https://github.com/3289937554-cell/ai-delivery-canary-app/actions/runs/29462817997",
+  "github_issue_url": "https://github.com/3289937554-cell/ai-delivery-canary-app/issues/1",
+  "github_pr_url": "https://github.com/3289937554-cell/ai-delivery-canary-app/pull/2",
+  "goal_boundary": "evidence/GH-1/packets/goal-boundary.md",
+  "governance_mode": "single_maintainer",
+  "human_merge_deploy_checklist": "evidence/GH-1/packets/human-merge-deploy-checklist.md",
+  "manifest_path": "evidence/GH-1/manifest.json",
+  "placeholder": false,
+  "prd_architecture": "evidence/GH-1/packets/prd-architecture.md",
+  "project_id": "project-0007-ai-delivery-canary-app",
+  "rollback_path": "evidence/GH-1/rollback.md",
+  "run_log_path": "evidence/GH-1/run-log.md",
+  "s0_s10_status": {
+    "s0_goal_boundary": {
+      "actor": "codex-control-plane",
+      "evidence_path": "evidence/GH-1/packets/goal-boundary.md",
+      "failure_route": "return_to_implementation",
+      "required_output": "s0_goal_boundary",
+      "status": "passed",
+      "timestamp": "2026-07-16T00:50:00Z"
+    },
+    "s10_final_gate": {
+      "actor": "3289937554-cell",
+      "evidence_path": "evidence/AI-DELIVERY-CANARY/final-check.json",
+      "failure_route": "return_to_implementation",
+      "required_output": "s10_final_gate",
+      "self_attested": true,
+      "status": "passed",
+      "timestamp": "2026-07-16T00:50:00Z"
+    },
+    "s1_claude_prd_architecture": {
+      "actor": "claude-planner-artifact",
+      "evidence_path": "evidence/GH-1/packets/prd-architecture.md",
+      "failure_route": "return_to_implementation",
+      "required_output": "s1_claude_prd_architecture",
+      "status": "passed",
+      "timestamp": "2026-07-16T00:50:00Z"
+    },
+    "s2_task_breakdown": {
+      "actor": "codex-control-plane",
+      "evidence_path": "evidence/GH-1/packets/task-breakdown.md",
+      "failure_route": "return_to_implementation",
+      "required_output": "s2_task_breakdown",
+      "status": "passed",
+      "timestamp": "2026-07-16T00:50:00Z"
+    },
+    "s3_branch_worktree": {
+      "actor": "codex-delivery-init",
+      "evidence_path": "evidence/GH-1/run-log.md",
+      "failure_route": "return_to_implementation",
+      "required_output": "s3_branch_worktree",
+      "status": "passed",
+      "timestamp": "2026-07-16T00:50:00Z"
+    },
+    "s4_codex_plan": {
+      "actor": "codex-planner",
+      "evidence_path": "evidence/GH-1/codex-plan.md",
+      "failure_route": "return_to_implementation",
+      "required_output": "s4_codex_plan",
+      "status": "passed",
+      "timestamp": "2026-07-16T00:50:00Z"
+    },
+    "s5_read_only_exploration": {
+      "actor": "codex-explorer",
+      "evidence_path": "evidence/GH-1/packets/codex-explorer.md",
+      "failure_route": "return_to_implementation",
+      "required_output": "s5_read_only_exploration",
+      "status": "passed",
+      "timestamp": "2026-07-16T00:50:00Z"
+    },
+    "s6_implementation_local_verification": {
+      "actor": "codex-worker",
+      "evidence_path": "evidence/GH-1/packets/codex-worker.md",
+      "failure_route": "return_to_implementation",
+      "required_output": "s6_implementation_local_verification",
+      "status": "passed",
+      "timestamp": "2026-07-16T00:50:00Z"
+    },
+    "s7_pr_ci": {
+      "actor": "github-actions-and-codex-manifest",
+      "evidence_path": "evidence/GH-1/run-log.md",
+      "failure_route": "return_to_implementation",
+      "required_output": "s7_pr_ci",
+      "status": "passed",
+      "timestamp": "2026-07-16T00:50:00Z"
+    },
+    "s8_claude_review": {
+      "actor": "claude-reviewer-artifact",
+      "evidence_path": "evidence/GH-1/packets/claude-reviewer.md",
+      "failure_route": "return_to_implementation",
+      "required_output": "s8_claude_review",
+      "status": "passed",
+      "timestamp": "2026-07-16T00:50:00Z"
+    },
+    "s9_fix_loop": {
+      "actor": "codex-reviser",
+      "evidence_path": "evidence/GH-1/packets/codex-reviser.md",
+      "failure_route": "return_to_implementation",
+      "required_output": "s9_fix_loop",
+      "status": "passed",
+      "timestamp": "2026-07-16T00:50:00Z"
+    }
+  },
+  "single_maintainer_attestation": {
+    "acknowledged_no_independent_review": true,
+    "attested_at": "2026-07-16T00:50:00Z",
+    "independent_review": false,
+    "maintainer_login": "3289937554-cell",
+    "reason": "This repository has a single human maintainer (3289937554-cell) and no independent code owner is available. The independence requirement of independent_review mode is intentionally exempted under single_maintainer mode. All evidence remains real and unmodified; the CODEOWNERS review is recorded honestly as a self-review with independent_review=false. No approval is fabricated."
+  },
+  "surface_evidence_path": "evidence/GH-1/surface-evidence/smoke-observation.txt",
+  "task_breakdown": "evidence/GH-1/packets/task-breakdown.md"
+}

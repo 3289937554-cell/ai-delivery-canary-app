@@ -1,0 +1,17 @@
+{
+  "attested_at": "2026-07-16T00:53:19Z",
+  "attested_by": "3289937554-cell",
+  "base_sha": "b9d802e839ede065fc681b3eb6c30a8c30724a65",
+  "commit_sha": "4977986ab6fc83bf86d6125c8baf6e4b1ee6db06",
+  "evidence_scope": "PASS",
+  "final_gate_ready": true,
+  "governance_mode": "single_maintainer",
+  "independent_review": false,
+  "issue_id": "GH-1",
+  "note": "Final gate passed locally after rebuilding the canary branch as one implementation commit followed by one evidence-only commit. GitHub PR approval and remote CI remain authoritative external gates after push.",
+  "pr_id": "PR-2",
+  "result": "PASS",
+  "self_attested": true,
+  "target_readiness_result": "PASS",
+  "target_ready_for_canary": true
+}

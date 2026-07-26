@@ -1,0 +1,66 @@
+{
+  "api_status": "authenticated",
+  "api_url": "https://api.github.com/repos/3289937554-cell/ai-delivery-canary-app/branches/main/protection",
+  "branch": "main",
+  "checked_at": "2026-07-15T14:08:48Z",
+  "evidence_status": "passed_authenticated_github_protection_read",
+  "protected": true,
+  "repository": "3289937554-cell/ai-delivery-canary-app",
+  "required_status_checks": {
+    "strict": true,
+    "contexts": [
+      "lint",
+      "typecheck",
+      "test",
+      "build",
+      "smoke",
+      "validate-evidence"
+    ],
+    "checks": [
+      {
+        "context": "lint",
+        "app_id": 15368
+      },
+      {
+        "context": "typecheck",
+        "app_id": 15368
+      },
+      {
+        "context": "test",
+        "app_id": 15368
+      },
+      {
+        "context": "build",
+        "app_id": 15368
+      },
+      {
+        "context": "smoke",
+        "app_id": 15368
+      },
+      {
+        "context": "validate-evidence",
+        "app_id": 15368
+      }
+    ]
+  },
+  "required_pull_request_reviews": {
+    "dismiss_stale_reviews": true,
+    "require_code_owner_reviews": true,
+    "require_last_push_approval": false,
+    "required_approving_review_count": 1
+  },
+  "required_conversation_resolution": true,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "bypass_allowances": [],
+  "raw_summary": {
+    "enforce_admins": false,
+    "required_linear_history": false,
+    "required_conversation_resolution": true,
+    "required_status_checks_strict": true,
+    "allow_force_pushes": false,
+    "allow_deletions": false,
+    "pull_request_bypass_allowances_count": 0
+  },
+  "source_command": "gh api repos/3289937554-cell/ai-delivery-canary-app/branches/main/protection"
+}

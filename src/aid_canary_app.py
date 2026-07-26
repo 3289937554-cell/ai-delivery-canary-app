@@ -11,7 +11,12 @@ VERSION = "0.1.0"
 
 
 def health() -> dict[str, str]:
-    return {"app": APP_NAME, "version": VERSION, "status": "ok"}
+    return {
+        "app": APP_NAME,
+        "version": VERSION,
+        "status": "ok",
+        "managed_delivery": "enabled",
+    }
 
 
 def main() -> int:
