@@ -1,0 +1,79 @@
+{
+  "manifest_version": "1.0",
+  "issue_id": "GH-7",
+  "pr_id": "PR-6",
+  "base_sha": "9abade1930293e19b86c08e65c817c439fe84b21",
+  "commit_sha": "4cd26b21092d9ffad160cac615b30a7ec99b6042",
+  "created_at": "2026-07-26T14:26:42Z",
+  "actor": "codex worker",
+  "approval_status": "ready_for_claude_review",
+  "commands": [
+    {
+      "name": "lint",
+      "command": "project lint command recorded in logs/lint.log",
+      "exit_code": 0,
+      "log_path": "evidence/GH-7/logs/lint.log",
+      "sha256": "9bb604c7c3c19f5aeb7860402b87d66ba7e0a636449c797a2d2fcf856ac25fb7"
+    },
+    {
+      "name": "typecheck",
+      "command": "project typecheck command recorded in logs/typecheck.log",
+      "exit_code": 0,
+      "log_path": "evidence/GH-7/logs/typecheck.log",
+      "sha256": "392279e22fd766738677fe45cabad84a2f46267741fdd24bac1176ddf697e11c"
+    },
+    {
+      "name": "test",
+      "command": "project test command recorded in logs/test.log",
+      "exit_code": 0,
+      "log_path": "evidence/GH-7/logs/test.log",
+      "sha256": "b8522a9758827582924eb5c9c603a215769d768df347b905b3496e4e1d14f879"
+    },
+    {
+      "name": "build",
+      "command": "project build command recorded in logs/build.log",
+      "exit_code": 0,
+      "log_path": "evidence/GH-7/logs/build.log",
+      "sha256": "105c8bfe1588b5003cb83695441409453dcbec75a1a721a522714cfb61468f30"
+    },
+    {
+      "name": "smoke",
+      "command": "project smoke command recorded in logs/smoke.log",
+      "exit_code": 0,
+      "log_path": "evidence/GH-7/logs/smoke.log",
+      "sha256": "6e1be9713a5a566da1b60872966855da0f115db04f5054781cec30e73ac284c5"
+    }
+  ],
+  "artifacts": [
+    {
+      "type": "diff",
+      "path": "evidence/GH-7/diff.patch",
+      "sha256": "77b6875868055500068c0dd058b36fc676e30a7d0c0871658be8adb68302dfa7"
+    },
+    {
+      "type": "logs",
+      "path": "evidence/GH-7/logs/test.log",
+      "sha256": "b8522a9758827582924eb5c9c603a215769d768df347b905b3496e4e1d14f879"
+    },
+    {
+      "type": "tests",
+      "path": "evidence/GH-7/reports/test-summary.json",
+      "sha256": "a85726f91a144247ce174a6f787976bec4d427667ec8226bdba085946039f95a"
+    },
+    {
+      "type": "surface-evidence",
+      "path": "evidence/GH-7/surface-evidence/smoke-observation.txt",
+      "sha256": "cf9e909555f1fae77d2e689130c4ae6b7d45f3d20d53a55f234c37e5393af594"
+    },
+    {
+      "type": "rollback",
+      "path": "evidence/GH-7/rollback.md",
+      "sha256": "4a6e69c40de4ef7ad1da3e7965d44cb596a2f493f0ce0d72acf3f746add4888b"
+    }
+  ],
+  "rollback": {
+    "strategy": "revert_pr",
+    "command": "gh pr revert 6",
+    "data_notes": "No irreversible data migration recorded for this delivery packet."
+  }
+}
