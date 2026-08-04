@@ -1,0 +1,80 @@
+issue_id: GH-999
+pr_id: PR-7
+base_sha: c3de200fb8733f31d05c421aa076cf3b522e7334
+commit_sha: f07fde7c284f436c634b81255b1ce56fb16a86dd
+actual_head_sha: f07fde7c284f436c634b81255b1ce56fb16a86dd
+clean_except_issue_evidence: true
+dirty_issue_evidence_allowed: evidence/GH-999/logs/lint.log, evidence/GH-999/logs/typecheck.log, evidence/GH-999/model-artifacts/codex-context-S4.json, evidence/GH-999/model-artifacts/codex-context-S5.json, evidence/GH-999/model-artifacts/codex-context-S6.json, evidence/GH-999/model-artifacts/codex-result-S4.json, evidence/GH-999/model-artifacts/codex-result-S5.json, evidence/GH-999/model-artifacts/codex-result-S6.json
+command_name: test
+exit_code: 0
+command: python3 -m unittest discover -s tests
+summary: test gate completed with exit_code=0 in 11.220s.
+started_at: 2026-08-04T05:46:58Z
+duration_seconds: 11.220
+stdout:
+
+stderr:
+....usage: python3 -m unittest [-h] [--smoke] [--host HOST] [--port PORT]
+                           [--data-dir DATA_DIR] [--web-root WEB_ROOT]
+python3 -m unittest: error: unrecognized arguments: --token command-line-secret
+...........................{"method": "POST", "path": "/api/releases", "status": 401}
+{"method": "POST", "path": "/api/releases", "status": 401}
+.{"method": "POST", "path": "/api/releases", "status": 201}
+{"method": "POST", "path": "/api/releases/9a29baac-d7b2-481b-af76-e8ac6606f372/gates", "status": 201}
+{"method": "POST", "path": "/api/releases/9a29baac-d7b2-481b-af76-e8ac6606f372/risks", "status": 201}
+.{"method": "GET", "path": "/api/health", "status": 200}
+{"method": "GET", "path": "/", "status": 200}
+{"method": "GET", "path": "/app.js", "status": 200}
+{"method": "GET", "path": "/styles.css", "status": 200}
+{"method": "GET", "path": "/favicon.ico", "status": 204}
+{"method": "GET", "path": "/../README.md", "status": 404}
+.{"method": "POST", "path": "/api/releases", "status": 400}
+{"method": "GET", "path": "/api/releases", "status": 200}
+{"method": "POST", "path": "/api/releases", "status": 400}
+{"method": "GET", "path": "/api/releases", "status": 200}
+.{"method": "GET", "path": "/api/releases/not-a-uuid", "status": 404}
+{"method": "GET", "path": "/api/releases/not-a-uuid/audit", "status": 404}
+{"method": "PATCH", "path": "/api/releases/not-a-uuid", "status": 404}
+{"method": "PATCH", "path": "/api/releases/00000000-0000-0000-0000-000000000000/gates/not-a-uuid", "status": 404}
+{"method": "POST", "path": "/api/releases", "status": 201}
+{"method": "PATCH", "path": "/api/releases/9167f221-f14f-4db9-963a-701ebb5c0197", "status": 409}
+{"method": "POST", "path": "/api/releases", "status": 400}
+{"method": "POST", "path": "/api/releases", "status": 401}
+{"method": "GET", "path": "/api/releases/00000000-0000-0000-0000-000000000000", "status": 404}
+{"method": "DELETE", "path": "/api/releases", "status": 405}
+{"method": "POST", "path": "/api/releases", "status": 415}
+..{"method": "POST", "path": "/api/releases", "status": 401}
+{"method": "POST", "path": "/api/releases", "status": 201}
+.{"method": "PUT", "path": "/api/releases", "status": 405}
+{"method": "OPTIONS", "path": "/api/releases", "status": 405}
+{"method": "HEAD", "path": "/api/releases", "status": 405}
+.{"method": "GET", "path": "/api/health", "status": 200}
+{"method": "GET", "path": "/api/releases", "status": 200}
+{"method": "POST", "path": "/api/releases", "status": 401}
+.{"method": "POST", "path": "/api/releases", "status": 201}
+{"method": "GET", "path": "/api/releases", "status": 200}
+{"method": "PATCH", "path": "/api/releases/82b2e729-c1a0-425b-80fa-8b83c7d898d1", "status": 200}
+{"method": "POST", "path": "/api/releases/82b2e729-c1a0-425b-80fa-8b83c7d898d1/gates", "status": 201}
+{"method": "PATCH", "path": "/api/releases/82b2e729-c1a0-425b-80fa-8b83c7d898d1/gates/6a478ef7-c047-46d0-aa40-b94c10674fc9", "status": 200}
+{"method": "POST", "path": "/api/releases/82b2e729-c1a0-425b-80fa-8b83c7d898d1/risks", "status": 201}
+{"method": "PATCH", "path": "/api/releases/82b2e729-c1a0-425b-80fa-8b83c7d898d1/risks/bc28af38-f9e9-4a96-baa8-025dc5f30bcb", "status": 200}
+{"method": "PATCH", "path": "/api/releases/82b2e729-c1a0-425b-80fa-8b83c7d898d1", "status": 200}
+{"method": "GET", "path": "/api/releases/82b2e729-c1a0-425b-80fa-8b83c7d898d1/audit", "status": 200}
+{"method": "GET", "path": "/api/audit", "status": 200}
+.{"method": "POST", "path": "/api/releases", "status": 413}
+{"method": "POST", "path": "/api/releases", "status": 400}
+...{"method": "TRACE", "path": "/api/releases", "status": 405}
+{"method": "CONNECT", "path": "/api/releases", "status": 405}
+{"method": "BREW", "path": "/api/releases", "status": 501}
+{"method": "UNKNOWN", "path": "", "status": 505}
+.{"method": "POST", "path": "/api/releases", "status": 415}
+{"method": "POST", "path": "/api/releases", "status": 400}
+{"method": "GET", "path": "/api/releases/00000000-0000-0000-0000-000000000000", "status": 404}
+{"method": "POST", "path": "/api/releases", "status": 201}
+{"method": "PATCH", "path": "/api/releases/a19f6c36-1a96-4b91-a513-2e3e9a00bc85", "status": 409}
+{"method": "DELETE", "path": "/api/releases", "status": 405}
+............................
+----------------------------------------------------------------------
+Ran 73 tests in 11.145s
+
+OK

@@ -1,0 +1,18 @@
+{
+  "result_sha256": "891c488b560940f40b6c74687c2075e0b4e5dd8c0d2098c62301b855a41d5964",
+  "stage": "S5",
+  "structured_output": {
+    "contract_version": "agent-review/v1",
+    "findings": [
+      {
+        "disposition": "block",
+        "evidence_refs": [
+          "source_artifact_sha256s"
+        ],
+        "severity": "high",
+        "title": "No inspectable source artifacts, test results, or provider-routing evidence were supplied to validate the governed AID client end to end."
+      }
+    ],
+    "overall": "blocked"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "cost_usd": 0.0041064,
+  "endpoint": "https://api.deepseek.com/anthropic/v1/messages",
+  "model": "deepseek-v4-pro",
+  "provider": "deepseek",
+  "result": "{\"approval_status\": \"approved_for_final_gate\", \"blockers\": [], \"evidence_refs\": [\"evidence/GH-999/model-artifacts/s8-reviewer-execution.json\", \"evidence/GH-999/model-artifacts/fallback-status.jsonl\", \"evidence/GH-999/model-artifacts/handoff-human-approval.md\", \"archon-adapter-probe-response\"], \"handoff_decision\": \"ready_for_final_gate\", \"summary\": \"DeepSeek V4-Pro was used as the sole provider for planner, reviewer, and finalizer; fallback log confirms no fallback was triggered. Archon adapter health check passes, binary resolution points to the DeepSeek launcher, and contract probe succeeds. Evidence manifest is complete with all required artifacts, checksums, and a human-approval handoff boundary. All acceptance criteria for the review task (task-2) and finalization task (task-3) are satisfied.\"}",
+  "role": "deepseek-reviewer",
+  "schema_version": "ai-delivery-model-transcript/v1",
+  "session_id": "deepseek-s8-20260804-075092a6266d",
+  "source_log_path": "evidence/GH-999/model-artifacts/source-logs/s8-reviewer.jsonl",
+  "source_log_sha256": "60a1612bfd2c8d765b5bafa31895cc05af6720887aed4eff94b8d65fe6a0fa99",
+  "usage": {
+    "input_tokens": 1770,
+    "output_tokens": 1475
+  }
+}
