@@ -1,0 +1,13 @@
+{
+  "result_sha256": "0df0424c69864d3b8b84942f953da0efdca7e5a7951dfdf37c29f5421df8e154",
+  "stage": "S6",
+  "structured_output": {
+    "blockers": [
+      "SOURCE_ARTIFACT_UNAVAILABLE"
+    ],
+    "changes": [],
+    "contract_version": "agent-implementation/v1",
+    "decision": "blocked",
+    "summary": "Cannot validate the governed AID client end to end because the required source artifacts and implementation-plan content were not provided in this stage invocation."
+  }
+}
