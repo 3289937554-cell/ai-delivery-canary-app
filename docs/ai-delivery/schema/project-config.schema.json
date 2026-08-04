@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/ai-delivery/project-config.schema.json",
+  "title": "AI Delivery Project Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "control_mode",
+    "control_plane",
+    "repo",
+    "owners",
+    "verification",
+    "workflow",
+    "experience"
+  ],
+  "properties": {
+    "schema_version": {"const": "ai-delivery-project/v1"},
+    "project_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "control_mode": {"enum": ["thin", "full"]},
+    "control_plane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "type": {"const": "local-path"},
+        "path": {"type": "string", "minLength": 1}
+      }
+    },
+    "repo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "default_branch", "github"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "default_branch": {"type": "string", "minLength": 1},
+        "github": {"type": "object"}
+      }
+    },
+    "owners": {"type": "object", "minProperties": 1},
+    "template_identity": {"type": "object"},
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lint", "typecheck", "test", "build", "smoke", "evidence"],
+      "properties": {
+        "lint": {"type": "string", "minLength": 1},
+        "typecheck": {"type": "string", "minLength": 1},
+        "test": {"type": "string", "minLength": 1},
+        "build": {"type": "string", "minLength": 1},
+        "smoke": {"type": "string", "minLength": 1},
+        "evidence": {"type": "string", "minLength": 1}
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lifecycle", "branch_pattern", "worktree_pattern", "evidence_manifest"],
+      "properties": {
+        "lifecycle": {"const": "S0-S10"},
+        "branch_pattern": {"const": "ai/GH-<number>-<slug>"},
+        "worktree_pattern": {"const": "../worktrees/GH-<number>-<slug>"},
+        "evidence_manifest": {"const": "evidence/GH-<number>/manifest.json"}
+      }
+    },
+    "experience": {"$ref": "#/$defs/experience"}
+  },
+  "$defs": {
+    "experience": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract_version",
+        "applicability",
+        "surface_type",
+        "rationale",
+        "design_required",
+        "design_status",
+        "design_root",
+        "visual_breakpoints",
+        "accessibility_standard",
+        "design_provider",
+        "privacy_gate"
+      ],
+      "properties": {
+        "contract_version": {"const": "experience/v2"},
+        "applicability": {"enum": ["pending", "confirmed"]},
+        "surface_type": {"enum": ["web", "desktop", "mobile", "none"]},
+        "rationale": {"type": "string"},
+        "design_required": {"type": "boolean"},
+        "design_status": {"enum": ["not_applicable", "required"]},
+        "design_root": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).*$"
+        },
+        "visual_breakpoints": {
+          "type": "array",
+          "items": {"type": "integer", "minimum": 1},
+          "uniqueItems": true
+        },
+        "accessibility_standard": {"enum": ["WCAG 2.2 AA", "not_applicable"]},
+        "design_provider": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "authority"],
+          "properties": {
+            "name": {"enum": ["repository", "penpot", "figma", "stitch", "other", "none"]},
+            "authority": {"const": "non_authoritative_adapter"}
+          }
+        },
+        "privacy_gate": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["private_artifacts_upload", "training_opt_out_confirmed"],
+          "properties": {
+            "private_artifacts_upload": {"enum": ["forbidden", "allowed"]},
+            "training_opt_out_confirmed": {"type": "boolean"}
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"applicability": {"const": "pending"}}},
+          "then": {
+            "properties": {
+              "surface_type": {"const": "none"},
+              "design_required": {"const": false},
+              "design_status": {"const": "not_applicable"},
+              "design_root": {"maxLength": 0},
+              "visual_breakpoints": {"maxItems": 0},
+              "accessibility_standard": {"const": "not_applicable"},
+              "design_provider": {"properties": {"name": {"const": "none"}}}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "applicability": {"const": "confirmed"},
+              "surface_type": {"const": "none"}
+            },
+            "required": ["applicability", "surface_type"]
+          },
+          "then": {
+            "properties": {
+              "rationale": {"minLength": 1},
+              "design_required": {"const": false},
+              "design_status": {"const": "not_applicable"},
+              "design_root": {"maxLength": 0},
+              "visual_breakpoints": {"maxItems": 0},
+              "accessibility_standard": {"const": "not_applicable"},
+              "design_provider": {"properties": {"name": {"const": "none"}}}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"surface_type": {"enum": ["web", "desktop", "mobile"]}},
+            "required": ["surface_type"]
+          },
+          "then": {
+            "properties": {
+              "applicability": {"const": "confirmed"},
+              "rationale": {"minLength": 1},
+              "design_required": {"const": true},
+              "design_status": {"const": "required"},
+              "design_root": {"const": "docs/product-design"},
+              "visual_breakpoints": {"minItems": 1},
+              "accessibility_standard": {"const": "WCAG 2.2 AA"},
+              "design_provider": {
+                "properties": {
+                  "name": {"enum": ["repository", "penpot", "figma", "stitch", "other"]}
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "privacy_gate": {
+                "properties": {"private_artifacts_upload": {"const": "allowed"}},
+                "required": ["private_artifacts_upload"]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "privacy_gate": {
+                "properties": {"training_opt_out_confirmed": {"const": true}}
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

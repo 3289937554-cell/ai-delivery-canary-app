@@ -1,0 +1,32 @@
+{
+  "capabilities": [
+    {
+      "acceptance_criteria": [
+        "Replace with an observable, testable user outcome."
+      ],
+      "entities": [
+        "primary-entity"
+      ],
+      "errors": [
+        "permission_denied"
+      ],
+      "id": "CAP-001",
+      "name": "Primary capability",
+      "permissions": [
+        "entity:read"
+      ],
+      "roles": [
+        "primary-user"
+      ],
+      "states": [
+        "ready",
+        "blocked"
+      ]
+    }
+  ],
+  "core_flow_ids": [
+    "FLOW-001"
+  ],
+  "issue_id": "GH-123",
+  "schema_version": "functional-map/v1"
+}

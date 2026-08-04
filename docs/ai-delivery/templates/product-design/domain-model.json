@@ -1,0 +1,23 @@
+{
+  "entities": [
+    {
+      "description": "The durable unit of work being operated.",
+      "fields": ["id", "name", "owner_id", "status", "created_at", "updated_at"],
+      "id": "ENT-PROJECT",
+      "lifecycle_states": ["draft", "active", "blocked", "archived"],
+      "name": "Project"
+    },
+    {
+      "description": "A traceable execution of a project workflow.",
+      "fields": ["id", "project_id", "revision", "checkpoint", "status", "updated_at"],
+      "id": "ENT-RUN",
+      "lifecycle_states": ["queued", "running", "waiting", "blocked", "complete"],
+      "name": "Run"
+    }
+  ],
+  "issue_id": "GH-123",
+  "relationships": [
+    {"from": "ENT-PROJECT", "name": "has_many", "to": "ENT-RUN"}
+  ],
+  "schema_version": "domain-model/v1"
+}

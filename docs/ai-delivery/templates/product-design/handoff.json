@@ -1,0 +1,47 @@
+{
+  "issue_id": "GH-123",
+  "schema_version": "product-design-handoff/v1",
+  "screens": [
+    {
+      "accessibility": "Implement WCAG 2.2 AA semantics, keyboard behavior, focus, contrast, reflow, and announcements.",
+      "component_ids": ["COMP-001"],
+      "content_constraints": "Support translated, empty, error, permission, and extreme-length content without overlap.",
+      "functional_ids": ["CAP-001"],
+      "responsive_behavior": "Preserve list context and reachable actions at every declared breakpoint.",
+      "screen_id": "SCREEN-001",
+      "target_files": ["replace/with/run-center-file"],
+      "verification_commands": ["replace-with-target-test-command", "replace-with-target-smoke-command"]
+    },
+    {
+      "accessibility": "Expose semantic headings, timeline landmarks, keyboard navigation, and announced status changes.",
+      "component_ids": ["COMP-001"],
+      "content_constraints": "Long checkpoint names and failure details wrap without shifting the primary action.",
+      "functional_ids": ["CAP-001"],
+      "responsive_behavior": "Collapse secondary metadata while retaining the current run and next action.",
+      "screen_id": "SCREEN-RUN-DETAIL",
+      "target_files": ["replace/with/run-detail-file"],
+      "verification_commands": ["replace-with-target-test-command", "replace-with-target-smoke-command"]
+    },
+    {
+      "accessibility": "Keep decision controls keyboard reachable and provide explicit stale and forbidden feedback.",
+      "component_ids": ["COMP-001"],
+      "content_constraints": "Evidence metadata and decision reasons remain readable at extreme lengths.",
+      "functional_ids": ["CAP-001"],
+      "responsive_behavior": "Render the approval drawer as a full-height mobile panel below 768px.",
+      "screen_id": "SCREEN-APPROVALS",
+      "target_files": ["replace/with/approval-desk-file"],
+      "verification_commands": ["replace-with-target-test-command", "replace-with-target-smoke-command"]
+    },
+    {
+      "accessibility": "Use a semantic evidence table and provide redaction and classification notices.",
+      "component_ids": ["COMP-001"],
+      "content_constraints": "Paths remain repository-relative and hashes do not overflow their cells.",
+      "functional_ids": ["CAP-001"],
+      "responsive_behavior": "Allow horizontal table inspection without hiding classification or receipt state.",
+      "screen_id": "SCREEN-EVIDENCE",
+      "target_files": ["replace/with/evidence-file"],
+      "verification_commands": ["replace-with-target-test-command", "replace-with-target-smoke-command"]
+    }
+  ],
+  "selected_variant_id": "variant-b"
+}

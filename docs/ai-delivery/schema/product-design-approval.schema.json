@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/ai-delivery/product-design-approval.schema.json",
+  "title": "Product Design Approval",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "gate",
+    "status",
+    "owner",
+    "decided_at",
+    "artifact_path",
+    "artifact_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "product-design-approval/v1"},
+    "gate": {"enum": ["functional", "concept", "final"]},
+    "status": {"const": "approved"},
+    "owner": {"type": "string", "minLength": 1},
+    "decided_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "artifact_path": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"
+    },
+    "artifact_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "variant_id": {"type": "string", "minLength": 1}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"gate": {"const": "concept"}}},
+      "then": {"required": ["variant_id"]},
+      "else": {"not": {"required": ["variant_id"]}}
+    }
+  ]
+}

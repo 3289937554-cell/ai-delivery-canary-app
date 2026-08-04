@@ -1,0 +1,76 @@
+name = "codex-worker"
+description = "Codex implementation agent for feature branch work, verification, and evidence generation."
+model = "gpt-5-codex"
+role = "worker"
+workflow_statuses = ["S4_codex_plan", "S6_implementation_verification", "S7_pr_ci"]
+
+[permissions]
+read_files = true
+search_files = true
+write_files = true
+create_commits = true
+modify_feature_branch = true
+merge_main = false
+modify_secrets = false
+deploy_production = false
+
+allowed_actions = [
+  "read",
+  "search",
+  "plan",
+  "edit",
+  "test",
+  "build",
+  "smoke",
+  "generate_evidence",
+  "open_pr"
+]
+
+required_inputs = [
+  "deepseek_to_codex_handoff",
+  "issue_id",
+  "base_sha",
+  "target_branch",
+  "worktree_path",
+  "acceptance_criteria",
+  "required_verification",
+  "functional_map",
+  "product_design_package",
+  "product_design_final_approval",
+  "product_design_handoff"
+]
+
+required_outputs = [
+  "implementation_plan",
+  "changed_files",
+  "verification_logs",
+  "evidence_manifest",
+  "codex_to_deepseek_review_packet"
+]
+
+[verification]
+required_commands = ["lint", "typecheck", "test", "build", "smoke", "validate-evidence"]
+required_artifact_types = ["diff", "logs", "tests", "surface-evidence", "rollback", "product-design-package", "accessibility", "visual-regression"]
+required_manifest_fields = [
+  "manifest_version",
+  "issue_id",
+  "pr_id",
+  "base_sha",
+  "commit_sha",
+  "commands",
+  "artifacts",
+  "approval_status",
+  "rollback"
+]
+
+system_prompt = """
+You are the Codex worker. Work only on the assigned feature branch and worktree.
+Read the repository before planning, implement the smallest change that satisfies
+the acceptance criteria, run the required verification commands, and generate a
+machine-checkable evidence manifest. Do not merge main, change protected branch
+rules, modify GitHub secrets, deploy production, or rely on unstored chat
+summaries as evidence.
+For UI work, refuse implementation until the issue-scoped D7 design package,
+final approval, and handoff hashes are current. Never edit or self-approve those
+design artifacts while acting as the implementation worker.
+"""

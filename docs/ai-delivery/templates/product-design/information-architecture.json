@@ -1,0 +1,15 @@
+{
+  "global_actions": ["global-search", "command-menu", "notifications"],
+  "issue_id": "GH-123",
+  "primary_navigation": [
+    {"id": "NAV-RUNS", "label": "Runs", "screen_id": "SCREEN-001"},
+    {"id": "NAV-APPROVALS", "label": "Approvals", "screen_id": "SCREEN-APPROVALS"},
+    {"id": "NAV-EVIDENCE", "label": "Evidence", "screen_id": "SCREEN-EVIDENCE"}
+  ],
+  "schema_version": "information-architecture/v1",
+  "workspaces": [
+    {"id": "WORKSPACE-RUNS", "purpose": "Monitor and control active work"},
+    {"id": "WORKSPACE-APPROVALS", "purpose": "Resolve human tasks with bound evidence"},
+    {"id": "WORKSPACE-EVIDENCE", "purpose": "Inspect verified references and receipts"}
+  ]
+}

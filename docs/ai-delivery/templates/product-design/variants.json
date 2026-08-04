@@ -1,0 +1,30 @@
+{
+  "issue_id": "GH-123",
+  "schema_version": "design-variants/v1",
+  "variants": [
+    {
+      "artifact_path": "docs/product-design/GH-123/variants/variant-a.md",
+      "artifact_sha256": "",
+      "covered_flow_ids": ["FLOW-001"],
+      "id": "variant-a",
+      "provider_ref": "repository",
+      "summary": "Information-dense operational direction"
+    },
+    {
+      "artifact_path": "docs/product-design/GH-123/variants/variant-b.md",
+      "artifact_sha256": "",
+      "covered_flow_ids": ["FLOW-001"],
+      "id": "variant-b",
+      "provider_ref": "repository",
+      "summary": "Guided task-focused direction"
+    },
+    {
+      "artifact_path": "docs/product-design/GH-123/variants/variant-c.md",
+      "artifact_sha256": "",
+      "covered_flow_ids": ["FLOW-001"],
+      "id": "variant-c",
+      "provider_ref": "repository",
+      "summary": "Adaptive overview-and-detail direction"
+    }
+  ]
+}

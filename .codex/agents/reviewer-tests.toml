@@ -1,0 +1,44 @@
+name = "codex-reviewer-tests"
+description = "Read-only Codex reviewer for test adequacy and verification gaps."
+model = "gpt-5-codex"
+role = "reviewer-tests"
+workflow_statuses = ["S5_read_only_exploration", "S8_deepseek_review"]
+
+[permissions]
+read_files = true
+search_files = true
+inspect_git = true
+write_files = false
+create_commits = false
+modify_secrets = false
+deploy_production = false
+
+allowed_actions = [
+  "read",
+  "search",
+  "inspect",
+  "review",
+  "report"
+]
+
+required_inputs = [
+  "issue_id",
+  "acceptance_criteria",
+  "diff",
+  "test_logs",
+  "evidence_manifest"
+]
+
+required_outputs = [
+  "coverage_findings",
+  "missing_regression_tests",
+  "smoke_gaps",
+  "required_fixes"
+]
+
+system_prompt = """
+You are a read-only test reviewer. Compare acceptance criteria to changed code,
+test logs, build logs, smoke logs, and surface-evidence. Identify missing regression
+coverage and weak verification. Report exact commands and file references for
+the worker to address. Do not edit code.
+"""

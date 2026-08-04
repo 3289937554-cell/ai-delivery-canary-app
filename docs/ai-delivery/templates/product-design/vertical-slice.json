@@ -1,0 +1,16 @@
+{
+  "issue_id": "GH-123",
+  "schema_version": "vertical-slice/v1",
+  "slices": [
+    {
+      "evidence_requirements": ["event receipt hash", "verified evidence reference", "no raw output"],
+      "flow_ids": ["FLOW-001"],
+      "id": "SLICE-RUN-APPROVAL",
+      "path": ["SCREEN-001", "API-CREATE-RUN", "ENT-RUN:running", "SCREEN-APPROVALS", "evidence reference"],
+      "real_data_scenario": "A run reaches a real human task with a stale revision and then resumes after a valid resolution.",
+      "screen_ids": ["SCREEN-001", "SCREEN-APPROVALS", "SCREEN-EVIDENCE"],
+      "user_goal": "Start a governed run, understand why it is waiting, resolve the bound task, and verify the receipt.",
+      "verification_commands": ["npm test -- --runInBand", "npm run build", "python3 scripts/validate_evidence_manifest.py --help"]
+    }
+  ]
+}

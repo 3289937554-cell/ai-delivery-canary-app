@@ -40,7 +40,7 @@ ALLOWED_ARTIFACT_TYPES = REQUIRED_ARTIFACT_TYPES + PRODUCT_DESIGN_ARTIFACT_TYPES
 LEGACY_ARTIFACT_ALIASES = {"screenshots": "surface-evidence"}
 ALLOWED_APPROVAL_STATUS = {
     "draft",
-    "ready_for_claude_review",
+    "ready_for_deepseek_review",
     "changes_requested",
     "approved_for_final_gate",
     "approved_for_human_merge",

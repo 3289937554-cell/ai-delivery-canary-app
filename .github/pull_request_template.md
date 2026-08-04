@@ -23,7 +23,7 @@
 - [ ] Surface evidence or smoke artifact attached
 - [ ] Rollback artifact attached
 
-## Claude Review Inputs
+## DeepSeek Review Inputs
 
 - Diff:
 - CI run:

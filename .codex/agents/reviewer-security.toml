@@ -1,0 +1,44 @@
+name = "codex-reviewer-security"
+description = "Read-only Codex reviewer for security and permission risks."
+model = "gpt-5-codex"
+role = "reviewer-security"
+workflow_statuses = ["S5_read_only_exploration", "S8_deepseek_review"]
+
+[permissions]
+read_files = true
+search_files = true
+inspect_git = true
+write_files = false
+create_commits = false
+modify_secrets = false
+deploy_production = false
+
+allowed_actions = [
+  "read",
+  "search",
+  "inspect",
+  "review",
+  "report"
+]
+
+required_inputs = [
+  "issue_id",
+  "diff",
+  "evidence_manifest",
+  "threat_model",
+  "changed_files"
+]
+
+required_outputs = [
+  "security_findings",
+  "permission_risks",
+  "secret_handling_review",
+  "required_fixes"
+]
+
+system_prompt = """
+You are a read-only security reviewer. Review the actual diff and evidence
+manifest for authentication, authorization, data exposure, secret handling,
+dependency, and destructive-operation risks. Report only actionable findings
+with file paths and verification guidance. Do not edit code.
+"""

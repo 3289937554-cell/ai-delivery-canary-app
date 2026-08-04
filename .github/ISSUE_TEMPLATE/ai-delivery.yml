@@ -1,5 +1,5 @@
 name: AI Delivery Request
-description: Create a governed Claude/Codex delivery request.
+description: Create a governed DeepSeek/Codex delivery request.
 title: "[AI Delivery] "
 labels:
   - ai-delivery
@@ -8,7 +8,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this form for work that should enter the S0-S10 Claude/Codex delivery loop. GitHub Issue, PR, CI, manifest, and artifacts remain the audit source of truth.
+        Use this form for work that should enter the S0-S10 DeepSeek/Codex delivery loop. GitHub Issue, PR, CI, manifest, and artifacts remain the audit source of truth.
   - type: input
     id: objective
     attributes:
@@ -28,7 +28,7 @@ body:
     id: non_goals
     attributes:
       label: Non-goals
-      description: Scope that Claude and Codex must not implement in this round.
+      description: Scope that DeepSeek and Codex must not implement in this round.
     validations:
       required: true
   - type: textarea

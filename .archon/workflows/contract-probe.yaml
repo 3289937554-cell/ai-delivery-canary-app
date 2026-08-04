@@ -1,0 +1,26 @@
+name: ai-delivery-contract-probe
+description: |
+  Deterministic compatibility probe for the AI Delivery Archon adapter.
+  It exercises DAG loading, bash execution, dependency ordering, node output
+  substitution, and final JSON emission without an AI provider or repository mutation.
+mutates_checkout: false
+worktree:
+  enabled: false
+
+nodes:
+  - id: probe-preflight
+    bash: |
+      printf '%s\n' '{"phase":"preflight","ok":true}'
+    timeout: 5000
+
+  - id: probe-contract
+    bash: |
+      set -eu
+      upstream=$probe-preflight.output
+      case "$upstream" in
+        *'"phase":"preflight"'*'"ok":true'*) ;;
+        *) printf '%s\n' 'probe dependency output mismatch' >&2; exit 1 ;;
+      esac
+      printf '%s\n' '{"contract_version":"ai-delivery-archon-probe/v1","ok":true}'
+    depends_on: [probe-preflight]
+    timeout: 5000

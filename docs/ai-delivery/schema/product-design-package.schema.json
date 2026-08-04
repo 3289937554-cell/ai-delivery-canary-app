@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/ai-delivery/product-design-package.schema.json",
+  "title": "Product Design Package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "issue_id",
+    "design_version",
+    "selected_variant_id",
+    "profile",
+    "standards",
+    "artifacts",
+    "generated_at",
+    "generator_version"
+  ],
+  "properties": {
+    "schema_version": {"const": "product-design-package/v1"},
+    "issue_id": {"type": "string", "pattern": "^GH-[1-9][0-9]*$"},
+    "design_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "selected_variant_id": {"type": "string", "minLength": 1},
+    "profile": {
+      "enum": ["operations", "saas", "consumer", "commerce", "content", "mobile_native"]
+    },
+    "standards": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token_format", "accessibility"],
+      "properties": {
+        "token_format": {"const": "DTCG 2025.10"},
+        "accessibility": {"const": "WCAG 2.2 AA"}
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 19,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"
+          },
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "generated_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "generator_version": {"const": "product-design-package/v1"}
+  },
+  "allOf": [
+    {"properties": {"artifacts": {"contains": {"properties": {"path": {"pattern": "/approvals/functional\\.json$"}}}}}},
+    {"properties": {"artifacts": {"contains": {"properties": {"path": {"pattern": "/approvals/concept\\.json$"}}}}}},
+    {"properties": {"artifacts": {"contains": {"properties": {"path": {"pattern": "/reviews/usability\\.md$"}}}}}},
+    {"properties": {"artifacts": {"contains": {"properties": {"path": {"pattern": "/reviews/design-system\\.md$"}}}}}},
+    {"properties": {"artifacts": {"contains": {"properties": {"path": {"pattern": "/reviews/ux-copy\\.md$"}}}}}},
+    {"properties": {"artifacts": {"contains": {"properties": {"path": {"pattern": "/reviews/accessibility\\.md$"}}}}}},
+    {"properties": {"artifacts": {"contains": {"properties": {"path": {"pattern": "/handoff\\.json$"}}}}}},
+    {"properties": {"artifacts": {"contains": {"properties": {"path": {"pattern": "/asset-inventory\\.json$"}}}}}}
+  ]
+}

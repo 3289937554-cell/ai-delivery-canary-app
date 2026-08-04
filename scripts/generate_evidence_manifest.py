@@ -36,7 +36,7 @@ PR_RE = re.compile(r"^PR-\d+$")
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 ALLOWED_APPROVAL_STATUS = {
     "draft",
-    "ready_for_claude_review",
+    "ready_for_deepseek_review",
     "changes_requested",
     "approved_for_final_gate",
     "approved_for_human_merge",
@@ -158,7 +158,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--evidence-dir", required=True, help="Evidence directory such as evidence/GH-123.")
     parser.add_argument("--repo-root", default=".", help="Repository root.")
     parser.add_argument("--actor", default="codex worker", help="Actor name written into the manifest.")
-    parser.add_argument("--approval-status", default="ready_for_claude_review", choices=sorted(ALLOWED_APPROVAL_STATUS))
+    parser.add_argument("--approval-status", default="ready_for_deepseek_review", choices=sorted(ALLOWED_APPROVAL_STATUS))
     parser.add_argument("--created-at", help="UTC timestamp YYYY-MM-DDTHH:MM:SSZ. Defaults to current UTC time.")
     parser.add_argument("--rollback-strategy", default="revert_pr")
     parser.add_argument("--rollback-command", help="Rollback command. Defaults to gh pr revert <number>.")

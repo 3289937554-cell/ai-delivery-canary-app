@@ -1,0 +1,136 @@
+name: plan-to-pr
+description: |
+  Use when: A governed AI Delivery issue is ready to move from S0/S1 planning
+  through S4 implementation planning, S6 implementation, S8 review, and the
+  S10 final gate. GitHub Issue, PR, CI, and the evidence manifest remain the
+  governance source of truth.
+
+  Human approval is required before implementation and after the final gate.
+  AI nodes must not merge the default branch, must not deploy, and must not
+  modify secrets, branch protection, paid resources, or production data.
+  NOT for: Production deployment, secret rotation, merge automation, or work
+  that has no approved GitHub issue and acceptance criteria.
+# Archon v0.5.0 compatibility bridge: this logical planning role is routed to
+# the governed DeepSeek V4-Pro adapter; the fixed binary accepts opencode as
+# the bridge provider name but no legacy provider execution is permitted.
+provider: opencode
+interactive: true
+
+nodes:
+  - id: s0-s1-planning
+    prompt: |
+      Perform the governed S0 goal/boundary and S1 product/architecture pass.
+
+      Request: $ARGUMENTS
+      External context: $CONTEXT
+
+      Inspect the repository and authoritative GitHub issue. Produce a concise,
+      testable plan that records goals, non-goals, acceptance criteria, product
+      experience requirements, architecture decisions, risks, evidence needs,
+      and explicit human-only actions. Save durable planning artifacts under
+      $ARTIFACTS_DIR. Do not implement code in this node.
+
+      You must not merge the default branch, must not deploy, and must not
+      modify secrets, branch protection, paid resources, or production data.
+    context: fresh
+
+  - id: approve-plan
+    approval:
+      message: >
+        Review the S0/S1 plan, scope, acceptance criteria, experience package,
+        risks, and human-only actions. Approve only when implementation may begin.
+      capture_response: true
+    depends_on: [s0-s1-planning]
+
+  - id: s4-implementation-plan
+    provider: codex
+    prompt: |
+      Perform the governed S2/S3/S4 preparation pass without changing code.
+
+      Approved S0/S1 output:
+      $s0-s1-planning.output
+
+      Human approval notes:
+      $approve-plan.output
+
+      Inspect current files, tests, Git state, project-config verification
+      commands, and existing evidence. Create an implementation plan with exact
+      files, ordered tasks, test-first steps, permission boundaries, rollback,
+      and required S5 read-only exploration. Save it under $ARTIFACTS_DIR.
+
+      You must not merge the default branch, must not deploy, and must not
+      modify secrets, branch protection, paid resources, or production data.
+    depends_on: [approve-plan]
+    context: fresh
+
+  - id: s6-implementation
+    provider: codex
+    prompt: |
+      Perform one bounded S5/S6 implementation pass on the current feature
+      branch using the approved plan and repository conventions.
+
+      Planning output:
+      $s4-implementation-plan.output
+
+      Use tests first for behavior changes. Implement only approved scope, run
+      every configured lint/typecheck/test/build/smoke gate that applies, and
+      generate or refresh evidence artifacts and the evidence manifest. Leave
+      the repository reviewable even if a gate fails, and report exact blockers.
+
+      You must not merge the default branch, must not deploy, and must not
+      modify secrets, branch protection, paid resources, or production data.
+    depends_on: [s4-implementation-plan]
+    context: fresh
+
+  - id: deterministic-sanity
+    bash: |
+      set -eu
+      git diff --check
+      git status --short
+    depends_on: [s6-implementation]
+    timeout: 120000
+
+  - id: s8-review
+    prompt: |
+      Perform the S8 independent review using repository state and real evidence.
+
+      Implementation report:
+      $s6-implementation.output
+
+      Deterministic sanity output:
+      $deterministic-sanity.output
+
+      Review correctness, acceptance criteria, tests, security, data safety,
+      application experience, accessibility where applicable, CI evidence,
+      evidence-manifest integrity, and rollback. Report findings by severity
+      with file references. Do not edit code.
+
+      You must not merge the default branch, must not deploy, and must not
+      modify secrets, branch protection, paid resources, or production data.
+    depends_on: [deterministic-sanity]
+    context: fresh
+
+  - id: s10-final-gate
+    prompt: |
+      Perform the S10 final gate. Re-read the current diff, configured gate
+      results, evidence manifest, surface evidence, S8 findings, residual risks,
+      and rollback plan. Return either approved_for_human_merge or
+      changes_requested with explicit reasons. This is a recommendation only;
+      do not merge or deploy.
+
+      S8 review:
+      $s8-review.output
+
+      You must not merge the default branch, must not deploy, and must not
+      modify secrets, branch protection, paid resources, or production data.
+    depends_on: [s8-review]
+    context: fresh
+
+  - id: approve-final
+    approval:
+      message: >
+        Review the S10 packet, CI and evidence links, residual risks, and rollback.
+        Approval authorizes only a later human merge decision; it does not merge
+        or deploy anything.
+      capture_response: true
+    depends_on: [s10-final-gate]

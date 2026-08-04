@@ -1,0 +1,36 @@
+{
+  "endpoints": [
+    {
+      "entity_ids": ["ENT-PROJECT", "ENT-RUN"],
+      "error_codes": ["FORBIDDEN", "NOT_FOUND", "STALE_REVISION"],
+      "flow_ids": ["FLOW-001"],
+      "id": "API-LIST-RUNS",
+      "method": "GET",
+      "path": "/api/aid/runs",
+      "request": {"query": {"limit": "integer"}},
+      "response": {"items": "AidRunProjection[]"}
+    },
+    {
+      "entity_ids": ["ENT-RUN"],
+      "error_codes": ["INVALID_INPUT", "CONFLICT", "PROVIDER_BLOCKED"],
+      "flow_ids": ["FLOW-001"],
+      "id": "API-CREATE-RUN",
+      "method": "POST",
+      "path": "/api/aid/runs",
+      "request": {"body": "CreateAidRunInput"},
+      "response": {"body": "AidRunProjection"}
+    },
+    {
+      "entity_ids": ["ENT-RUN"],
+      "error_codes": ["STALE_REVISION", "NOT_ALLOWED", "DUPLICATE"],
+      "flow_ids": ["FLOW-001"],
+      "id": "API-SUBMIT-ACTION",
+      "method": "POST",
+      "path": "/api/aid/runs/{run_id}/actions",
+      "request": {"body": "TypedRunAction"},
+      "response": {"body": "AidRunProjection"}
+    }
+  ],
+  "issue_id": "GH-123",
+  "schema_version": "api-contract/v1"
+}

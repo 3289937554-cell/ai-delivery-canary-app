@@ -1,0 +1,220 @@
+{
+  "schema_version": "application-blueprint/v1",
+  "issue_id": "GH-123",
+  "status": "ready_for_compilation",
+  "profile": "operations",
+  "product": {
+    "name": "Governed work console",
+    "business_goal": "Help an operator move governed work from intake to an auditable outcome without losing state or approval context.",
+    "non_goals": [
+      "Automatic production merge or deployment",
+      "Replacing human approval for high-risk actions"
+    ],
+    "constraints": [
+      "Local single-operator desktop and responsive web surfaces",
+      "Private evidence and raw model output must remain out of model context"
+    ],
+    "success_measures": [
+      "An operator can identify the next legal action from the run detail",
+      "Every approval and evidence reference is revision-bound",
+      "Blocked and waiting states are never presented as success"
+    ]
+  },
+  "roles": [
+    {
+      "id": "ROLE-OPERATOR",
+      "name": "Operator",
+      "actions": ["project:read", "run:read", "run:create", "run:pause", "task:read"],
+      "resource_scope": "assigned projects and runs"
+    },
+    {
+      "id": "ROLE-OWNER",
+      "name": "Product owner",
+      "actions": ["project:read", "run:read", "task:approve", "evidence:read", "run:resume"],
+      "resource_scope": "owned projects and bound evidence"
+    },
+    {
+      "id": "ROLE-AUDITOR",
+      "name": "Auditor",
+      "actions": ["project:read", "run:read", "evidence:read", "event:read"],
+      "resource_scope": "read-only approved evidence"
+    }
+  ],
+  "entities": [
+    {
+      "id": "ENT-PROJECT",
+      "name": "Project",
+      "description": "A durable product workspace with owners and delivery policy.",
+      "fields": ["id", "name", "owner_id", "policy_id", "status", "created_at", "updated_at"],
+      "lifecycle_states": ["draft", "active", "blocked", "archived"]
+    },
+    {
+      "id": "ENT-RUN",
+      "name": "Run",
+      "description": "A revisioned execution of a project workflow.",
+      "fields": ["id", "project_id", "revision", "checkpoint", "status", "next_action", "updated_at"],
+      "lifecycle_states": ["queued", "running", "waiting", "blocked", "complete"]
+    },
+    {
+      "id": "ENT-HUMAN-TASK",
+      "name": "Human task",
+      "description": "A revision and evidence-bound decision that must be resolved by an allowed role.",
+      "fields": ["id", "run_id", "revision", "allowed_decisions", "evidence_hash", "status", "resolved_by"],
+      "lifecycle_states": ["pending", "resolved", "stale", "cancelled"]
+    },
+    {
+      "id": "ENT-EVIDENCE",
+      "name": "Evidence reference",
+      "description": "A classified, redacted reference to a verified artifact.",
+      "fields": ["id", "run_id", "classification", "relative_path", "sha256", "byte_count", "status"],
+      "lifecycle_states": ["candidate", "verified", "redacted", "rejected"]
+    }
+  ],
+  "relationships": [
+    {"from": "ENT-PROJECT", "name": "has_many", "to": "ENT-RUN"},
+    {"from": "ENT-RUN", "name": "has_many", "to": "ENT-HUMAN-TASK"},
+    {"from": "ENT-RUN", "name": "has_many", "to": "ENT-EVIDENCE"}
+  ],
+  "workflows": [
+    {
+      "id": "FLOW-GOVERNED-RUN",
+      "name": "Run governed work",
+      "entity_id": "ENT-RUN",
+      "states": [
+        {"id": "queued", "meaning": "Ready to start"},
+        {"id": "running", "meaning": "Executing the approved workflow"},
+        {"id": "waiting", "meaning": "Waiting for Codex, a human, or an external dependency"},
+        {"id": "blocked", "meaning": "A gate or dependency prevents progress"},
+        {"id": "complete", "meaning": "All required gates passed"}
+      ],
+      "transitions": [
+        {"action": "start", "from": "queued", "to": "running"},
+        {"action": "wait_for_human", "from": "running", "to": "waiting"},
+        {"action": "block", "from": "running", "to": "blocked"},
+        {"action": "resume", "from": "waiting", "to": "running"},
+        {"action": "recover", "from": "blocked", "to": "running"},
+        {"action": "finish", "from": "running", "to": "complete"}
+      ]
+    },
+    {
+      "id": "FLOW-HUMAN-DECISION",
+      "name": "Resolve a bound human task",
+      "entity_id": "ENT-HUMAN-TASK",
+      "states": [
+        {"id": "pending", "meaning": "Decision is required"},
+        {"id": "resolved", "meaning": "Allowed decision recorded"},
+        {"id": "stale", "meaning": "Revision or evidence no longer matches"},
+        {"id": "rejected", "meaning": "Decision or evidence was rejected"}
+      ],
+      "transitions": [
+        {"action": "approve", "from": "pending", "to": "resolved"},
+        {"action": "detect_revision_drift", "from": "pending", "to": "stale"},
+        {"action": "reject", "from": "pending", "to": "rejected"},
+        {"action": "refresh", "from": "stale", "to": "pending"}
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TASK-MONITOR-RUN",
+      "name": "Monitor a governed run",
+      "role_ids": ["ROLE-OPERATOR", "ROLE-OWNER", "ROLE-AUDITOR"],
+      "entity_ids": ["ENT-PROJECT", "ENT-RUN"],
+      "flow_ids": ["FLOW-GOVERNED-RUN"],
+      "entry_points": ["primary-navigation", "global-search", "notification"],
+      "primary_action": "Create or resume a run",
+      "permissions": ["run:read", "run:create", "run:resume"],
+      "states": ["queued", "running", "waiting", "blocked", "complete"],
+      "errors": ["FORBIDDEN", "NOT_FOUND", "STALE_REVISION", "PROVIDER_BLOCKED"],
+      "success_signal": "The operator can see the current checkpoint, next legal action, and latest event receipt.",
+      "failure_recovery": "Show the blocking reason, owner, retry or resume action, and preserve the run revision."
+    },
+    {
+      "id": "TASK-RESOLVE-HUMAN-TASK",
+      "name": "Resolve a bound human task",
+      "role_ids": ["ROLE-OWNER"],
+      "entity_ids": ["ENT-RUN", "ENT-HUMAN-TASK", "ENT-EVIDENCE"],
+      "flow_ids": ["FLOW-GOVERNED-RUN", "FLOW-HUMAN-DECISION"],
+      "entry_points": ["run-detail", "approvals-navigation"],
+      "primary_action": "Review bound evidence and submit an allowed decision",
+      "permissions": ["task:read", "task:approve", "evidence:read"],
+      "states": ["pending", "resolved", "stale", "rejected"],
+      "errors": ["FORBIDDEN", "STALE_REVISION", "EVIDENCE_MISMATCH", "INVALID_DECISION"],
+      "preconditions": ["operator has owner role", "task revision matches run revision", "evidence hash is current"],
+      "success_signal": "The allowed decision is recorded with actor, reason, revision, evidence hash, and receipt hash.",
+      "failure_recovery": "Keep the drawer open, identify stale or mismatched evidence, and require refresh instead of accepting a guess."
+    },
+    {
+      "id": "TASK-INSPECT-EVIDENCE",
+      "name": "Inspect verified evidence",
+      "role_ids": ["ROLE-OWNER", "ROLE-AUDITOR"],
+      "entity_ids": ["ENT-RUN", "ENT-EVIDENCE"],
+      "flow_ids": ["FLOW-GOVERNED-RUN"],
+      "entry_points": ["evidence-navigation", "run-detail", "approval-drawer"],
+      "primary_action": "Verify classification, size, and hash metadata",
+      "permissions": ["evidence:read"],
+      "states": ["candidate", "verified", "redacted", "rejected"],
+      "errors": ["FORBIDDEN", "NOT_FOUND", "CLASSIFICATION_BLOCKED", "FILE_TOO_LARGE"],
+      "success_signal": "The auditor can confirm an evidence reference without receiving raw secrets, absolute paths, or model output.",
+      "failure_recovery": "Explain why content is withheld and keep metadata available for audit without exposing restricted bytes."
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "SCREEN-RUN-CENTER",
+      "name": "Run center",
+      "task_ids": ["TASK-MONITOR-RUN"],
+      "composition": ["master-detail", "timeline", "command-bar", "status-summary"],
+      "state_contracts": ["default", "loading", "empty", "error", "permission-denied", "disabled", "extreme-content", "blocked", "readonly", "stale"],
+      "entry_points": ["primary-navigation", "global-search"],
+      "exit_paths": ["open-run-detail", "open-approval-drawer", "open-evidence"],
+      "primary_action": "Create or resume a run"
+    },
+    {
+      "id": "SCREEN-RUN-DETAIL",
+      "name": "Run detail",
+      "task_ids": ["TASK-MONITOR-RUN", "TASK-RESOLVE-HUMAN-TASK"],
+      "composition": ["detail-pane", "timeline", "command-bar", "audit-feed"],
+      "state_contracts": ["default", "loading", "empty", "error", "permission-denied", "disabled", "extreme-content", "blocked", "readonly", "stale"],
+      "entry_points": ["run-center", "notification"],
+      "exit_paths": ["return-to-run-center", "open-approval-drawer", "open-evidence"],
+      "primary_action": "Inspect the next legal action"
+    },
+    {
+      "id": "SCREEN-APPROVAL-DESK",
+      "name": "Approval desk",
+      "task_ids": ["TASK-RESOLVE-HUMAN-TASK"],
+      "composition": ["detail-pane", "approval-drawer", "evidence-summary", "decision-bar", "stale-warning"],
+      "state_contracts": ["default", "loading", "empty", "error", "permission-denied", "disabled", "extreme-content", "blocked", "readonly", "stale"],
+      "entry_points": ["run-detail", "approvals-navigation"],
+      "exit_paths": ["resolve-task", "refresh-stale-task", "return-to-run-detail"],
+      "primary_action": "Resolve a revision-bound human task"
+    },
+    {
+      "id": "SCREEN-EVIDENCE",
+      "name": "Evidence",
+      "task_ids": ["TASK-INSPECT-EVIDENCE"],
+      "composition": ["evidence-table", "metadata-panel", "redaction-notice", "audit-feed"],
+      "state_contracts": ["default", "loading", "empty", "error", "permission-denied", "disabled", "extreme-content", "blocked", "readonly", "stale"],
+      "entry_points": ["evidence-navigation", "run-detail", "approval-drawer"],
+      "exit_paths": ["return-to-run-detail"],
+      "primary_action": "Inspect verified evidence metadata"
+    }
+  ],
+  "global_actions": ["global-search", "command-menu", "notifications"],
+  "non_functional_requirements": {
+    "accessibility": "WCAG 2.2 AA, keyboard-first operation, visible focus, announced state changes, and no color-only status.",
+    "responsive": "Preserve the active task and next legal action at 1440, 1024, 768, and 390px.",
+    "audit": "Persist structured receipts, revision, actor, decision, evidence hash, and event sequence without raw output.",
+    "performance": "List and detail surfaces remain responsive with 1000 runs and 10,000 events through pagination and incremental reconciliation."
+  },
+  "vertical_slice": {
+    "id": "SLICE-RUN-APPROVAL",
+    "task_id": "TASK-RESOLVE-HUMAN-TASK",
+    "screen_ids": ["SCREEN-RUN-CENTER", "SCREEN-RUN-DETAIL", "SCREEN-APPROVAL-DESK", "SCREEN-EVIDENCE"],
+    "flow_ids": ["FLOW-GOVERNED-RUN", "FLOW-HUMAN-DECISION"],
+    "real_data_scenario": "A run reaches a human task, the first evidence revision is stale, the owner refreshes it, and a valid decision resumes the run.",
+    "evidence_requirements": ["event receipt hash", "revision-bound decision", "verified evidence metadata", "no raw output"],
+    "verification_commands": ["npm test", "npm run build", "npm run smoke"]
+  }
+}

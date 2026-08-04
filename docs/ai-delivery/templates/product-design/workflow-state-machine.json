@@ -1,0 +1,23 @@
+{
+  "issue_id": "GH-123",
+  "schema_version": "workflow-state-machine/v1",
+  "workflows": [
+    {
+      "entity_id": "ENT-RUN",
+      "id": "FLOW-001",
+      "name": "Run a governed project",
+      "states": [
+        {"id": "queued", "meaning": "Waiting to start"},
+        {"id": "running", "meaning": "Work is executing"},
+        {"id": "blocked", "meaning": "A gate or dependency stopped progress"},
+        {"id": "complete", "meaning": "All required gates passed"}
+      ],
+      "transitions": [
+        {"action": "start", "from": "queued", "to": "running"},
+        {"action": "pause_for_gate", "from": "running", "to": "blocked"},
+        {"action": "resume", "from": "blocked", "to": "running"},
+        {"action": "finish", "from": "running", "to": "complete"}
+      ]
+    }
+  ]
+}

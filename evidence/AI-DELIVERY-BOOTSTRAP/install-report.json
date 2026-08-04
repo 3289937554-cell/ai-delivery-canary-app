@@ -1,219 +1,813 @@
 {
   "result": "PASS",
-  "installed_at": "2026-07-13T07:42:34Z",
-  "pack_root": "/Users/jiangli/总控库/软件开发",
-  "target_repo": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app",
+  "installed_at": "2026-08-04T05:09:19Z",
+  "pack_root": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime",
+  "target_repo": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console",
   "project_id": "project-0007-ai-delivery-canary-app",
-  "mode": "thin",
+  "mode": "full",
   "dry_run": false,
-  "overwrite": false,
-  "registry_path": "/Users/jiangli/总控库/软件开发/registry/projects.jsonl",
-  "registry_requested": true,
+  "overwrite": true,
+  "registry_path": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/registry/projects.jsonl",
+  "registry_requested": false,
   "registry_upsert_order": "registry_upsert_before_install_report",
-  "registry_upsert_planned": true,
-  "registered": true,
+  "registry_upsert_planned": false,
+  "registered": false,
   "owners": {
     "default_owner": "@3289937554-cell",
     "platform_owner": "@3289937554-cell",
     "security_owner": "@3289937554-cell",
     "data_owner": "@3289937554-cell"
   },
+  "experience": {
+    "contract_version": "experience/v2",
+    "applicability": "confirmed",
+    "surface_type": "web",
+    "rationale": "Delivery Operations Console is a responsive browser application for managing releases, delivery gates, risks, and audit history.",
+    "design_required": true,
+    "design_status": "required",
+    "design_root": "docs/product-design",
+    "visual_breakpoints": [
+      1440,
+      1280,
+      1024,
+      768,
+      390
+    ],
+    "accessibility_standard": "WCAG 2.2 AA",
+    "design_provider": {
+      "name": "repository",
+      "authority": "non_authoritative_adapter"
+    },
+    "privacy_gate": {
+      "private_artifacts_upload": "forbidden",
+      "training_opt_out_confirmed": false
+    }
+  },
   "template_identity": {
     "schema_version": "ai-delivery-template-identity/v1",
     "installer_version": "ai-delivery-installer/v1",
-    "control_mode": "thin",
-    "control_plane_root": "/Users/jiangli/总控库/软件开发",
+    "control_mode": "full",
+    "control_plane_root": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime",
     "files": [
+      {
+        "kind": "copy",
+        "source": "templates/archon/workflows/contract-probe.yaml",
+        "destination": ".archon/workflows/contract-probe.yaml",
+        "source_sha256": "d8c6726c7cd5a7433434a66c3a0eab9ebb0eebaeab4886ebbb04090bfb98da16",
+        "expected_sha256": "d8c6726c7cd5a7433434a66c3a0eab9ebb0eebaeab4886ebbb04090bfb98da16"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/archon/workflows/plan-to-pr.yaml",
+        "destination": ".archon/workflows/plan-to-pr.yaml",
+        "source_sha256": "f0b8d8ee19663507ca75d4db1eb3088949aaa8b8c0a88e5903fdfca19f090459",
+        "expected_sha256": "f0b8d8ee19663507ca75d4db1eb3088949aaa8b8c0a88e5903fdfca19f090459"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/archon/workflows/pr-review-fix-loop.yaml",
+        "destination": ".archon/workflows/pr-review-fix-loop.yaml",
+        "source_sha256": "379a1089fbe3b311a7403170e9c2fc952e01fb9a43a7609db45d9685724c306b",
+        "expected_sha256": "379a1089fbe3b311a7403170e9c2fc952e01fb9a43a7609db45d9685724c306b"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/codex/agents/explorer.toml",
+        "destination": ".codex/agents/explorer.toml",
+        "source_sha256": "b2d5a709662a9ba0af036bbe77bea5818621c595ebaf88b45bc6b1baa4039a35",
+        "expected_sha256": "b2d5a709662a9ba0af036bbe77bea5818621c595ebaf88b45bc6b1baa4039a35"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/codex/agents/reviewer-security.toml",
+        "destination": ".codex/agents/reviewer-security.toml",
+        "source_sha256": "05707a64cf6112604524729dc5de9b27509d3fceaba094f47075f312b6d3dd10",
+        "expected_sha256": "05707a64cf6112604524729dc5de9b27509d3fceaba094f47075f312b6d3dd10"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/codex/agents/reviewer-tests.toml",
+        "destination": ".codex/agents/reviewer-tests.toml",
+        "source_sha256": "966a50ec011b99ecc277d2ea785448e95257b2490a2c643a394250c03adc5cd5",
+        "expected_sha256": "966a50ec011b99ecc277d2ea785448e95257b2490a2c643a394250c03adc5cd5"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/codex/agents/worker.toml",
+        "destination": ".codex/agents/worker.toml",
+        "source_sha256": "bc4509b3a63f90876c5007d735e51de51de6cecefd238b8954e2e4d6888afb3b",
+        "expected_sha256": "bc4509b3a63f90876c5007d735e51de51de6cecefd238b8954e2e4d6888afb3b"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/deepseek/agents/architect-reviewer.md",
+        "destination": ".deepseek/agents/architect-reviewer.md",
+        "source_sha256": "c418a029eb6618e8f3546ab9195a89f06dd65a768b1c06b6335a10bc3ef4f682",
+        "expected_sha256": "c418a029eb6618e8f3546ab9195a89f06dd65a768b1c06b6335a10bc3ef4f682"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/deepseek/agents/design-reviewer.md",
+        "destination": ".deepseek/agents/design-reviewer.md",
+        "source_sha256": "745b5bb7a6d742cc255e46f44c26177fc546131dbf8f55cd048a93caae810c07",
+        "expected_sha256": "745b5bb7a6d742cc255e46f44c26177fc546131dbf8f55cd048a93caae810c07"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/deepseek/agents/final-reviewer.md",
+        "destination": ".deepseek/agents/final-reviewer.md",
+        "source_sha256": "a462814af0306e07ab69cb5f35f303fc2a712ccaa9ffc8db0b7730bf14c065b8",
+        "expected_sha256": "a462814af0306e07ab69cb5f35f303fc2a712ccaa9ffc8db0b7730bf14c065b8"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/deepseek/agents/planner.md",
+        "destination": ".deepseek/agents/planner.md",
+        "source_sha256": "69421f43bb3b7e139479b5ae12017e4edc7e2b77ecf608e26d93b121eee33e8b",
+        "expected_sha256": "69421f43bb3b7e139479b5ae12017e4edc7e2b77ecf608e26d93b121eee33e8b"
+      },
+      {
+        "kind": "copy",
+        "source": "templates/deepseek/agents/product-designer.md",
+        "destination": ".deepseek/agents/product-designer.md",
+        "source_sha256": "30c1502a21cffd2f13acc3e152d8a51594d5d0f67744383e54d3781fb9ef2303",
+        "expected_sha256": "30c1502a21cffd2f13acc3e152d8a51594d5d0f67744383e54d3781fb9ef2303"
+      },
       {
         "kind": "rendered-codeowners",
         "source": "templates/github/CODEOWNERS.example",
         "destination": ".github/CODEOWNERS",
-        "source_sha256": "b6e339048e5e0afc4bf39905b8ea48e4c49848bca1bf0393eb76ff1cfb3d1d80",
-        "expected_sha256": "c8326ce6310aec5b5e77b397d99a155356357705365494832545dd90419a1907"
+        "source_sha256": "141ab783bd038735b1555113a280f17108c1784b960ef358832054ee410753b7",
+        "expected_sha256": "ca1da53cc3a65caa4462da42e87e3713db23bb8ff15992c0c962d51cc2fb7b4f"
       },
       {
         "kind": "copy",
         "source": "templates/github/ISSUE_TEMPLATE/ai-delivery.yml",
         "destination": ".github/ISSUE_TEMPLATE/ai-delivery.yml",
-        "source_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf",
-        "expected_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf"
+        "source_sha256": "30b1678c566e00a967c7d0c6b4cc840c86f6ac1dc79fedfa125d13185c4c18a9",
+        "expected_sha256": "30b1678c566e00a967c7d0c6b4cc840c86f6ac1dc79fedfa125d13185c4c18a9"
       },
       {
         "kind": "copy",
         "source": "templates/github/pull_request_template.md",
         "destination": ".github/pull_request_template.md",
-        "source_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee",
-        "expected_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee"
+        "source_sha256": "30462ac71289c8041f6ce81f5d13ef38c263bff65139c27eea1ee31956defeef",
+        "expected_sha256": "30462ac71289c8041f6ce81f5d13ef38c263bff65139c27eea1ee31956defeef"
       },
       {
         "kind": "copy",
         "source": "templates/github/workflows/ai-delivery-ci.yml",
         "destination": ".github/workflows/ai-delivery-ci.yml",
-        "source_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a",
-        "expected_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a"
+        "source_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
+        "expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/schema/manifest.schema.json",
+        "destination": "docs/ai-delivery/schema/manifest.schema.json",
+        "source_sha256": "5cccdd10cc7c64e805207352d505d59aef8affc3c7d6dfb3c0bdacbb73001d2b",
+        "expected_sha256": "5cccdd10cc7c64e805207352d505d59aef8affc3c7d6dfb3c0bdacbb73001d2b"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/schema/naming-conventions.md",
+        "destination": "docs/ai-delivery/schema/naming-conventions.md",
+        "source_sha256": "10ac29930b0d395fc704b91aaf3633b62fab952106c59b4e26ed493113e3de7d",
+        "expected_sha256": "10ac29930b0d395fc704b91aaf3633b62fab952106c59b4e26ed493113e3de7d"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/schema/product-design-approval.schema.json",
+        "destination": "docs/ai-delivery/schema/product-design-approval.schema.json",
+        "source_sha256": "cdd27d8a4f3165a55af8e48c257eb984baf5669af0ffa791138c385a0e905a9d",
+        "expected_sha256": "cdd27d8a4f3165a55af8e48c257eb984baf5669af0ffa791138c385a0e905a9d"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/schema/product-design-package.schema.json",
+        "destination": "docs/ai-delivery/schema/product-design-package.schema.json",
+        "source_sha256": "072f56b9f4d39e7f11f436328d137e43728cd629a35dce12e43e8739dc7a9deb",
+        "expected_sha256": "072f56b9f4d39e7f11f436328d137e43728cd629a35dce12e43e8739dc7a9deb"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/schema/project-config.schema.json",
+        "destination": "docs/ai-delivery/schema/project-config.schema.json",
+        "source_sha256": "be2f0fb394b603510a6837a417dcf2a33baeecaa53415510bffdd7cf6d51ae3a",
+        "expected_sha256": "be2f0fb394b603510a6837a417dcf2a33baeecaa53415510bffdd7cf6d51ae3a"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/schema/status-enums.md",
+        "destination": "docs/ai-delivery/schema/status-enums.md",
+        "source_sha256": "56e3e57f6b7ce3b00c444972a805edf330aac33420c73f1ea1ecdaa1705c00f8",
+        "expected_sha256": "56e3e57f6b7ce3b00c444972a805edf330aac33420c73f1ea1ecdaa1705c00f8"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/context-checkpoint-template.md",
+        "destination": "docs/ai-delivery/templates/context-checkpoint-template.md",
+        "source_sha256": "a53e93d51835f5ceb2c27899083cda9de548e39914a31d69570533fc78b1709b",
+        "expected_sha256": "a53e93d51835f5ceb2c27899083cda9de548e39914a31d69570533fc78b1709b"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/evidence-index-template.md",
+        "destination": "docs/ai-delivery/templates/evidence-index-template.md",
+        "source_sha256": "5b5a5106e3c698456556e7f45257262eb9f385a56b2e6f2d886e6287d00d9750",
+        "expected_sha256": "5b5a5106e3c698456556e7f45257262eb9f385a56b2e6f2d886e6287d00d9750"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/experience-decision-template.md",
+        "destination": "docs/ai-delivery/templates/experience-decision-template.md",
+        "source_sha256": "5d779b0f37eea2294d2d3227953283b701c7684e74f6831dbb45829d2e99dec7",
+        "expected_sha256": "5d779b0f37eea2294d2d3227953283b701c7684e74f6831dbb45829d2e99dec7"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/final-delivery-template.md",
+        "destination": "docs/ai-delivery/templates/final-delivery-template.md",
+        "source_sha256": "f490a4db57ad8e81a4e951a800ce9665ecc336dc2d31f85308188fb4cd294cef",
+        "expected_sha256": "f490a4db57ad8e81a4e951a800ce9665ecc336dc2d31f85308188fb4cd294cef"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/handoff-template.md",
+        "destination": "docs/ai-delivery/templates/handoff-template.md",
+        "source_sha256": "653bf4907149981bbaa216ced0e719a32b7cbb7c9ff33bd80d9fec8dba6e227c",
+        "expected_sha256": "653bf4907149981bbaa216ced0e719a32b7cbb7c9ff33bd80d9fec8dba6e227c"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/human-approval-checklist.md",
+        "destination": "docs/ai-delivery/templates/human-approval-checklist.md",
+        "source_sha256": "86e093749aad723538f296ee18ba2d507bf258a07bc7a6dabdc0cf25ebfd6efa",
+        "expected_sha256": "86e093749aad723538f296ee18ba2d507bf258a07bc7a6dabdc0cf25ebfd6efa"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/memory-record-template.md",
+        "destination": "docs/ai-delivery/templates/memory-record-template.md",
+        "source_sha256": "d1cf119d5010301af783177a171627db06f47859d08aadb19aa976d5cf96ba2f",
+        "expected_sha256": "d1cf119d5010301af783177a171627db06f47859d08aadb19aa976d5cf96ba2f"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/pr-review-template.md",
+        "destination": "docs/ai-delivery/templates/pr-review-template.md",
+        "source_sha256": "539c1031d356d4de0585fb8854bef08e7b8f248c5ad29da1bdf802c0159df4f1",
+        "expected_sha256": "539c1031d356d4de0585fb8854bef08e7b8f248c5ad29da1bdf802c0159df4f1"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/DESIGN.md",
+        "destination": "docs/ai-delivery/templates/product-design/DESIGN.md",
+        "source_sha256": "3ad2b7653031cb7315736b6e16b62caab013adfb118aa27300c53adca1bc3fd3",
+        "expected_sha256": "3ad2b7653031cb7315736b6e16b62caab013adfb118aa27300c53adca1bc3fd3"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/ai-architecture-brief.md",
+        "destination": "docs/ai-delivery/templates/product-design/ai-architecture-brief.md",
+        "source_sha256": "ac2f33db9eff0f6ac3413ac80534e79ffe28900bf2d63b421cf6ae24f40cfe02",
+        "expected_sha256": "ac2f33db9eff0f6ac3413ac80534e79ffe28900bf2d63b421cf6ae24f40cfe02"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/api-contract.json",
+        "destination": "docs/ai-delivery/templates/product-design/api-contract.json",
+        "source_sha256": "aabb3da58113e1f4fa7579fba6141c1195b68b866109d08abe20fc8e67a7e667",
+        "expected_sha256": "aabb3da58113e1f4fa7579fba6141c1195b68b866109d08abe20fc8e67a7e667"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/application-blueprint.json",
+        "destination": "docs/ai-delivery/templates/product-design/application-blueprint.json",
+        "source_sha256": "ed0b1d8e7ae49d23b3a2c97908e10a7005da98053badeb448056238d7205003a",
+        "expected_sha256": "ed0b1d8e7ae49d23b3a2c97908e10a7005da98053badeb448056238d7205003a"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/asset-inventory.json",
+        "destination": "docs/ai-delivery/templates/product-design/asset-inventory.json",
+        "source_sha256": "82e58bd5f1fbe62c91c37af141534a472a569059eb3689d699b2c62f0d253d37",
+        "expected_sha256": "82e58bd5f1fbe62c91c37af141534a472a569059eb3689d699b2c62f0d253d37"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/component-catalog.json",
+        "destination": "docs/ai-delivery/templates/product-design/component-catalog.json",
+        "source_sha256": "3f62390b27e0fdc5b54917eee1255b5c9a39487ce60c80ca980a213127087923",
+        "expected_sha256": "3f62390b27e0fdc5b54917eee1255b5c9a39487ce60c80ca980a213127087923"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/domain-model.json",
+        "destination": "docs/ai-delivery/templates/product-design/domain-model.json",
+        "source_sha256": "af8a07b722f9ea3384d8686d16942ce73e3acddad5d4fa6d566e85c946d1d5f0",
+        "expected_sha256": "af8a07b722f9ea3384d8686d16942ce73e3acddad5d4fa6d566e85c946d1d5f0"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/frontend-architecture.md",
+        "destination": "docs/ai-delivery/templates/product-design/frontend-architecture.md",
+        "source_sha256": "4dfc2fd0118170da2b9d18444f405640d2e236af0c99fd9b2470cc0b355347e3",
+        "expected_sha256": "4dfc2fd0118170da2b9d18444f405640d2e236af0c99fd9b2470cc0b355347e3"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/functional-map.json",
+        "destination": "docs/ai-delivery/templates/product-design/functional-map.json",
+        "source_sha256": "f9926b378b11f94ad8e36d9013076e0992d1709dbdc22c615911c994fa1c39c0",
+        "expected_sha256": "f9926b378b11f94ad8e36d9013076e0992d1709dbdc22c615911c994fa1c39c0"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/handoff.json",
+        "destination": "docs/ai-delivery/templates/product-design/handoff.json",
+        "source_sha256": "05f0581117069749d9156de8ebf180f97c530a01fb3ed479546153bc28f41b83",
+        "expected_sha256": "05f0581117069749d9156de8ebf180f97c530a01fb3ed479546153bc28f41b83"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/information-architecture.json",
+        "destination": "docs/ai-delivery/templates/product-design/information-architecture.json",
+        "source_sha256": "e0027b9d2eab5dbf77a4ae53d2c3468508f4efac5e42e8674d007bc69843b364",
+        "expected_sha256": "e0027b9d2eab5dbf77a4ae53d2c3468508f4efac5e42e8674d007bc69843b364"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/permission-matrix.json",
+        "destination": "docs/ai-delivery/templates/product-design/permission-matrix.json",
+        "source_sha256": "7a9199ecc80fcf583595db0c46f6a52462ab2e71948511928bc1fb40d65851fe",
+        "expected_sha256": "7a9199ecc80fcf583595db0c46f6a52462ab2e71948511928bc1fb40d65851fe"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/product-brief.md",
+        "destination": "docs/ai-delivery/templates/product-design/product-brief.md",
+        "source_sha256": "55676e8fc34b2c82cdb9e9979afc40f0f652e04ed079453b586d6749bf0b13fe",
+        "expected_sha256": "55676e8fc34b2c82cdb9e9979afc40f0f652e04ed079453b586d6749bf0b13fe"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/reviews/accessibility.md",
+        "destination": "docs/ai-delivery/templates/product-design/reviews/accessibility.md",
+        "source_sha256": "e84b4c81cc858adfef0a0a9ebe286a6c7758ecb3065459ce6b30da1742b6de13",
+        "expected_sha256": "e84b4c81cc858adfef0a0a9ebe286a6c7758ecb3065459ce6b30da1742b6de13"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/reviews/design-system.md",
+        "destination": "docs/ai-delivery/templates/product-design/reviews/design-system.md",
+        "source_sha256": "ab8ea0ec0bd3d6c5e5104170f641dcf2e7b740a62b51341a8279d9c3baa846dc",
+        "expected_sha256": "ab8ea0ec0bd3d6c5e5104170f641dcf2e7b740a62b51341a8279d9c3baa846dc"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/reviews/usability.md",
+        "destination": "docs/ai-delivery/templates/product-design/reviews/usability.md",
+        "source_sha256": "9f3b71ad596c314be7eb2f6425d6ccd91aac21b4157bfdc1990e0e1dc9932dc6",
+        "expected_sha256": "9f3b71ad596c314be7eb2f6425d6ccd91aac21b4157bfdc1990e0e1dc9932dc6"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/reviews/ux-copy.md",
+        "destination": "docs/ai-delivery/templates/product-design/reviews/ux-copy.md",
+        "source_sha256": "761a95f3476c39e0c27bd455292303ec1c06ef6ff995f9be664839f9bbcb3711",
+        "expected_sha256": "761a95f3476c39e0c27bd455292303ec1c06ef6ff995f9be664839f9bbcb3711"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/screen-inventory.json",
+        "destination": "docs/ai-delivery/templates/product-design/screen-inventory.json",
+        "source_sha256": "9d0eeedfe658d24b40d84408f41cc1bb75297dbd5a166f64fa943675cd2cc005",
+        "expected_sha256": "9d0eeedfe658d24b40d84408f41cc1bb75297dbd5a166f64fa943675cd2cc005"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/screen-state-matrix.json",
+        "destination": "docs/ai-delivery/templates/product-design/screen-state-matrix.json",
+        "source_sha256": "8c8e675fe49f98e4079bb7b0a9d70102695c6d2b63605af84ac35d930f2d6ca5",
+        "expected_sha256": "8c8e675fe49f98e4079bb7b0a9d70102695c6d2b63605af84ac35d930f2d6ca5"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/tokens.json",
+        "destination": "docs/ai-delivery/templates/product-design/tokens.json",
+        "source_sha256": "f66d79c86dd0e461059d285ae363013aee0415c2e0f2a9f177574d5dd885bb91",
+        "expected_sha256": "f66d79c86dd0e461059d285ae363013aee0415c2e0f2a9f177574d5dd885bb91"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/user-flows.md",
+        "destination": "docs/ai-delivery/templates/product-design/user-flows.md",
+        "source_sha256": "a276caa68571909105dd0c8c8cb5d7c9fc54fbbb2dff2f0ab69b5975b7dd942e",
+        "expected_sha256": "a276caa68571909105dd0c8c8cb5d7c9fc54fbbb2dff2f0ab69b5975b7dd942e"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/variants.json",
+        "destination": "docs/ai-delivery/templates/product-design/variants.json",
+        "source_sha256": "5edfe009668a62ee989fec42f695af3e556cb70929cdaf8ea6980cfe10354a56",
+        "expected_sha256": "5edfe009668a62ee989fec42f695af3e556cb70929cdaf8ea6980cfe10354a56"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/variants/variant-a.md",
+        "destination": "docs/ai-delivery/templates/product-design/variants/variant-a.md",
+        "source_sha256": "2588b48b51fe16afc5c56dccc034a343f2abe56845b9505e0f1a6592d6723f59",
+        "expected_sha256": "2588b48b51fe16afc5c56dccc034a343f2abe56845b9505e0f1a6592d6723f59"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/variants/variant-b.md",
+        "destination": "docs/ai-delivery/templates/product-design/variants/variant-b.md",
+        "source_sha256": "9a7c583f2ed89f95867ec9d7013f472ba20a5cf5066467edff1c6dd2c202b50d",
+        "expected_sha256": "9a7c583f2ed89f95867ec9d7013f472ba20a5cf5066467edff1c6dd2c202b50d"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/variants/variant-c.md",
+        "destination": "docs/ai-delivery/templates/product-design/variants/variant-c.md",
+        "source_sha256": "3f7b2aad30975e7cc304c74b1a84940391b045bb0b62667868201eebf1926011",
+        "expected_sha256": "3f7b2aad30975e7cc304c74b1a84940391b045bb0b62667868201eebf1926011"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/vertical-slice.json",
+        "destination": "docs/ai-delivery/templates/product-design/vertical-slice.json",
+        "source_sha256": "92589be709c0c0baa0fc8e9f475e017103dfde603391132be8cd502edfe5bc0b",
+        "expected_sha256": "92589be709c0c0baa0fc8e9f475e017103dfde603391132be8cd502edfe5bc0b"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/product-design/workflow-state-machine.json",
+        "destination": "docs/ai-delivery/templates/product-design/workflow-state-machine.json",
+        "source_sha256": "ae969963c6d4013f7f3af778fcec52e3372dd9f7b08dcec7422835caa7da483c",
+        "expected_sha256": "ae969963c6d4013f7f3af778fcec52e3372dd9f7b08dcec7422835caa7da483c"
+      },
+      {
+        "kind": "copy-tree",
+        "source": "docs/ai-delivery/templates/task-master-mapping-template.md",
+        "destination": "docs/ai-delivery/templates/task-master-mapping-template.md",
+        "source_sha256": "3851fe55ad98ef9e3de26cedae5c951402ddb8ad8d2cb3c7376b87483b23a5ca",
+        "expected_sha256": "3851fe55ad98ef9e3de26cedae5c951402ddb8ad8d2cb3c7376b87483b23a5ca"
       },
       {
         "kind": "copy",
         "source": "scripts/generate_evidence_manifest.py",
         "destination": "scripts/generate_evidence_manifest.py",
-        "source_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01",
-        "expected_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01"
+        "source_sha256": "8224c3deb9dd8c0edf219d0c97cacbd01b3cfb27591f4deb3a4b297d222a5b9c",
+        "expected_sha256": "8224c3deb9dd8c0edf219d0c97cacbd01b3cfb27591f4deb3a4b297d222a5b9c"
       },
       {
         "kind": "copy",
         "source": "scripts/validate_evidence_manifest.py",
         "destination": "scripts/validate_evidence_manifest.py",
-        "source_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520",
-        "expected_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520"
+        "source_sha256": "209ff8041a1da46469cf7b505fead815b143352fa75c04e942a9baf5c453a2be",
+        "expected_sha256": "209ff8041a1da46469cf7b505fead815b143352fa75c04e942a9baf5c453a2be"
       }
     ],
-    "identity_sha256": "e0c64b8bf61ca23adf399651dd6654e28b09bc4cbe0fb5b666af46e49ea0ac53"
+    "identity_sha256": "1e233955ddfb9c864c74c6cb7f7f607b99254393295a762fd69ad0654f7d9870"
   },
   "files": [
     {
-      "source": "/Users/jiangli/总控库/软件开发/templates/github/workflows/ai-delivery-ci.yml",
-      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.github/workflows/ai-delivery-ci.yml",
-      "status": "copied"
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/github/workflows/ai-delivery-ci.yml",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.github/workflows/ai-delivery-ci.yml",
+      "status": "unchanged"
     },
     {
-      "source": "/Users/jiangli/总控库/软件开发/templates/github/ISSUE_TEMPLATE/ai-delivery.yml",
-      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.github/ISSUE_TEMPLATE/ai-delivery.yml",
-      "status": "copied"
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/github/ISSUE_TEMPLATE/ai-delivery.yml",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.github/ISSUE_TEMPLATE/ai-delivery.yml",
+      "status": "unchanged"
     },
     {
-      "source": "/Users/jiangli/总控库/软件开发/templates/github/pull_request_template.md",
-      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.github/pull_request_template.md",
-      "status": "copied"
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/github/pull_request_template.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.github/pull_request_template.md",
+      "status": "unchanged"
     },
     {
-      "source": "/Users/jiangli/总控库/软件开发/scripts/generate_evidence_manifest.py",
-      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/scripts/generate_evidence_manifest.py",
-      "status": "copied"
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/scripts/generate_evidence_manifest.py",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/scripts/generate_evidence_manifest.py",
+      "status": "unchanged"
     },
     {
-      "source": "/Users/jiangli/总控库/软件开发/scripts/validate_evidence_manifest.py",
-      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/scripts/validate_evidence_manifest.py",
-      "status": "copied"
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/scripts/validate_evidence_manifest.py",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/scripts/validate_evidence_manifest.py",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/deepseek/agents/planner.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.deepseek/agents/planner.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/deepseek/agents/architect-reviewer.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.deepseek/agents/architect-reviewer.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/deepseek/agents/final-reviewer.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.deepseek/agents/final-reviewer.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/deepseek/agents/product-designer.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.deepseek/agents/product-designer.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/deepseek/agents/design-reviewer.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.deepseek/agents/design-reviewer.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/codex/agents/explorer.toml",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.codex/agents/explorer.toml",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/codex/agents/worker.toml",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.codex/agents/worker.toml",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/codex/agents/reviewer-security.toml",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.codex/agents/reviewer-security.toml",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/codex/agents/reviewer-tests.toml",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.codex/agents/reviewer-tests.toml",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/archon/workflows/plan-to-pr.yaml",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.archon/workflows/plan-to-pr.yaml",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/archon/workflows/pr-review-fix-loop.yaml",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.archon/workflows/pr-review-fix-loop.yaml",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/templates/archon/workflows/contract-probe.yaml",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.archon/workflows/contract-probe.yaml",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/schema/manifest.schema.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/schema/manifest.schema.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/schema/naming-conventions.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/schema/naming-conventions.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/schema/product-design-approval.schema.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/schema/product-design-approval.schema.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/schema/product-design-package.schema.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/schema/product-design-package.schema.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/schema/project-config.schema.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/schema/project-config.schema.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/schema/status-enums.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/schema/status-enums.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/context-checkpoint-template.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/context-checkpoint-template.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/evidence-index-template.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/evidence-index-template.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/experience-decision-template.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/experience-decision-template.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/final-delivery-template.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/final-delivery-template.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/handoff-template.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/handoff-template.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/human-approval-checklist.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/human-approval-checklist.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/memory-record-template.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/memory-record-template.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/pr-review-template.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/pr-review-template.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/DESIGN.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/DESIGN.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/ai-architecture-brief.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/ai-architecture-brief.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/api-contract.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/api-contract.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/application-blueprint.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/application-blueprint.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/asset-inventory.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/asset-inventory.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/component-catalog.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/component-catalog.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/domain-model.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/domain-model.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/frontend-architecture.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/frontend-architecture.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/functional-map.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/functional-map.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/handoff.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/handoff.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/information-architecture.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/information-architecture.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/permission-matrix.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/permission-matrix.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/product-brief.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/product-brief.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/reviews/accessibility.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/reviews/accessibility.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/reviews/design-system.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/reviews/design-system.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/reviews/usability.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/reviews/usability.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/reviews/ux-copy.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/reviews/ux-copy.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/screen-inventory.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/screen-inventory.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/screen-state-matrix.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/screen-state-matrix.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/tokens.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/tokens.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/user-flows.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/user-flows.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/variants/variant-a.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/variants/variant-a.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/variants/variant-b.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/variants/variant-b.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/variants/variant-c.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/variants/variant-c.md",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/variants.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/variants.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/vertical-slice.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/vertical-slice.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/product-design/workflow-state-machine.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/product-design/workflow-state-machine.json",
+      "status": "unchanged"
+    },
+    {
+      "source": "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/docs/ai-delivery/templates/task-master-mapping-template.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/templates/task-master-mapping-template.md",
+      "status": "unchanged"
     },
     {
       "source": "templates/github/CODEOWNERS.example rendered",
-      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.github/CODEOWNERS",
-      "status": "written"
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.github/CODEOWNERS",
+      "status": "unchanged"
     },
     {
       "source": "generated project config",
-      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/docs/ai-delivery/project-config.json",
-      "status": "written"
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/project-config.json",
+      "status": "unchanged"
     },
     {
       "source": "generated target lock",
-      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.ai-delivery/lock.json",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/.ai-delivery/lock.json",
       "status": "written"
     },
     {
       "source": "generated onboarding status",
-      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/docs/ai-delivery/onboarding-status.md",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/onboarding-status.md",
       "status": "written"
     },
     {
       "source": "generated memory registry seed",
-      "destination": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/docs/ai-delivery/memory/registry.jsonl",
+      "destination": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console/docs/ai-delivery/memory/registry.jsonl",
       "status": "written"
     }
   ],
   "enabled_validation": {
     "command": [
-      "/Users/jiangli/总控库/软件开发/.venv/bin/python",
-      "/Users/jiangli/总控库/软件开发/scripts/validate_ai_delivery_pack.py",
+      "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/.venv/bin/python",
+      "/Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/scripts/validate_ai_delivery_pack.py",
       "--enabled-repo",
       "--repo-root",
-      "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app"
+      "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console"
     ],
     "exit_code": 0,
-    "stdout": "AI delivery enabled repository validation\nroot: /Users/jiangli/项目库/project-0007-ai-delivery-canary-app\nenabled_repo_mode: thin\nenabled_repo_required_files_checked: true\nenabled_repo_full_files_checked: skipped\nenabled_repo_codeowners_checked: true\nlegacy_patterns_checked: true\nci_gates_checked: lint,typecheck,test,build,smoke,validate-evidence\nresult: PASS\n",
+    "stdout": "AI delivery enabled repository validation\nroot: /Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console\nenabled_repo_mode: full\nenabled_repo_required_files_checked: true\nenabled_repo_full_files_checked: true\nenabled_repo_codeowners_checked: true\nlegacy_patterns_checked: true\nci_gates_checked: lint,typecheck,test,build,smoke,validate-evidence\nresult: PASS\n",
     "stderr": "",
     "passed": true
   },
-  "registry_record": {
-    "schema_version": "ai-delivery-registry/v1",
-    "project_id": "project-0007-ai-delivery-canary-app",
-    "repo_path": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app",
-    "control_mode": "thin",
-    "status": "onboarded_pending_bootstrap_pr",
-    "github": {
-      "origin": "https://github.com/3289937554-cell/ai-delivery-canary-app.git",
-      "name_with_owner": "3289937554-cell/ai-delivery-canary-app"
-    },
-    "git": {
-      "current_branch": "main"
-    },
-    "owners": {
-      "default_owner": "@3289937554-cell",
-      "platform_owner": "@3289937554-cell",
-      "security_owner": "@3289937554-cell",
-      "data_owner": "@3289937554-cell"
-    },
-    "control_plane": {
-      "path": "/Users/jiangli/总控库/软件开发",
-      "check_command": "python3 '/Users/jiangli/总控库/软件开发/scripts/check_ai_delivery_target_repo.py' --target-repo '/Users/jiangli/项目库/project-0007-ai-delivery-canary-app'",
-      "install_command": "python3 '/Users/jiangli/总控库/软件开发/scripts/install_ai_delivery_to_target_repo.py' --target-repo '/Users/jiangli/项目库/project-0007-ai-delivery-canary-app' --mode thin"
-    },
-    "lock_path": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/.ai-delivery/lock.json",
-    "project_config_path": "/Users/jiangli/项目库/project-0007-ai-delivery-canary-app/docs/ai-delivery/project-config.json",
-    "created_or_updated_at": "2026-07-13T07:42:34Z",
-    "last_checked_at": null,
-    "template_identity": {
-      "schema_version": "ai-delivery-template-identity/v1",
-      "installer_version": "ai-delivery-installer/v1",
-      "control_mode": "thin",
-      "control_plane_root": "/Users/jiangli/总控库/软件开发",
-      "files": [
-        {
-          "kind": "rendered-codeowners",
-          "source": "templates/github/CODEOWNERS.example",
-          "destination": ".github/CODEOWNERS",
-          "source_sha256": "b6e339048e5e0afc4bf39905b8ea48e4c49848bca1bf0393eb76ff1cfb3d1d80",
-          "expected_sha256": "c8326ce6310aec5b5e77b397d99a155356357705365494832545dd90419a1907"
-        },
-        {
-          "kind": "copy",
-          "source": "templates/github/ISSUE_TEMPLATE/ai-delivery.yml",
-          "destination": ".github/ISSUE_TEMPLATE/ai-delivery.yml",
-          "source_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf",
-          "expected_sha256": "023e3fa3fe267b1f549bb7ca16c74b1d0a3e971fea25de38163f41a90d7efdcf"
-        },
-        {
-          "kind": "copy",
-          "source": "templates/github/pull_request_template.md",
-          "destination": ".github/pull_request_template.md",
-          "source_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee",
-          "expected_sha256": "ee741a3b2ebc503b924bebdd6721d601359be2269158b382ea7815a60f608bee"
-        },
-        {
-          "kind": "copy",
-          "source": "templates/github/workflows/ai-delivery-ci.yml",
-          "destination": ".github/workflows/ai-delivery-ci.yml",
-          "source_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a",
-          "expected_sha256": "3a37636eab843c2d5b5ae9c5756ef5fed5869a723a74ed83a6529d2e28578e0a"
-        },
-        {
-          "kind": "copy",
-          "source": "scripts/generate_evidence_manifest.py",
-          "destination": "scripts/generate_evidence_manifest.py",
-          "source_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01",
-          "expected_sha256": "78907f0fddd1dba13fa43ead110c6fa4350b6311770bd193dc440879ab01dd01"
-        },
-        {
-          "kind": "copy",
-          "source": "scripts/validate_evidence_manifest.py",
-          "destination": "scripts/validate_evidence_manifest.py",
-          "source_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520",
-          "expected_sha256": "ec80736af0254e8828750653c2c861742a91bc2f0f8a5c77f9930dee4dcf5520"
-        }
-      ],
-      "identity_sha256": "e0c64b8bf61ca23adf399651dd6654e28b09bc4cbe0fb5b666af46e49ea0ac53"
-    }
-  },
+  "registry_record": null,
   "next_commands": [
     "git checkout -b chore/ai-delivery-bootstrap",
     "git add .github .ai-delivery scripts/generate_evidence_manifest.py scripts/validate_evidence_manifest.py docs/ai-delivery evidence/AI-DELIVERY-BOOTSTRAP",

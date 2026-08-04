@@ -1,11 +1,11 @@
 # AI Delivery Onboarding Status
 
-installed_at: 2026-07-13T07:42:34Z
+installed_at: 2026-08-04T05:09:19Z
 project_id: project-0007-ai-delivery-canary-app
-control_mode: thin
-pack_root: /Users/jiangli/总控库/软件开发
-target_repo: /Users/jiangli/项目库/project-0007-ai-delivery-canary-app
-registry_path: /Users/jiangli/总控库/软件开发/registry/projects.jsonl
+control_mode: full
+pack_root: /Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime
+target_repo: /Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console
+registry_path: /Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/registry/projects.jsonl
 default_owner: @3289937554-cell
 platform_owner: @3289937554-cell
 security_owner: @3289937554-cell
@@ -14,20 +14,20 @@ data_owner: @3289937554-cell
 ## Local enablement command
 
 ```bash
-python3 /Users/jiangli/总控库/软件开发/scripts/validate_ai_delivery_pack.py --enabled-repo --repo-root /Users/jiangli/项目库/project-0007-ai-delivery-canary-app
+python3 /Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/scripts/validate_ai_delivery_pack.py --enabled-repo --repo-root /Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console
 ```
 
 ## Control-plane check command
 
 ```bash
-python3 /Users/jiangli/总控库/软件开发/scripts/check_ai_delivery_target_repo.py --target-repo /Users/jiangli/项目库/project-0007-ai-delivery-canary-app
-python3 /Users/jiangli/总控库/软件开发/scripts/check_ai_delivery_registry.py
+python3 /Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/scripts/check_ai_delivery_target_repo.py --target-repo /Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console
+python3 /Users/jiangli/总控库/软件开发/.worktrees/aid-control-runtime/scripts/check_ai_delivery_registry.py
 ```
 
 ## Bootstrap PR sequence
 
 ```bash
-cd /Users/jiangli/项目库/project-0007-ai-delivery-canary-app
+cd /Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console
 git checkout -b chore/ai-delivery-bootstrap
 git add .github .ai-delivery scripts/generate_evidence_manifest.py scripts/validate_evidence_manifest.py docs/ai-delivery evidence/AI-DELIVERY-BOOTSTRAP
 git commit -m "chore: enable AI delivery orchestration"

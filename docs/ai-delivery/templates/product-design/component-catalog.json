@@ -1,0 +1,25 @@
+{
+  "components": [
+    {
+      "accessibility": "Use semantic structure, visible focus, keyboard operation, and announced status changes.",
+      "functional_ids": [
+        "CAP-001"
+      ],
+      "id": "COMP-001",
+      "name": "Primary workspace component",
+      "states": [
+        "loading",
+        "empty",
+        "error",
+        "disabled"
+      ],
+      "variants": [
+        "default",
+        "compact"
+      ]
+    }
+  ],
+  "issue_id": "GH-123",
+  "profile": "operations",
+  "schema_version": "component-catalog/v1"
+}

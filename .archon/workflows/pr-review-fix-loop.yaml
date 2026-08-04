@@ -1,0 +1,101 @@
+name: pr-review-fix-loop
+description: |
+  Use when: An existing governed pull request needs exactly one S8 review,
+  one human routing decision, one S6 revision, deterministic verification,
+  and one S10 final review.
+
+  This workflow intentionally performs one round only. The external execution
+  safety kernel owns retries, budgets, failure fingerprints, and circuit state.
+  External controller contract: max_same_blocker_rounds: 3. A repeated blocker
+  at that limit must become blocked_for_human_decision.
+
+  AI nodes must not merge the default branch, must not deploy, and must not
+  modify secrets, branch protection, paid resources, or production data.
+  NOT for: Unbounded autonomous iteration, deployment, secrets, or merge actions.
+# Archon v0.5.0 compatibility bridge: this logical review role is routed to
+# the governed DeepSeek V4-Pro adapter; the fixed binary accepts opencode as
+# the bridge provider name but no legacy provider execution is permitted.
+provider: opencode
+interactive: true
+
+nodes:
+  - id: s8-review
+    prompt: |
+      Perform one independent S8 review of the current governed pull request.
+      Use the real diff, CI logs, tests, application surface evidence, evidence
+      manifest, issue acceptance criteria, and rollback plan. Return actionable
+      findings with severity, blocker fingerprint, and file references. Do not
+      edit code.
+
+      Request: $ARGUMENTS
+      External context: $CONTEXT
+
+      You must not merge the default branch, must not deploy, and must not
+      modify secrets, branch protection, paid resources, or production data.
+    context: fresh
+
+  - id: approve-routing
+    approval:
+      message: >
+        Confirm that the S8 findings are evidence-backed and authorize one bounded
+        revision round. Reject to stop and route the work manually.
+      capture_response: true
+    depends_on: [s8-review]
+
+  - id: s6-revision
+    provider: codex
+    prompt: |
+      Perform exactly one bounded S6 revision pass for the approved S8 findings.
+
+      Review findings:
+      $s8-review.output
+
+      Human routing notes:
+      $approve-routing.output
+
+      Fix only validated findings, add or update tests first, run every applicable
+      configured gate, and refresh diff/evidence artifacts and the evidence
+      manifest. Report unresolved blockers with stable identifiers. Do not start
+      another review/fix round inside this workflow; the external execution safety
+      kernel decides whether another run is allowed.
+
+      You must not merge the default branch, must not deploy, and must not
+      modify secrets, branch protection, paid resources, or production data.
+    depends_on: [approve-routing]
+    context: fresh
+
+  - id: deterministic-sanity
+    bash: |
+      set -eu
+      git diff --check
+      git status --short
+    depends_on: [s6-revision]
+    timeout: 120000
+
+  - id: s10-final-review
+    prompt: |
+      Perform the independent S10 review after the bounded revision. Re-read the
+      current diff, tests, configured gate results, evidence manifest, surface
+      evidence, original S8 findings, residual risks, and rollback. Return either
+      approved_for_human_merge, changes_requested, or
+      blocked_for_human_decision. Do not edit code.
+
+      Revision report:
+      $s6-revision.output
+
+      Sanity output:
+      $deterministic-sanity.output
+
+      You must not merge the default branch, must not deploy, and must not
+      modify secrets, branch protection, paid resources, or production data.
+    depends_on: [deterministic-sanity]
+    context: fresh
+
+  - id: approve-final
+    approval:
+      message: >
+        Review the S10 result, CI and evidence links, unresolved blockers,
+        residual risks, and rollback. Approval authorizes only a later human
+        merge decision; it does not merge or deploy anything.
+      capture_response: true
+    depends_on: [s10-final-review]

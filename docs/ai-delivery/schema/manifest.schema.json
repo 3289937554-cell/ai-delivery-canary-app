@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/ai-delivery/manifest.schema.json",
+  "title": "AI Delivery Evidence Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_version",
+    "issue_id",
+    "pr_id",
+    "base_sha",
+    "commit_sha",
+    "created_at",
+    "actor",
+    "approval_status",
+    "commands",
+    "artifacts",
+    "rollback"
+  ],
+  "properties": {
+    "manifest_version": { "const": "1.0" },
+    "issue_id": { "type": "string", "pattern": "^GH-[0-9]+$" },
+    "pr_id": { "type": "string", "pattern": "^PR-[0-9]+$" },
+    "base_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "commit_sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "created_at": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$" },
+    "actor": { "type": "string", "minLength": 1 },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready_for_deepseek_review",
+        "changes_requested",
+        "approved_for_final_gate",
+        "approved_for_human_merge",
+        "blocked_for_human_decision"
+      ]
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "command", "exit_code", "log_path", "sha256"],
+        "properties": {
+          "name": { "type": "string", "enum": ["lint", "typecheck", "test", "build", "smoke"] },
+          "command": { "type": "string", "minLength": 1 },
+          "exit_code": { "const": 0 },
+          "log_path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^([0-9a-f]{64}|external)$" }
+        }
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "path", "sha256"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "diff",
+              "logs",
+              "tests",
+              "surface-evidence",
+              "rollback",
+              "product-design-package",
+              "accessibility",
+              "visual-regression"
+            ]
+          },
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^([0-9a-f]{64}|external)$" }
+        }
+      }
+    },
+    "rollback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strategy", "command", "data_notes"],
+      "properties": {
+        "strategy": { "type": "string", "minLength": 1 },
+        "command": { "type": "string", "minLength": 1 },
+        "data_notes": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

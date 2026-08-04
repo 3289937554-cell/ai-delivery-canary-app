@@ -1,0 +1,78 @@
+{
+  "issue_id": "GH-123",
+  "schema_version": "screen-state-matrix/v2",
+  "screens": [
+    {
+      "flow_ids": ["FLOW-001"],
+      "functional_ids": ["CAP-001"],
+      "id": "SCREEN-001",
+      "name": "Run center",
+      "states": [
+        {"name": "default", "status": "required"},
+        {"name": "loading", "status": "required"},
+        {"name": "empty", "status": "required"},
+        {"name": "error", "status": "required"},
+        {"name": "permission-denied", "status": "required"},
+        {"name": "disabled", "status": "required"},
+        {"name": "extreme-content", "status": "required"},
+        {"name": "blocked", "status": "required"},
+        {"name": "readonly", "status": "required"},
+        {"name": "stale", "status": "required"}
+      ]
+    },
+    {
+      "flow_ids": ["FLOW-001"],
+      "functional_ids": ["CAP-001"],
+      "id": "SCREEN-RUN-DETAIL",
+      "name": "Run detail",
+      "states": [
+        {"name": "default", "status": "required"},
+        {"name": "loading", "status": "required"},
+        {"name": "empty", "status": "required"},
+        {"name": "error", "status": "required"},
+        {"name": "permission-denied", "status": "required"},
+        {"name": "disabled", "status": "required"},
+        {"name": "extreme-content", "status": "required"},
+        {"name": "blocked", "status": "required"},
+        {"name": "readonly", "status": "required"},
+        {"name": "stale", "status": "required"}
+      ]
+    },
+    {
+      "flow_ids": ["FLOW-001"],
+      "functional_ids": ["CAP-001"],
+      "id": "SCREEN-APPROVALS",
+      "name": "Approval desk",
+      "states": [
+        {"name": "default", "status": "required"},
+        {"name": "loading", "status": "required"},
+        {"name": "empty", "status": "required"},
+        {"name": "error", "status": "required"},
+        {"name": "permission-denied", "status": "required"},
+        {"name": "disabled", "status": "required"},
+        {"name": "extreme-content", "status": "required"},
+        {"name": "blocked", "status": "required"},
+        {"name": "readonly", "status": "required"},
+        {"name": "stale", "status": "required"}
+      ]
+    },
+    {
+      "flow_ids": ["FLOW-001"],
+      "functional_ids": ["CAP-001"],
+      "id": "SCREEN-EVIDENCE",
+      "name": "Evidence",
+      "states": [
+        {"name": "default", "status": "required"},
+        {"name": "loading", "status": "required"},
+        {"name": "empty", "status": "required"},
+        {"name": "error", "status": "required"},
+        {"name": "permission-denied", "status": "required"},
+        {"name": "disabled", "status": "required"},
+        {"name": "extreme-content", "status": "required"},
+        {"name": "blocked", "status": "required"},
+        {"name": "readonly", "status": "required"},
+        {"name": "stale", "status": "required"}
+      ]
+    }
+  ]
+}

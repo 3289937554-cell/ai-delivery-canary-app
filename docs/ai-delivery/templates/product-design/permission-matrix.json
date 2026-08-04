@@ -1,0 +1,12 @@
+{
+  "issue_id": "GH-123",
+  "matrix": [
+    {"actions": ["project:read", "run:read", "run:create", "run:pause"], "role_id": "ROLE-OPERATOR"},
+    {"actions": ["project:read", "run:read", "run:approve", "evidence:read"], "role_id": "ROLE-OWNER"}
+  ],
+  "roles": [
+    {"id": "ROLE-OPERATOR", "name": "Operator"},
+    {"id": "ROLE-OWNER", "name": "Product owner"}
+  ],
+  "schema_version": "permission-matrix/v1"
+}

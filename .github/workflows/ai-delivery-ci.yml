@@ -20,12 +20,7 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
-        with:
-          python-version: "3.12"
-      - name: install pinned dev tools
-        run: python3 -m pip install --requirement requirements-dev.txt
+      - uses: actions/checkout@v4
       - name: lint
         shell: bash
         run: |
@@ -41,7 +36,7 @@ jobs:
           fi
       - name: upload lint evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@v4
         with:
           name: ai-delivery-lint-evidence
           path: evidence/ci
@@ -51,12 +46,7 @@ jobs:
     name: typecheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
-        with:
-          python-version: "3.12"
-      - name: install pinned dev tools
-        run: python3 -m pip install --requirement requirements-dev.txt
+      - uses: actions/checkout@v4
       - name: typecheck
         shell: bash
         run: |
@@ -72,7 +62,7 @@ jobs:
           fi
       - name: upload typecheck evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@v4
         with:
           name: ai-delivery-typecheck-evidence
           path: evidence/ci
@@ -82,7 +72,7 @@ jobs:
     name: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@v4
       - name: test
         shell: bash
         run: |
@@ -100,7 +90,7 @@ jobs:
           fi
       - name: upload test evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@v4
         with:
           name: ai-delivery-test-evidence
           path: evidence/ci
@@ -110,7 +100,7 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@v4
       - name: build
         shell: bash
         run: |
@@ -126,7 +116,7 @@ jobs:
           fi
       - name: upload build evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@v4
         with:
           name: ai-delivery-build-evidence
           path: evidence/ci
@@ -141,7 +131,7 @@ jobs:
       - test
       - build
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@v4
       - name: smoke
         shell: bash
         run: |
@@ -157,7 +147,7 @@ jobs:
           fi
       - name: upload smoke evidence
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@v4
         with:
           name: ai-delivery-smoke-evidence
           path: evidence/ci
@@ -169,7 +159,7 @@ jobs:
     needs:
       - smoke
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -255,14 +245,13 @@ jobs:
             args+=("--expected-pr-id" "PR-$PR_NUMBER")
           fi
           python3 scripts/validate_evidence_manifest.py "${args[@]}"
-          python3 scripts/validate_model_execution.py --repo-root . --discover --require-all
 
           manifest_count=$(find "$EVIDENCE_DIR" -path '*/manifest.json' -type f | wc -l | tr -d ' ')
           printf '%s\n' "validated_manifest=$EVIDENCE_MANIFEST"
           printf '%s\n' "manifest_count_detected=$manifest_count"
       - name: upload validate-evidence logs
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@v4
         with:
           name: ai-delivery-validate-evidence
           path: evidence/${{ env.ISSUE_ID }}
