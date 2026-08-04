@@ -8,7 +8,6 @@ import sys
 import tempfile
 import types
 import unittest
-import uuid
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,21 +32,23 @@ class ModelExecutionValidatorTests(unittest.TestCase):
 
     def make_record(self, repo_root: Path, role: str) -> tuple[Path, dict[str, object]]:
         assignments = {
-            "claude-planner": ("anthropic", "Claude Agent SDK (Cowork)"),
-            "claude-reviewer": ("anthropic", "Claude Code CLI"),
-            "claude-final": ("anthropic", "Claude Code CLI"),
+            "deepseek-planner": ("deepseek", "deepseek-anthropic-api"),
+            "deepseek-reviewer": ("deepseek", "deepseek-anthropic-api"),
+            "deepseek-final": ("deepseek", "deepseek-anthropic-api"),
             "codex-worker": ("openai", "Codex Desktop"),
         }
         provider, interface = assignments[role]
         prompt_path = f"evidence/prompts/{role}.txt"
         artifact_path = f"evidence/artifacts/{role}.md"
         transcript_path = f"evidence/transcripts/{role}.log"
-        run_id = f"local_{uuid.uuid4()}" if role.startswith("claude-") else "019f6aa2-aa74-73d2-9f99-c7aad51ac2d2"
+        stage = {"deepseek-planner": "s1", "deepseek-reviewer": "s8", "deepseek-final": "s10"}.get(role)
+        run_id = f"deepseek-{stage}-20260804-922c71f33672" if stage else "019f6aa2-aa74-73d2-9f99-c7aad51ac2d2"
+        model = "deepseek-v4-pro" if stage else "gpt-5.5"
         record: dict[str, object] = {
             "schema_version": "ai-delivery-model-execution/v1",
             "role": role,
             "provider": provider,
-            "model": "model-2026-07",
+            "model": model,
             "interface": interface,
             "run_id": run_id,
             "started_at": "2026-07-16T08:00:00.430Z",
@@ -64,20 +65,42 @@ class ModelExecutionValidatorTests(unittest.TestCase):
             "schema_version": "ai-delivery-model-transcript/v1",
             "role": role,
             "provider": provider,
-            "model": record["model"],
-            "interface": interface,
-            "run_id": run_id,
-            "started_at": record["started_at"],
-            "completed_at": record["completed_at"],
-            "exit_code": 0,
-            "source_audit_event_count": 3,
-            "source_audit_sha256": "a" * 64,
-            "source_audit_retained_locally": True,
+            "model": model,
         }
-        if role.startswith("claude-"):
-            transcript["sdk_session_id"] = str(uuid.uuid4())
+        if stage:
+            source_log_path = f"evidence/source-logs/{role}.jsonl"
+            source_log_sha256 = self.write_file(
+                repo_root,
+                source_log_path,
+                json.dumps({"provider": "deepseek", "model": model, "run_id": run_id}) + "\n",
+            )
+            record["source_log_path"] = source_log_path
+            record["source_log_sha256"] = source_log_sha256
+            transcript.update(
+                {
+                    "session_id": run_id,
+                    "source_log_path": source_log_path,
+                    "source_log_sha256": source_log_sha256,
+                    "result": "DeepSeek produced a governed structured result.",
+                    "endpoint": "https://api.deepseek.com/anthropic/v1/messages",
+                    "usage": {"input_tokens": 3, "output_tokens": 5},
+                    "cost_usd": 0.001,
+                }
+            )
         else:
-            transcript["thread_id"] = run_id
+            transcript.update(
+                {
+                    "interface": interface,
+                    "run_id": run_id,
+                    "started_at": record["started_at"],
+                    "completed_at": record["completed_at"],
+                    "exit_code": 0,
+                    "source_audit_event_count": 3,
+                    "source_audit_sha256": "a" * 64,
+                    "source_audit_retained_locally": True,
+                    "thread_id": run_id,
+                }
+            )
         record["transcript_sha256"] = self.write_file(
             repo_root,
             transcript_path,
@@ -133,7 +156,7 @@ class ModelExecutionValidatorTests(unittest.TestCase):
         for case, mutate in mutations.items():
             with self.subTest(case=case), tempfile.TemporaryDirectory() as tmp_dir:
                 repo_root = Path(tmp_dir)
-                record_path, record = self.make_record(repo_root, "claude-planner")
+                record_path, record = self.make_record(repo_root, "deepseek-planner")
                 mutate(record)
                 record_path.write_text(json.dumps(record, sort_keys=True), encoding="utf-8")
 
@@ -144,7 +167,7 @@ class ModelExecutionValidatorTests(unittest.TestCase):
         validator = self.load_validator()
         with tempfile.TemporaryDirectory() as tmp_dir:
             repo_root = Path(tmp_dir)
-            record_path, record = self.make_record(repo_root, "claude-reviewer")
+            record_path, record = self.make_record(repo_root, "deepseek-reviewer")
             record["exit_code"] = 17
             record_path.write_text(json.dumps(record, sort_keys=True), encoding="utf-8")
 
@@ -182,10 +205,10 @@ class ModelExecutionValidatorTests(unittest.TestCase):
         validator = self.load_validator()
         with tempfile.TemporaryDirectory() as tmp_dir:
             repo_root = Path(tmp_dir)
-            sidecar = repo_root / "evidence" / "release" / "model-executions" / "claude-planner-transcript.json"
+            sidecar = repo_root / "evidence" / "release" / "model-executions" / "deepseek-planner-transcript.json"
             sidecar.parent.mkdir(parents=True, exist_ok=True)
             sidecar.write_text("{}", encoding="utf-8")
-            source_audit = sidecar.with_name("claude-planner-source-audit.json")
+            source_audit = sidecar.with_name("deepseek-planner-source-audit.json")
             source_audit.write_text("{}", encoding="utf-8")
 
             self.assertNotIn(sidecar.resolve(), validator.discover_record_paths(repo_root))
