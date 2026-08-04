@@ -1,0 +1,558 @@
+diff --git a/.ai-delivery/lock.json b/.ai-delivery/lock.json
+index 323fe05..590ccaa 100644
+--- a/.ai-delivery/lock.json
++++ b/.ai-delivery/lock.json
+@@ -152,7 +152,7 @@
+       },
+       {
+         "destination": ".github/workflows/ai-delivery-ci.yml",
+-        "expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
++        "expected_sha256": "3fba3289489e100ad51c32bef926a1bca6d08288be21db22808204b42b879f97",
+         "kind": "copy",
+         "source": "templates/github/workflows/ai-delivery-ci.yml",
+         "source_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a"
+@@ -466,7 +466,16 @@
+         "source_sha256": "209ff8041a1da46469cf7b505fead815b143352fa75c04e942a9baf5c453a2be"
+       }
+     ],
+-    "identity_sha256": "1e233955ddfb9c864c74c6cb7f7f607b99254393295a762fd69ad0654f7d9870",
++    "target_template_overrides": [
++      {
++        "policy": "ci-template-specialization/v1",
++        "destination": ".github/workflows/ai-delivery-ci.yml",
++        "base_expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
++        "actual_sha256": "3fba3289489e100ad51c32bef926a1bca6d08288be21db22808204b42b879f97",
++        "reason": "Pin GitHub Actions to immutable commit SHAs and install the repository fixed Python tooling before lint and typecheck so CI is reproducible and every gate is executable."
++      }
++    ],
++    "identity_sha256": "b89e57464bd3589d0966dce41861ad0c7ed399758af19558f22f5df96a735867",
+     "installer_version": "ai-delivery-installer/v1",
+     "schema_version": "ai-delivery-template-identity/v1"
+   }
+diff --git a/.github/workflows/ai-delivery-ci.yml b/.github/workflows/ai-delivery-ci.yml
+index 95cc9cd..bbf7b45 100644
+--- a/.github/workflows/ai-delivery-ci.yml
++++ b/.github/workflows/ai-delivery-ci.yml
+@@ -20,7 +20,9 @@ jobs:
+     name: lint
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@v4
++      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
++      - name: install pinned Python tools
++        run: python3 -m pip install --requirement requirements-dev.txt
+       - name: lint
+         shell: bash
+         run: |
+@@ -36,7 +38,7 @@ jobs:
+           fi
+       - name: upload lint evidence
+         if: always()
+-        uses: actions/upload-artifact@v4
++        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+         with:
+           name: ai-delivery-lint-evidence
+           path: evidence/ci
+@@ -46,7 +48,9 @@ jobs:
+     name: typecheck
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@v4
++      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
++      - name: install pinned Python tools
++        run: python3 -m pip install --requirement requirements-dev.txt
+       - name: typecheck
+         shell: bash
+         run: |
+@@ -62,7 +66,7 @@ jobs:
+           fi
+       - name: upload typecheck evidence
+         if: always()
+-        uses: actions/upload-artifact@v4
++        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+         with:
+           name: ai-delivery-typecheck-evidence
+           path: evidence/ci
+@@ -72,7 +76,7 @@ jobs:
+     name: test
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@v4
++      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+       - name: test
+         shell: bash
+         run: |
+@@ -90,7 +94,7 @@ jobs:
+           fi
+       - name: upload test evidence
+         if: always()
+-        uses: actions/upload-artifact@v4
++        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+         with:
+           name: ai-delivery-test-evidence
+           path: evidence/ci
+@@ -100,7 +104,7 @@ jobs:
+     name: build
+     runs-on: ubuntu-latest
+     steps:
+-      - uses: actions/checkout@v4
++      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+       - name: build
+         shell: bash
+         run: |
+@@ -116,7 +120,7 @@ jobs:
+           fi
+       - name: upload build evidence
+         if: always()
+-        uses: actions/upload-artifact@v4
++        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+         with:
+           name: ai-delivery-build-evidence
+           path: evidence/ci
+@@ -131,7 +135,7 @@ jobs:
+       - test
+       - build
+     steps:
+-      - uses: actions/checkout@v4
++      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+       - name: smoke
+         shell: bash
+         run: |
+@@ -147,7 +151,7 @@ jobs:
+           fi
+       - name: upload smoke evidence
+         if: always()
+-        uses: actions/upload-artifact@v4
++        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+         with:
+           name: ai-delivery-smoke-evidence
+           path: evidence/ci
+@@ -159,7 +163,7 @@ jobs:
+     needs:
+       - smoke
+     steps:
+-      - uses: actions/checkout@v4
++      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+         with:
+           fetch-depth: 0
+           ref: ${{ github.event.pull_request.head.sha || github.sha }}
+@@ -245,13 +249,14 @@ jobs:
+             args+=("--expected-pr-id" "PR-$PR_NUMBER")
+           fi
+           python3 scripts/validate_evidence_manifest.py "${args[@]}"
++          python3 scripts/validate_model_execution.py --repo-root . --discover --require-all
+ 
+           manifest_count=$(find "$EVIDENCE_DIR" -path '*/manifest.json' -type f | wc -l | tr -d ' ')
+           printf '%s\n' "validated_manifest=$EVIDENCE_MANIFEST"
+           printf '%s\n' "manifest_count_detected=$manifest_count"
+       - name: upload validate-evidence logs
+         if: always()
+-        uses: actions/upload-artifact@v4
++        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+         with:
+           name: ai-delivery-validate-evidence
+           path: evidence/${{ env.ISSUE_ID }}
+diff --git a/SYSTEM_MAP.md b/SYSTEM_MAP.md
+index 55689c2..2ea7d7f 100644
+--- a/SYSTEM_MAP.md
++++ b/SYSTEM_MAP.md
+@@ -2,13 +2,13 @@
+ 
+ ```text
+ GitHub Issue
+-  -> Claude planner artifact
++  -> DeepSeek V4-Pro planner artifact
+   -> Codex plan / explorer / worker
+   -> ai/GH-<number>-<slug> branch/worktree
+   -> local gates
+   -> evidence manifest
+   -> GitHub PR / Actions
+-  -> Claude reviewer / final artifacts
++  -> DeepSeek V4-Pro reviewer / final artifacts
+   -> final-check
+   -> human merge checklist
+ ```
+diff --git a/docs/ai-delivery/project-config.json b/docs/ai-delivery/project-config.json
+index c2706ef..ce05a57 100644
+--- a/docs/ai-delivery/project-config.json
++++ b/docs/ai-delivery/project-config.json
+@@ -156,7 +156,7 @@
+       },
+       {
+         "destination": ".github/workflows/ai-delivery-ci.yml",
+-        "expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
++        "expected_sha256": "3fba3289489e100ad51c32bef926a1bca6d08288be21db22808204b42b879f97",
+         "kind": "copy",
+         "source": "templates/github/workflows/ai-delivery-ci.yml",
+         "source_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a"
+@@ -470,7 +470,16 @@
+         "source_sha256": "209ff8041a1da46469cf7b505fead815b143352fa75c04e942a9baf5c453a2be"
+       }
+     ],
+-    "identity_sha256": "1e233955ddfb9c864c74c6cb7f7f607b99254393295a762fd69ad0654f7d9870",
++    "target_template_overrides": [
++      {
++        "policy": "ci-template-specialization/v1",
++        "destination": ".github/workflows/ai-delivery-ci.yml",
++        "base_expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
++        "actual_sha256": "3fba3289489e100ad51c32bef926a1bca6d08288be21db22808204b42b879f97",
++        "reason": "Pin GitHub Actions to immutable commit SHAs and install the repository fixed Python tooling before lint and typecheck so CI is reproducible and every gate is executable."
++      }
++    ],
++    "identity_sha256": "b89e57464bd3589d0966dce41861ad0c7ed399758af19558f22f5df96a735867",
+     "installer_version": "ai-delivery-installer/v1",
+     "schema_version": "ai-delivery-template-identity/v1"
+   },
+diff --git a/docs/product-design/GH-999/ai-architecture-brief.md b/docs/product-design/GH-999/ai-architecture-brief.md
+index c2e1535..04aea69 100644
+--- a/docs/product-design/GH-999/ai-architecture-brief.md
++++ b/docs/product-design/GH-999/ai-architecture-brief.md
+@@ -4,7 +4,7 @@ schema_version: ai-architecture-brief/v1
+ issue_id: GH-999
+ status: draft
+ 
+-这份文件是给 Claude/Codex 的输入契约，不是聊天摘要。先填业务事实，再允许 AI 生成 P0-P9 工件。
++这份文件是给 DeepSeek V4-Pro/Codex 的输入契约，不是聊天摘要。先填业务事实，再允许 AI 生成 P0-P9 工件。
+ 
+ ## 1. 业务边界
+ 
+diff --git a/scripts/validate_model_execution.py b/scripts/validate_model_execution.py
+old mode 100755
+new mode 100644
+index 1347804..25489de
+--- a/scripts/validate_model_execution.py
++++ b/scripts/validate_model_execution.py
+@@ -16,11 +16,17 @@ from typing import Any
+ SCHEMA_VERSION = "ai-delivery-model-execution/v1"
+ TRANSCRIPT_SCHEMA_VERSION = "ai-delivery-model-transcript/v1"
+ ROLE_ASSIGNMENTS = {
++    "deepseek-planner": ("deepseek", "deepseek-anthropic-api"),
++    "deepseek-reviewer": ("deepseek", "deepseek-anthropic-api"),
++    "deepseek-final": ("deepseek", "deepseek-anthropic-api"),
++    "codex-worker": ("openai", "Codex Desktop"),
++}
++LEGACY_ROLE_ASSIGNMENTS = {
+     "claude-planner": ("anthropic", "Claude Agent SDK (Cowork)"),
+     "claude-reviewer": ("anthropic", "Claude Code CLI"),
+     "claude-final": ("anthropic", "Claude Code CLI"),
+-    "codex-worker": ("openai", "Codex Desktop"),
+ }
++ACCEPTED_ROLE_ASSIGNMENTS = {**LEGACY_ROLE_ASSIGNMENTS, **ROLE_ASSIGNMENTS}
+ REQUIRED_FIELDS = {
+     "schema_version",
+     "role",
+@@ -39,8 +45,11 @@ REQUIRED_FIELDS = {
+     "transcript_path",
+     "transcript_sha256",
+ }
++DEEPSEEK_REQUIRED_FIELDS = (REQUIRED_FIELDS - {"prompt_path"}) | {"source_log_path", "source_log_sha256"}
++DEEPSEEK_OPTIONAL_FIELDS = {"prompt_path"}
+ SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+ RFC3339_UTC_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$")
++DEEPSEEK_RUN_ID_PATTERN = re.compile(r"^deepseek-(?:s1|s8|s10)-\d{8}-[0-9a-f]{12}$")
+ 
+ 
+ def discover_record_paths(repo_root: Path) -> list[Path]:
+@@ -78,8 +87,10 @@ def validate_records(repo_root: Path, record_paths: list[Path], *, require_all_r
+             failures.append(f"record must be a JSON object: {record_path}")
+             continue
+         record = raw
+-        missing = sorted(REQUIRED_FIELDS - set(record))
+-        unknown = sorted(set(record) - REQUIRED_FIELDS)
++        required_fields = DEEPSEEK_REQUIRED_FIELDS if str(record.get("role", "")).startswith("deepseek-") else REQUIRED_FIELDS
++        missing = sorted(required_fields - set(record))
++        allowed_fields = required_fields | (DEEPSEEK_OPTIONAL_FIELDS if str(record.get("role", "")).startswith("deepseek-") else set())
++        unknown = sorted(set(record) - allowed_fields)
+         if missing:
+             failures.append(f"{record_path}: missing fields: {missing}")
+         if unknown:
+@@ -108,17 +119,19 @@ def _validate_record(
+         failures.append(f"{record_path}: placeholder must be false")
+ 
+     role = record["role"]
+-    if not isinstance(role, str) or role not in ROLE_ASSIGNMENTS:
++    if not isinstance(role, str) or role not in ACCEPTED_ROLE_ASSIGNMENTS:
+         failures.append(f"{record_path}: role is not permitted: {role!r}")
+     else:
+         if role in seen_roles:
+             failures.append(f"{record_path}: duplicate role: {role}")
+         seen_roles.add(role)
+-        expected_provider, expected_interface = ROLE_ASSIGNMENTS[role]
++        expected_provider, expected_interface = ACCEPTED_ROLE_ASSIGNMENTS[role]
+         if record["provider"] != expected_provider:
+             failures.append(f"{record_path}: provider for {role} must be {expected_provider}")
+         if record["interface"] != expected_interface:
+             failures.append(f"{record_path}: interface for {role} must be {expected_interface}")
++        if role.startswith("deepseek-") and record["model"] != "deepseek-v4-pro":
++            failures.append(f"{record_path}: model for {role} must be deepseek-v4-pro")
+ 
+     for field_name in ("provider", "model", "interface"):
+         value = record[field_name]
+@@ -138,19 +151,29 @@ def _validate_record(
+         failures.append(f"{record_path}: exit_code must be zero for a successful execution")
+ 
+     resolved_artifacts: dict[str, Path] = {}
+-    for prefix in ("prompt", "artifact", "transcript"):
++    prefixes: tuple[str, ...] = ("prompt", "artifact", "transcript")
++    if isinstance(role, str) and role.startswith("deepseek-"):
++        prefixes = ("artifact", "transcript")
++        if "prompt_path" in record:
++            prefixes = ("prompt",) + prefixes
++        prefixes += ("source_log",)
++    for prefix in prefixes:
+         resolved = _validate_artifact(repo_root, record_path, record, prefix, failures)
+         if resolved is not None:
+             resolved_artifacts[prefix] = resolved
+     transcript_path = resolved_artifacts.get("transcript")
+     if transcript_path is not None:
+-        _validate_transcript(record_path, record, transcript_path, failures)
++        _validate_transcript(record_path, record, transcript_path, failures, resolved_artifacts.get("source_log"))
+ 
+ 
+ def _validate_run_id(record_path: Path, role: Any, value: Any, failures: list[str]) -> None:
+     if not isinstance(value, str):
+         failures.append(f"{record_path}: run_id must be a provider-issued identifier")
+         return
++    if isinstance(role, str) and role.startswith("deepseek-"):
++        if not DEEPSEEK_RUN_ID_PATTERN.fullmatch(value):
++            failures.append(f"{record_path}: DeepSeek run_id must identify the governed stage and date")
++        return
+     uuid_value = value.removeprefix("local_") if isinstance(role, str) and role.startswith("claude-") else value
+     try:
+         parsed = uuid.UUID(uuid_value)
+@@ -221,6 +244,7 @@ def _validate_transcript(
+     record: dict[str, Any],
+     transcript_path: Path,
+     failures: list[str],
++    source_log_path: Path | None = None,
+ ) -> None:
+     try:
+         transcript = json.loads(transcript_path.read_text(encoding="utf-8"))
+@@ -231,6 +255,11 @@ def _validate_transcript(
+         failures.append(f"{record_path}: transcript must be valid structured JSON object")
+         return
+ 
++    role = record["role"]
++    if isinstance(role, str) and role.startswith("deepseek-"):
++        _validate_deepseek_transcript(record_path, record, transcript, source_log_path, failures)
++        return
++
+     required = {
+         "schema_version",
+         "role",
+@@ -274,7 +303,6 @@ def _validate_transcript(
+     if transcript["source_audit_retained_locally"] is not True:
+         failures.append(f"{record_path}: transcript source audit must be retained locally")
+ 
+-    role = record["role"]
+     if isinstance(role, str) and role.startswith("claude-"):
+         session_id = transcript.get("sdk_session_id")
+         try:
+@@ -287,12 +315,79 @@ def _validate_transcript(
+         failures.append(f"{record_path}: Codex transcript thread_id must match run_id")
+ 
+ 
++def _validate_deepseek_transcript(
++    record_path: Path,
++    record: dict[str, Any],
++    transcript: dict[str, Any],
++    source_log_path: Path | None,
++    failures: list[str],
++) -> None:
++    required = {
++        "schema_version",
++        "role",
++        "provider",
++        "session_id",
++        "model",
++        "source_log_path",
++        "source_log_sha256",
++        "result",
++        "endpoint",
++        "usage",
++        "cost_usd",
++    }
++    missing = sorted(required - set(transcript))
++    if missing:
++        failures.append(f"{record_path}: DeepSeek transcript missing execution fields: {missing}")
++        return
++    for field_name in ("role", "provider", "model"):
++        if transcript[field_name] != record[field_name]:
++            failures.append(f"{record_path}: DeepSeek transcript {field_name} must match execution record")
++    if transcript["schema_version"] != TRANSCRIPT_SCHEMA_VERSION:
++        failures.append(f"{record_path}: DeepSeek transcript schema_version must be {TRANSCRIPT_SCHEMA_VERSION}")
++    if transcript["session_id"] != record["run_id"]:
++        failures.append(f"{record_path}: DeepSeek transcript session_id must match run_id")
++    if transcript["source_log_path"] != record["source_log_path"]:
++        failures.append(f"{record_path}: DeepSeek transcript source_log_path must match execution record")
++    if transcript["source_log_sha256"] != record["source_log_sha256"]:
++        failures.append(f"{record_path}: DeepSeek transcript source_log_sha256 must match execution record")
++    if source_log_path is None:
++        return
++    try:
++        lines = [json.loads(line) for line in source_log_path.read_text(encoding="utf-8").splitlines() if line.strip()]
++    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
++        failures.append(f"{record_path}: DeepSeek source log must contain structured JSON lines: {exc}")
++        return
++    if not lines:
++        failures.append(f"{record_path}: DeepSeek source log must not be empty")
++    for event in lines:
++        if not isinstance(event, dict):
++            failures.append(f"{record_path}: DeepSeek source log events must be JSON objects")
++            continue
++        if event.get("provider") != "deepseek" or event.get("model") != "deepseek-v4-pro":
++            failures.append(f"{record_path}: DeepSeek source log identity is invalid")
++        if event.get("run_id") != record["run_id"] and event.get("sessionId") != record["run_id"]:
++            failures.append(f"{record_path}: DeepSeek source log run identity must match run_id")
++    if not isinstance(transcript["result"], str) or not transcript["result"].strip():
++        failures.append(f"{record_path}: DeepSeek transcript result must be non-empty")
++    if transcript["endpoint"] != "https://api.deepseek.com/anthropic/v1/messages":
++        failures.append(f"{record_path}: DeepSeek transcript endpoint is not the governed endpoint")
++    usage = transcript["usage"]
++    if not isinstance(usage, dict) or any(
++        not isinstance(usage.get(key), int) or isinstance(usage.get(key), bool) or usage[key] < 0
++        for key in ("input_tokens", "output_tokens")
++    ):
++        failures.append(f"{record_path}: DeepSeek transcript usage must contain non-negative token counts")
++    cost = transcript["cost_usd"]
++    if isinstance(cost, bool) or not isinstance(cost, int | float) or cost < 0:
++        failures.append(f"{record_path}: DeepSeek transcript cost_usd must be non-negative")
++
++
+ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+     parser = argparse.ArgumentParser(description="Validate AI delivery model execution records")
+     parser.add_argument("records", nargs="*", type=Path, help="record paths relative to the repository root")
+     parser.add_argument("--repo-root", type=Path, default=Path("."), help="repository root")
+     parser.add_argument("--discover", action="store_true", help="discover model records under evidence")
+-    parser.add_argument("--require-all", action="store_true", help="require all four delivery roles")
++    parser.add_argument("--require-all", action="store_true", help="require the current DeepSeek and Codex delivery roles")
+     return parser.parse_args(argv)
+ 
+ 
+diff --git a/tests/test_model_execution_validator.py b/tests/test_model_execution_validator.py
+index dae8e44..70ce78d 100644
+--- a/tests/test_model_execution_validator.py
++++ b/tests/test_model_execution_validator.py
+@@ -8,7 +8,6 @@ import sys
+ import tempfile
+ import types
+ import unittest
+-import uuid
+ from pathlib import Path
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+@@ -33,21 +32,23 @@ class ModelExecutionValidatorTests(unittest.TestCase):
+ 
+     def make_record(self, repo_root: Path, role: str) -> tuple[Path, dict[str, object]]:
+         assignments = {
+-            "claude-planner": ("anthropic", "Claude Agent SDK (Cowork)"),
+-            "claude-reviewer": ("anthropic", "Claude Code CLI"),
+-            "claude-final": ("anthropic", "Claude Code CLI"),
++            "deepseek-planner": ("deepseek", "deepseek-anthropic-api"),
++            "deepseek-reviewer": ("deepseek", "deepseek-anthropic-api"),
++            "deepseek-final": ("deepseek", "deepseek-anthropic-api"),
+             "codex-worker": ("openai", "Codex Desktop"),
+         }
+         provider, interface = assignments[role]
+         prompt_path = f"evidence/prompts/{role}.txt"
+         artifact_path = f"evidence/artifacts/{role}.md"
+         transcript_path = f"evidence/transcripts/{role}.log"
+-        run_id = f"local_{uuid.uuid4()}" if role.startswith("claude-") else "019f6aa2-aa74-73d2-9f99-c7aad51ac2d2"
++        stage = {"deepseek-planner": "s1", "deepseek-reviewer": "s8", "deepseek-final": "s10"}.get(role)
++        run_id = f"deepseek-{stage}-20260804-922c71f33672" if stage else "019f6aa2-aa74-73d2-9f99-c7aad51ac2d2"
++        model = "deepseek-v4-pro" if stage else "gpt-5.5"
+         record: dict[str, object] = {
+             "schema_version": "ai-delivery-model-execution/v1",
+             "role": role,
+             "provider": provider,
+-            "model": "model-2026-07",
++            "model": model,
+             "interface": interface,
+             "run_id": run_id,
+             "started_at": "2026-07-16T08:00:00.430Z",
+@@ -64,20 +65,42 @@ class ModelExecutionValidatorTests(unittest.TestCase):
+             "schema_version": "ai-delivery-model-transcript/v1",
+             "role": role,
+             "provider": provider,
+-            "model": record["model"],
+-            "interface": interface,
+-            "run_id": run_id,
+-            "started_at": record["started_at"],
+-            "completed_at": record["completed_at"],
+-            "exit_code": 0,
+-            "source_audit_event_count": 3,
+-            "source_audit_sha256": "a" * 64,
+-            "source_audit_retained_locally": True,
++            "model": model,
+         }
+-        if role.startswith("claude-"):
+-            transcript["sdk_session_id"] = str(uuid.uuid4())
++        if stage:
++            source_log_path = f"evidence/source-logs/{role}.jsonl"
++            source_log_sha256 = self.write_file(
++                repo_root,
++                source_log_path,
++                json.dumps({"provider": "deepseek", "model": model, "run_id": run_id}) + "\n",
++            )
++            record["source_log_path"] = source_log_path
++            record["source_log_sha256"] = source_log_sha256
++            transcript.update(
++                {
++                    "session_id": run_id,
++                    "source_log_path": source_log_path,
++                    "source_log_sha256": source_log_sha256,
++                    "result": "DeepSeek produced a governed structured result.",
++                    "endpoint": "https://api.deepseek.com/anthropic/v1/messages",
++                    "usage": {"input_tokens": 3, "output_tokens": 5},
++                    "cost_usd": 0.001,
++                }
++            )
+         else:
+-            transcript["thread_id"] = run_id
++            transcript.update(
++                {
++                    "interface": interface,
++                    "run_id": run_id,
++                    "started_at": record["started_at"],
++                    "completed_at": record["completed_at"],
++                    "exit_code": 0,
++                    "source_audit_event_count": 3,
++                    "source_audit_sha256": "a" * 64,
++                    "source_audit_retained_locally": True,
++                    "thread_id": run_id,
++                }
++            )
+         record["transcript_sha256"] = self.write_file(
+             repo_root,
+             transcript_path,
+@@ -133,7 +156,7 @@ class ModelExecutionValidatorTests(unittest.TestCase):
+         for case, mutate in mutations.items():
+             with self.subTest(case=case), tempfile.TemporaryDirectory() as tmp_dir:
+                 repo_root = Path(tmp_dir)
+-                record_path, record = self.make_record(repo_root, "claude-planner")
++                record_path, record = self.make_record(repo_root, "deepseek-planner")
+                 mutate(record)
+                 record_path.write_text(json.dumps(record, sort_keys=True), encoding="utf-8")
+ 
+@@ -144,7 +167,7 @@ class ModelExecutionValidatorTests(unittest.TestCase):
+         validator = self.load_validator()
+         with tempfile.TemporaryDirectory() as tmp_dir:
+             repo_root = Path(tmp_dir)
+-            record_path, record = self.make_record(repo_root, "claude-reviewer")
++            record_path, record = self.make_record(repo_root, "deepseek-reviewer")
+             record["exit_code"] = 17
+             record_path.write_text(json.dumps(record, sort_keys=True), encoding="utf-8")
+ 
+@@ -182,10 +205,10 @@ class ModelExecutionValidatorTests(unittest.TestCase):
+         validator = self.load_validator()
+         with tempfile.TemporaryDirectory() as tmp_dir:
+             repo_root = Path(tmp_dir)
+-            sidecar = repo_root / "evidence" / "release" / "model-executions" / "claude-planner-transcript.json"
++            sidecar = repo_root / "evidence" / "release" / "model-executions" / "deepseek-planner-transcript.json"
+             sidecar.parent.mkdir(parents=True, exist_ok=True)
+             sidecar.write_text("{}", encoding="utf-8")
+-            source_audit = sidecar.with_name("claude-planner-source-audit.json")
++            source_audit = sidecar.with_name("deepseek-planner-source-audit.json")
+             source_audit.write_text("{}", encoding="utf-8")
+ 
+             self.assertNotIn(sidecar.resolve(), validator.discover_record_paths(repo_root))

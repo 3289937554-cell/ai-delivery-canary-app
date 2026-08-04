@@ -1,0 +1,14 @@
+{
+  "errors": 0,
+  "failed": 0,
+  "gates": {
+    "build": 0,
+    "lint": 0,
+    "smoke": 0,
+    "test": 0,
+    "typecheck": 0
+  },
+  "passed": 5,
+  "status": "passed",
+  "total": 5
+}

@@ -8,10 +8,10 @@ Deliver a usable local-first Delivery Operations Console for a single software o
 
 ## Boundaries
 
-- Included: release creation, delivery gates, risk tracking, lifecycle transitions, append-only audit history, local persistence, responsive browser UI, operations runbook, and repository-bound Claude/Codex provenance.
+- Included: release creation, delivery gates, risk tracking, lifecycle transitions, append-only audit history, local persistence, responsive browser UI, operations runbook, and repository-bound DeepSeek/Codex provenance.
 - Excluded: internet deployment, multi-user identity, billing, automatic merge, production deployment, secrets changes, branch-protection changes, and destructive data migration.
 - Authority boundary: GitHub Issue #3, PR #4, the strict GH-3 manifest, and required CI checks are authoritative. Human approval remains required for merge.
 
 ## Acceptance
 
-The implementation commit must be followed directly by one evidence-only commit. Ruff, strict Mypy, 73 tests, build, real service smoke, desktop/mobile browser acceptance, strict manifest validation, four-role execution validation, and all six PR checks must pass.
+The implementation commit must be followed directly by one evidence-only commit. DeepSeek V4-Pro planner/reviewer/finalizer provenance, Codex implementation evidence, strict manifest validation, local gates, smoke evidence, and all six PR checks must pass.

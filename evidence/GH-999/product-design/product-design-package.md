@@ -1,8 +1,19 @@
-# GH-999 Product Design Package Evidence
+# Product Design Package Evidence
 
 schema_version: product-design-evidence/v1
 issue_id: GH-999
+assessment_ready: true
+current_state: D7
 selected_variant: variant-a
 profile: operations
-
-The final design package is `docs/product-design/GH-999/design-package.json`, bound to the approved design-package hash and the P9 architecture manifest. It covers run center, run detail, approval desk, evidence inspection, revision-bound human decisions, blocked/stale recovery, and repository-local audit evidence. The package is derived from the compiled application blueprint and is checked by the AID design final gate.
+design_package_path: docs/product-design/GH-999/design-package.json
+design_package_sha256: 69ae6fdda8bea94f3527a1038e7234d1b8e3a2c6ab0fa5a9ded881f3b14ffcc4
+functional_approval_path: docs/product-design/GH-999/approvals/functional.json
+functional_approval_sha256: 3be9fbea72d9c3dba9ef3ead4259b2710189ae67128773f03fcd46dabfa8ce77
+concept_approval_path: docs/product-design/GH-999/approvals/concept.json
+concept_approval_sha256: 89c1a14f461d3f156d417d2fad476a11eee72980d47e18403cb3723c98ac325c
+final_approval_path: docs/product-design/GH-999/approvals/final.json
+final_approval_sha256: 0da7903745168aacea1b54806a19ce2d5a2d2f1b02bbbd1cf5cfa3436947edcd
+functional_approval_fresh: true
+concept_approval_fresh: true
+final_approval_fresh: true

@@ -1,6 +1,6 @@
 {
   "artifact_path": "evidence/AI-DELIVERY-CANARY/codex-worker.md",
-  "artifact_sha256": "3d24aee630ff0c5c6e244ca657db878d33947380bc27e60103bf44926335b1f7",
+  "artifact_sha256": "baee486f4784719049d01b8de21c948c086895132873105580469d968e6054c5",
   "completed_at": "2026-07-16T14:26:07.000Z",
   "exit_code": 0,
   "interface": "Codex Desktop",

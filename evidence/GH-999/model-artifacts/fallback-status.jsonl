@@ -1,0 +1,1 @@
+{"schema":"ai-delivery.provider-fallback-status/v1","recorded_at":"2026-08-04T06:45:51Z","primary_provider":"deepseek","primary_model":"deepseek-v4-pro","fallback_active":false,"fallback_provider":null,"fallback_model":null,"note":"No fallback was used for the recorded DeepSeek V4-Pro planner, reviewer, or final executions."}
