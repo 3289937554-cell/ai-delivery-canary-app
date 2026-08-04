@@ -1,0 +1,18 @@
+issue_id: GH-999
+pr_id: PR-7
+base_sha: c3de200fb8733f31d05c421aa076cf3b522e7334
+commit_sha: f07fde7c284f436c634b81255b1ce56fb16a86dd
+actual_head_sha: f07fde7c284f436c634b81255b1ce56fb16a86dd
+clean_except_issue_evidence: true
+dirty_issue_evidence_allowed: evidence/GH-999/logs/lint.log, evidence/GH-999/logs/typecheck.log, evidence/GH-999/model-artifacts/codex-context-S4.json, evidence/GH-999/model-artifacts/codex-context-S5.json, evidence/GH-999/model-artifacts/codex-context-S6.json, evidence/GH-999/model-artifacts/codex-result-S4.json, evidence/GH-999/model-artifacts/codex-result-S5.json, evidence/GH-999/model-artifacts/codex-result-S6.json
+command_name: typecheck
+exit_code: 0
+command: ./scripts/typecheck.sh
+summary: typecheck gate completed with exit_code=0 in 0.255s.
+started_at: 2026-08-04T05:46:58Z
+duration_seconds: 0.255
+stdout:
+Success: no issues found in 6 source files
+typecheck: ok
+stderr:
+

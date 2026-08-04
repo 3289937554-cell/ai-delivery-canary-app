@@ -1,0 +1,119 @@
+{
+    "manifest_version": "1.0",
+    "issue_id": "GH-999",
+    "pr_id": "PR-7",
+    "base_sha": "c3de200fb8733f31d05c421aa076cf3b522e7334",
+    "commit_sha": "f07fde7c284f436c634b81255b1ce56fb16a86dd",
+    "created_at": "2026-08-04T05:47:51Z",
+    "actor": "codex worker",
+    "approval_status": "ready_for_deepseek_review",
+    "commands": [
+        {
+            "name": "lint",
+            "command": "./scripts/lint.sh",
+            "exit_code": 0,
+            "log_path": "evidence/GH-999/logs/lint.log",
+            "sha256": "7ed926ae8764d461391e972edf798652218857e71a1957de61abce882ed61c87"
+        },
+        {
+            "name": "typecheck",
+            "command": "./scripts/typecheck.sh",
+            "exit_code": 0,
+            "log_path": "evidence/GH-999/logs/typecheck.log",
+            "sha256": "9b72b36d62f364ffbf2bfa196d1e604eeadebf82fa7a49d0909a4402745f286c"
+        },
+        {
+            "name": "test",
+            "command": "python3 -m unittest discover -s tests",
+            "exit_code": 0,
+            "log_path": "evidence/GH-999/logs/test.log",
+            "sha256": "2959c908c428742da6e2597d2aa66e45d5573ee6ab10d857a91ead9c7dd67596"
+        },
+        {
+            "name": "build",
+            "command": "./scripts/build.sh",
+            "exit_code": 0,
+            "log_path": "evidence/GH-999/logs/build.log",
+            "sha256": "74d06864aadcc0b9e48a62388bbdf6db74e8211b32c5b94b013fa55146b8c0e7"
+        },
+        {
+            "name": "smoke",
+            "command": "./scripts/smoke.sh",
+            "exit_code": 0,
+            "log_path": "evidence/GH-999/logs/smoke.log",
+            "sha256": "5c4017dad866ed4595a4636742867862ce599dbd81dafeced9dd6a07821b19ad"
+        }
+    ],
+    "artifacts": [
+        {
+            "type": "diff",
+            "path": "evidence/GH-999/diff.patch",
+            "sha256": "2771a2bce7f5ba90bd61f5361999b331348ae89426edba17e068d48d4e5c2666"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/logs/test.log",
+            "sha256": "2959c908c428742da6e2597d2aa66e45d5573ee6ab10d857a91ead9c7dd67596"
+        },
+        {
+            "type": "tests",
+            "path": "evidence/GH-999/reports/test-summary.json",
+            "sha256": "a26098f968d8158af9ef213c31cec282501ebfd8bd13150c1ed518db91609cab"
+        },
+        {
+            "type": "surface-evidence",
+            "path": "evidence/GH-999/surface-evidence/smoke-observation.txt",
+            "sha256": "627ff598d50ce64739213d2bea043c7dfc1b5ce9b4c2ee9c496d0cce5b0e351b"
+        },
+        {
+            "type": "product-design-package",
+            "path": "evidence/GH-999/product-design/product-design-package.md",
+            "sha256": "8a14511ccfdb2704eb5fa3d55492e6c6db5273a1409c4dfc4985d17cf023e168"
+        },
+        {
+            "type": "accessibility",
+            "path": "evidence/GH-999/product-design/accessibility-report.md",
+            "sha256": "47bd2eedad2e3862c386ffb60b52b1135b5119fc306c110b1096a5c36392383c"
+        },
+        {
+            "type": "visual-regression",
+            "path": "evidence/GH-999/product-design/visual-regression.md",
+            "sha256": "a15d2ea350d93489866e600e4214cd1608fc3148fb87e84bf9ba5817fec1b6a5"
+        },
+        {
+            "type": "rollback",
+            "path": "evidence/GH-999/rollback.md",
+            "sha256": "81e540cd9dca0f72d7df542f8273b83408b6331e6445a3346cfe4928f02f16c3"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/model-artifacts/s1-planner-execution.json",
+            "sha256": "a5fad7f253abc55d58e981a17dd4f7bf9cc737aac3bc9aec341072b3734c510f"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/model-artifacts/fallback-status.jsonl",
+            "sha256": "f69a7d4d54592481db7d5b15cc8a1a0538ff5d0b9deff491a1b4ebb717ff91f7"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/model-artifacts/handoff-human-approval.md",
+            "sha256": "f667bf94ca2e79d439a203fb63fe4b7820e4c76e7059b55df27dbb19974b8c23"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/model-artifacts/s8-reviewer-execution.json",
+            "sha256": "79339d4f6040570b4d0b5b9c954403c32192778961b5c09e0d3a7b23c1f94ebb"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/model-artifacts/s10-final-execution.json",
+            "sha256": "0310f4114e02c8241a906d7eab610ec252c312c3ed2f10bde65af64034a0abca"
+        }
+    ],
+    "rollback": {
+        "strategy": "revert_pr",
+        "command": "gh pr revert 7",
+        "data_notes": "No irreversible data migration recorded for this delivery packet."
+    }
+}
