@@ -1,0 +1,125 @@
+{
+  "schema_version": "task-graph/v1",
+  "stage": "S2",
+  "run_id": "aid-426acaebef5c4f0e88ad1726225bdc0f",
+  "project_id": "project-0007-ai-delivery-canary-app",
+  "issue_id": "GH-999",
+  "slug": "e2e-provider-fallback",
+  "goal": "Validate the governed AID client end to end with DeepSeek V4-Pro as the planning, review, and final provider.",
+  "acceptance_criteria": [
+    "All local gates and provider routing remain explicit and traceable.",
+    "Every DeepSeek planner, reviewer, and final artifact is bound to provider deepseek, model deepseek-v4-pro, interface deepseek-anthropic-api, and the same AID run.",
+    "Archon v0.5.0 workflow validation and the deterministic contract probe remain ready without Claude execution.",
+    "The delivery workflow produces real PR, CI, manifest, review, final-gate, and rollback evidence; merge, deploy, secrets, billing, and branch protection remain human-controlled."
+  ],
+  "source_artifacts": [
+    {
+      "path": "evidence/GH-999/model-artifacts/s1-planner.json",
+      "sha256": "cbcdc99710358a16c5522400923052d399d57a54696ba30439b9e45d1ad64d67"
+    },
+    {
+      "path": "evidence/GH-999/model-artifacts/s1-planner-execution.json",
+      "sha256": "a5fad7f253abc55d58e981a17dd4f7bf9cc737aac3bc9aec341072b3734c510f"
+    },
+    {
+      "path": "evidence/GH-999/model-artifacts/s1-planner-transcript.json",
+      "sha256": "738e03a02193fb68ebbe95272b73854c8d8c061c846856881cef6aa409701b3d"
+    },
+    {
+      "path": "evidence/GH-999/model-artifacts/source-logs/s1-planner.jsonl",
+      "sha256": "7e308c9461d68c20a252649cc13c8a2f70b2dcf7c860cf72b29b103549fba7c8"
+    },
+    {
+      "path": "evidence/GH-999/model-artifacts/archon-adapter-deepseek.json",
+      "sha256": "1ecf383384d4de611db8f4a75f9e1fc226138ed32decea1971ee60b75db2df2d"
+    }
+  ],
+  "orchestration": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-pro",
+    "interface": "deepseek-anthropic-api",
+    "archon_version": "v0.5.0",
+    "archon_binary_sha256": "3258a78413f6cc0eb8fb214b3293bccbbdb670c09c973821633ee478c6d91bd1",
+    "workflow": "plan-to-pr",
+    "required_workflows": [
+      "plan-to-pr",
+      "pr-review-fix-loop",
+      "ai-delivery-contract-probe"
+    ],
+    "contract_probe": {
+      "contract_version": "ai-delivery-archon-probe/v1",
+      "ok": true
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "task-1",
+      "title": "Preserve the DeepSeek V4-Pro provider and provenance chain",
+      "owner": "deepseek",
+      "dependencies": [],
+      "scope": [
+        "control_api/deepseek_agent_provider.py",
+        "scripts/deepseek_agent_launcher.py",
+        "evidence/AI-DELIVERY-CONTROL/agent-provider-probe-latest.json",
+        "evidence/GH-999/model-artifacts/"
+      ],
+      "acceptance_criteria": [
+        "DeepSeek provider probe is PASS or an explicitly recorded degraded fallback.",
+        "S1/S8/S10 provenance records contain deepseek-v4-pro and no Claude provider identity.",
+        "No credential is written to repository files, logs, manifests, or task artifacts."
+      ],
+      "risks": [
+        "Provider fallback or model drift can invalidate the required provenance contract.",
+        "A credential or raw response can leak into evidence if redaction boundaries regress."
+      ]
+    },
+    {
+      "task_id": "task-2",
+      "title": "Run governed Archon compatibility and application workflow checks",
+      "owner": "task-master-archon",
+      "dependencies": ["task-1"],
+      "scope": [
+        ".archon/workflows/plan-to-pr.yaml",
+        ".archon/workflows/pr-review-fix-loop.yaml",
+        ".archon/workflows/contract-probe.yaml",
+        "evidence/GH-999/model-artifacts/archon-adapter-deepseek.json"
+      ],
+      "acceptance_criteria": [
+        "Pinned Archon v0.5.0 version and SHA-256 checks pass.",
+        "All required workflows are discovered and validate successfully.",
+        "Deterministic contract probe returns ai-delivery-archon-probe/v1 with ok=true.",
+        "The opencode compatibility bridge remains bound to the governed DeepSeek launcher and does not admit legacy credentials."
+      ],
+      "risks": [
+        "Archon schema/provider drift can silently route a logical role to the wrong executable.",
+        "Workflow validation alone cannot prove GitHub PR or CI state."
+      ]
+    },
+    {
+      "task_id": "task-3",
+      "title": "Complete the evidence-backed delivery handoff without autonomous production mutation",
+      "owner": "codex-worker",
+      "dependencies": ["task-2"],
+      "scope": [
+        "docs/product-design/GH-999/",
+        "evidence/GH-999/",
+        "evidence/AI-DELIVERY-CONTROL/",
+        "GitHub Issue/PR/CI references"
+      ],
+      "acceptance_criteria": [
+        "S3 through S7 produce a bound branch/worktree, Codex plan, read-only exploration proof, implementation gates, manifest, rollback, and real CI evidence.",
+        "DeepSeek reviewer and final artifacts are imported only from the governed model-artifacts directory and are tied to real evidence hashes.",
+        "Repeated blockers route to human decision and production status remains NO_GO until real external and human evidence is present."
+      ],
+      "risks": [
+        "Missing GitHub authentication, PR/CI, CODEOWNERS, or branch-protection evidence must stop the run.",
+        "A green local check must not be promoted to production GO without external evidence and owner authorization."
+      ]
+    }
+  ],
+  "human_boundaries": [
+    "No automatic merge.",
+    "No automatic deployment.",
+    "No secrets, billing, branch-protection, or production-data mutation."
+  ]
+}

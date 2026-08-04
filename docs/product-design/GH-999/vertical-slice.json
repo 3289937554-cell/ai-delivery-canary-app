@@ -1,0 +1,39 @@
+{
+  "issue_id": "GH-999",
+  "schema_version": "vertical-slice/v1",
+  "slices": [
+    {
+      "evidence_requirements": [
+        "event receipt hash",
+        "revision-bound decision",
+        "verified evidence metadata",
+        "no raw output"
+      ],
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN",
+        "FLOW-HUMAN-DECISION"
+      ],
+      "id": "SLICE-RUN-APPROVAL",
+      "path": [
+        "SCREEN-RUN-CENTER",
+        "API-TASK-TASK-RESOLVE-HUMAN-TASK",
+        "FLOW-GOVERNED-RUN:transition",
+        "event receipt",
+        "evidence reference"
+      ],
+      "real_data_scenario": "A run reaches a human task, the first evidence revision is stale, the owner refreshes it, and a valid decision resumes the run.",
+      "screen_ids": [
+        "SCREEN-RUN-CENTER",
+        "SCREEN-RUN-DETAIL",
+        "SCREEN-APPROVAL-DESK",
+        "SCREEN-EVIDENCE"
+      ],
+      "user_goal": "The allowed decision is recorded with actor, reason, revision, evidence hash, and receipt hash.",
+      "verification_commands": [
+        "npm test",
+        "npm run build",
+        "npm run smoke"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "issue_id": "GH-999",
+  "schema_version": "design-variants/v1",
+  "variants": [
+    {
+      "artifact_path": "docs/product-design/GH-999/variants/variant-a.md",
+      "artifact_sha256": "ab656d79a320c60c4da31c9a19cba8e092855ccaf3cb547d557fc96e227ac09c",
+      "covered_flow_ids": [
+        "FLOW-GOVERNED-RUN",
+        "FLOW-HUMAN-DECISION"
+      ],
+      "id": "variant-a",
+      "provider_ref": "repository",
+      "summary": "Information-dense operational direction"
+    },
+    {
+      "artifact_path": "docs/product-design/GH-999/variants/variant-b.md",
+      "artifact_sha256": "d64e598be20a24b48abbf671e8f3369f4eaf4d27da0b79b1da6cb62ec79472e4",
+      "covered_flow_ids": [
+        "FLOW-GOVERNED-RUN",
+        "FLOW-HUMAN-DECISION"
+      ],
+      "id": "variant-b",
+      "provider_ref": "repository",
+      "summary": "Guided task-focused direction"
+    },
+    {
+      "artifact_path": "docs/product-design/GH-999/variants/variant-c.md",
+      "artifact_sha256": "bb673b00f8aff8dde8c1fcf19d31ff08425a7aa96789938370922dae69ba02c7",
+      "covered_flow_ids": [
+        "FLOW-GOVERNED-RUN",
+        "FLOW-HUMAN-DECISION"
+      ],
+      "id": "variant-c",
+      "provider_ref": "repository",
+      "summary": "Adaptive overview-and-detail direction"
+    }
+  ]
+}

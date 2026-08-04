@@ -1,0 +1,63 @@
+{
+  "artifacts": [
+    {
+      "path": "docs/product-design/GH-999/application-blueprint.json",
+      "sha256": "9d4c7a36a8dfe7c1c82aa194a3bbf3cdacfcd2693937db1fa78e63c7b6c9adfb"
+    },
+    {
+      "path": "docs/product-design/GH-999/product-brief.md",
+      "sha256": "93b343b13c977464d7d6089c61d2be49af398b5d082cd7f7e68a87ce67d94aa2"
+    },
+    {
+      "path": "docs/product-design/GH-999/domain-model.json",
+      "sha256": "eba50d813bedef2b600f21dfdfa9e5da8c7a571100d43e39ad95e0f5a921ee7e"
+    },
+    {
+      "path": "docs/product-design/GH-999/workflow-state-machine.json",
+      "sha256": "47d82f6b5b666e1905152ee5ca75ecb6adac8a3a49995311b972825df39ed37b"
+    },
+    {
+      "path": "docs/product-design/GH-999/permission-matrix.json",
+      "sha256": "a90ba33529a3b45f85cfe16449e6c15f73d682d90c85fd3c961209e5c4535483"
+    },
+    {
+      "path": "docs/product-design/GH-999/information-architecture.json",
+      "sha256": "c80407dfe27319f3c7927e6d136751528e719a87cbf7fcfa550994b37a6c50c3"
+    },
+    {
+      "path": "docs/product-design/GH-999/screen-inventory.json",
+      "sha256": "a09da4733667041b417846a3f5af719cc59dc76aa29eb517e7d57214b5ee3ab9"
+    },
+    {
+      "path": "docs/product-design/GH-999/DESIGN.md",
+      "sha256": "4f0b229f9a533811a98944c7e088bad98b8709d98fb6e9c3148554f18e989b54"
+    },
+    {
+      "path": "docs/product-design/GH-999/tokens.json",
+      "sha256": "f66d79c86dd0e461059d285ae363013aee0415c2e0f2a9f177574d5dd885bb91"
+    },
+    {
+      "path": "docs/product-design/GH-999/component-catalog.json",
+      "sha256": "28973dec6605384e0c068bc68d154ad9071c5ed877f68c070657341fb0b4329c"
+    },
+    {
+      "path": "docs/product-design/GH-999/screen-state-matrix.json",
+      "sha256": "157ed19a2a4d5b2df02854c7407b2f3ac565b3e3bc36dd3f2d48018e92f03015"
+    },
+    {
+      "path": "docs/product-design/GH-999/api-contract.json",
+      "sha256": "86455b217b838721a494928832f6f85a4cbd95cc4c2cf1efa95e716d75f2c872"
+    },
+    {
+      "path": "docs/product-design/GH-999/frontend-architecture.md",
+      "sha256": "1cf35a73be62ca8eb7a26c4ffa270b7fa8111007f99821324e486c904b565dbd"
+    },
+    {
+      "path": "docs/product-design/GH-999/vertical-slice.json",
+      "sha256": "f6b4f76ec0840554ea6252349ed3d7691d2b9446726f095c25b94aef04664b78"
+    }
+  ],
+  "issue_id": "GH-999",
+  "schema_version": "product-architecture-manifest/v1",
+  "stage": "vertical_slice"
+}

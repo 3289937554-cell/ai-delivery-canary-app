@@ -1,0 +1,110 @@
+{
+  "issue_id": "GH-999",
+  "schema_version": "workflow-state-machine/v1",
+  "workflows": [
+    {
+      "entity_id": "ENT-RUN",
+      "id": "FLOW-GOVERNED-RUN",
+      "name": "Run governed work",
+      "states": [
+        {
+          "id": "queued",
+          "meaning": "Ready to start"
+        },
+        {
+          "id": "running",
+          "meaning": "Executing the approved workflow"
+        },
+        {
+          "id": "waiting",
+          "meaning": "Waiting for Codex, a human, or an external dependency"
+        },
+        {
+          "id": "blocked",
+          "meaning": "A gate or dependency prevents progress"
+        },
+        {
+          "id": "complete",
+          "meaning": "All required gates passed"
+        }
+      ],
+      "transitions": [
+        {
+          "action": "start",
+          "from": "queued",
+          "to": "running"
+        },
+        {
+          "action": "wait_for_human",
+          "from": "running",
+          "to": "waiting"
+        },
+        {
+          "action": "block",
+          "from": "running",
+          "to": "blocked"
+        },
+        {
+          "action": "resume",
+          "from": "waiting",
+          "to": "running"
+        },
+        {
+          "action": "recover",
+          "from": "blocked",
+          "to": "running"
+        },
+        {
+          "action": "finish",
+          "from": "running",
+          "to": "complete"
+        }
+      ]
+    },
+    {
+      "entity_id": "ENT-HUMAN-TASK",
+      "id": "FLOW-HUMAN-DECISION",
+      "name": "Resolve a bound human task",
+      "states": [
+        {
+          "id": "pending",
+          "meaning": "Decision is required"
+        },
+        {
+          "id": "resolved",
+          "meaning": "Allowed decision recorded"
+        },
+        {
+          "id": "stale",
+          "meaning": "Revision or evidence no longer matches"
+        },
+        {
+          "id": "rejected",
+          "meaning": "Decision or evidence was rejected"
+        }
+      ],
+      "transitions": [
+        {
+          "action": "approve",
+          "from": "pending",
+          "to": "resolved"
+        },
+        {
+          "action": "detect_revision_drift",
+          "from": "pending",
+          "to": "stale"
+        },
+        {
+          "action": "reject",
+          "from": "pending",
+          "to": "rejected"
+        },
+        {
+          "action": "refresh",
+          "from": "stale",
+          "to": "pending"
+        }
+      ]
+    }
+  ]
+}

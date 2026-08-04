@@ -1,0 +1,10 @@
+{
+  "artifact_path": "docs/product-design/GH-999/variants/variant-a.md",
+  "artifact_sha256": "ab656d79a320c60c4da31c9a19cba8e092855ccaf3cb547d557fc96e227ac09c",
+  "decided_at": "2026-08-04T03:06:20Z",
+  "gate": "concept",
+  "owner": "@3289937554-cell",
+  "schema_version": "product-design-approval/v1",
+  "status": "approved",
+  "variant_id": "variant-a"
+}

@@ -1,0 +1,49 @@
+{
+  "global_actions": [
+    "global-search",
+    "command-menu",
+    "notifications"
+  ],
+  "issue_id": "GH-999",
+  "primary_navigation": [
+    {
+      "id": "NAV-RUN-CENTER",
+      "label": "Run center",
+      "screen_id": "SCREEN-RUN-CENTER"
+    },
+    {
+      "id": "NAV-RUN-DETAIL",
+      "label": "Run detail",
+      "screen_id": "SCREEN-RUN-DETAIL"
+    },
+    {
+      "id": "NAV-APPROVAL-DESK",
+      "label": "Approval desk",
+      "screen_id": "SCREEN-APPROVAL-DESK"
+    },
+    {
+      "id": "NAV-EVIDENCE",
+      "label": "Evidence",
+      "screen_id": "SCREEN-EVIDENCE"
+    }
+  ],
+  "schema_version": "information-architecture/v1",
+  "workspaces": [
+    {
+      "id": "WORKSPACE-RUN-CENTER",
+      "purpose": "Create or resume a run"
+    },
+    {
+      "id": "WORKSPACE-RUN-DETAIL",
+      "purpose": "Inspect the next legal action"
+    },
+    {
+      "id": "WORKSPACE-APPROVAL-DESK",
+      "purpose": "Resolve a revision-bound human task"
+    },
+    {
+      "id": "WORKSPACE-EVIDENCE",
+      "purpose": "Inspect verified evidence metadata"
+    }
+  ]
+}

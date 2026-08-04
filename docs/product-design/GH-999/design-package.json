@@ -1,0 +1,127 @@
+{
+  "artifacts": [
+    {
+      "path": "docs/product-design/GH-999/DESIGN.md",
+      "sha256": "4f0b229f9a533811a98944c7e088bad98b8709d98fb6e9c3148554f18e989b54"
+    },
+    {
+      "path": "docs/product-design/GH-999/api-contract.json",
+      "sha256": "86455b217b838721a494928832f6f85a4cbd95cc4c2cf1efa95e716d75f2c872"
+    },
+    {
+      "path": "docs/product-design/GH-999/application-blueprint.json",
+      "sha256": "9d4c7a36a8dfe7c1c82aa194a3bbf3cdacfcd2693937db1fa78e63c7b6c9adfb"
+    },
+    {
+      "path": "docs/product-design/GH-999/approvals/concept.json",
+      "sha256": "89c1a14f461d3f156d417d2fad476a11eee72980d47e18403cb3723c98ac325c"
+    },
+    {
+      "path": "docs/product-design/GH-999/approvals/functional.json",
+      "sha256": "3be9fbea72d9c3dba9ef3ead4259b2710189ae67128773f03fcd46dabfa8ce77"
+    },
+    {
+      "path": "docs/product-design/GH-999/asset-inventory.json",
+      "sha256": "2aa5e6209fd92767577179bcc0b7146122a64dbd86419897ab015eb781db7c98"
+    },
+    {
+      "path": "docs/product-design/GH-999/component-catalog.json",
+      "sha256": "28973dec6605384e0c068bc68d154ad9071c5ed877f68c070657341fb0b4329c"
+    },
+    {
+      "path": "docs/product-design/GH-999/domain-model.json",
+      "sha256": "eba50d813bedef2b600f21dfdfa9e5da8c7a571100d43e39ad95e0f5a921ee7e"
+    },
+    {
+      "path": "docs/product-design/GH-999/frontend-architecture.md",
+      "sha256": "1cf35a73be62ca8eb7a26c4ffa270b7fa8111007f99821324e486c904b565dbd"
+    },
+    {
+      "path": "docs/product-design/GH-999/functional-map.json",
+      "sha256": "706e77d1a5cbe8b520fda9669ab3af8797834b5aea6f65bcb449f80855a9979a"
+    },
+    {
+      "path": "docs/product-design/GH-999/handoff.json",
+      "sha256": "4f907f58f60d78ae66aa177c60b5cf7d6c329c8198ae4e278d376be23dc02348"
+    },
+    {
+      "path": "docs/product-design/GH-999/information-architecture.json",
+      "sha256": "c80407dfe27319f3c7927e6d136751528e719a87cbf7fcfa550994b37a6c50c3"
+    },
+    {
+      "path": "docs/product-design/GH-999/permission-matrix.json",
+      "sha256": "a90ba33529a3b45f85cfe16449e6c15f73d682d90c85fd3c961209e5c4535483"
+    },
+    {
+      "path": "docs/product-design/GH-999/product-brief.md",
+      "sha256": "93b343b13c977464d7d6089c61d2be49af398b5d082cd7f7e68a87ce67d94aa2"
+    },
+    {
+      "path": "docs/product-design/GH-999/reviews/accessibility.md",
+      "sha256": "8a36342b4078f0a64b789a279fa9bca23442fef4893a454420547c25ed71b094"
+    },
+    {
+      "path": "docs/product-design/GH-999/reviews/design-system.md",
+      "sha256": "f875da7d401e7b085c7f508332154400b6d0f98b0d8ab39feebd78a9712c88cc"
+    },
+    {
+      "path": "docs/product-design/GH-999/reviews/usability.md",
+      "sha256": "7543b0ae0705af93922ea85ecabcd60ead609e1686c1bda6bbd8e9c623e7e8fa"
+    },
+    {
+      "path": "docs/product-design/GH-999/reviews/ux-copy.md",
+      "sha256": "64bce2a3b9b31317a61f5a621dbdbdb96eb21bb808f52bc0392972bff65c0412"
+    },
+    {
+      "path": "docs/product-design/GH-999/screen-inventory.json",
+      "sha256": "a09da4733667041b417846a3f5af719cc59dc76aa29eb517e7d57214b5ee3ab9"
+    },
+    {
+      "path": "docs/product-design/GH-999/screen-state-matrix.json",
+      "sha256": "157ed19a2a4d5b2df02854c7407b2f3ac565b3e3bc36dd3f2d48018e92f03015"
+    },
+    {
+      "path": "docs/product-design/GH-999/tokens.json",
+      "sha256": "f66d79c86dd0e461059d285ae363013aee0415c2e0f2a9f177574d5dd885bb91"
+    },
+    {
+      "path": "docs/product-design/GH-999/user-flows.md",
+      "sha256": "fa1b0f4a1064d23bf835ec1d1c0507931a4a8c363d114c7aadce2574df2a0989"
+    },
+    {
+      "path": "docs/product-design/GH-999/variants.json",
+      "sha256": "97edb2da7dfdb9106dd08da5d37d444dea00ada5199147477b4e2ce007f6b09b"
+    },
+    {
+      "path": "docs/product-design/GH-999/variants/variant-a.md",
+      "sha256": "ab656d79a320c60c4da31c9a19cba8e092855ccaf3cb547d557fc96e227ac09c"
+    },
+    {
+      "path": "docs/product-design/GH-999/variants/variant-b.md",
+      "sha256": "d64e598be20a24b48abbf671e8f3369f4eaf4d27da0b79b1da6cb62ec79472e4"
+    },
+    {
+      "path": "docs/product-design/GH-999/variants/variant-c.md",
+      "sha256": "bb673b00f8aff8dde8c1fcf19d31ff08425a7aa96789938370922dae69ba02c7"
+    },
+    {
+      "path": "docs/product-design/GH-999/vertical-slice.json",
+      "sha256": "f6b4f76ec0840554ea6252349ed3d7691d2b9446726f095c25b94aef04664b78"
+    },
+    {
+      "path": "docs/product-design/GH-999/workflow-state-machine.json",
+      "sha256": "47d82f6b5b666e1905152ee5ca75ecb6adac8a3a49995311b972825df39ed37b"
+    }
+  ],
+  "design_version": "1.0.0",
+  "generated_at": "2026-08-04T03:08:57Z",
+  "generator_version": "product-design-package/v1",
+  "issue_id": "GH-999",
+  "profile": "operations",
+  "schema_version": "product-design-package/v1",
+  "selected_variant_id": "variant-a",
+  "standards": {
+    "accessibility": "WCAG 2.2 AA",
+    "token_format": "DTCG 2025.10"
+  }
+}

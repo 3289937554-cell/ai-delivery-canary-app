@@ -1,0 +1,109 @@
+{
+  "issue_id": "GH-999",
+  "schema_version": "screen-inventory/v1",
+  "screens": [
+    {
+      "composition": [
+        "master-detail",
+        "timeline",
+        "command-bar",
+        "status-summary"
+      ],
+      "entry_points": [
+        "primary-navigation",
+        "global-search"
+      ],
+      "exit_paths": [
+        "open-run-detail",
+        "open-approval-drawer",
+        "open-evidence"
+      ],
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN"
+      ],
+      "id": "SCREEN-RUN-CENTER",
+      "primary_action": "Create or resume a run",
+      "task_ids": [
+        "TASK-MONITOR-RUN"
+      ]
+    },
+    {
+      "composition": [
+        "detail-pane",
+        "timeline",
+        "command-bar",
+        "audit-feed"
+      ],
+      "entry_points": [
+        "run-center",
+        "notification"
+      ],
+      "exit_paths": [
+        "return-to-run-center",
+        "open-approval-drawer",
+        "open-evidence"
+      ],
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN",
+        "FLOW-HUMAN-DECISION"
+      ],
+      "id": "SCREEN-RUN-DETAIL",
+      "primary_action": "Inspect the next legal action",
+      "task_ids": [
+        "TASK-MONITOR-RUN",
+        "TASK-RESOLVE-HUMAN-TASK"
+      ]
+    },
+    {
+      "composition": [
+        "detail-pane",
+        "approval-drawer",
+        "evidence-summary",
+        "decision-bar",
+        "stale-warning"
+      ],
+      "entry_points": [
+        "run-detail",
+        "approvals-navigation"
+      ],
+      "exit_paths": [
+        "resolve-task",
+        "refresh-stale-task",
+        "return-to-run-detail"
+      ],
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN",
+        "FLOW-HUMAN-DECISION"
+      ],
+      "id": "SCREEN-APPROVAL-DESK",
+      "primary_action": "Resolve a revision-bound human task",
+      "task_ids": [
+        "TASK-RESOLVE-HUMAN-TASK"
+      ]
+    },
+    {
+      "composition": [
+        "evidence-table",
+        "metadata-panel",
+        "redaction-notice",
+        "audit-feed"
+      ],
+      "entry_points": [
+        "evidence-navigation",
+        "run-detail",
+        "approval-drawer"
+      ],
+      "exit_paths": [
+        "return-to-run-detail"
+      ],
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN"
+      ],
+      "id": "SCREEN-EVIDENCE",
+      "primary_action": "Inspect verified evidence metadata",
+      "task_ids": [
+        "TASK-INSPECT-EVIDENCE"
+      ]
+    }
+  ]
+}

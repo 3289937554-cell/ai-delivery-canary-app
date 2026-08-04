@@ -1,0 +1,9 @@
+{
+  "artifact_path": "docs/product-design/GH-999/design-package.json",
+  "artifact_sha256": "69ae6fdda8bea94f3527a1038e7234d1b8e3a2c6ab0fa5a9ded881f3b14ffcc4",
+  "decided_at": "2026-08-04T03:09:21Z",
+  "gate": "final",
+  "owner": "@3289937554-cell",
+  "schema_version": "product-design-approval/v1",
+  "status": "approved"
+}

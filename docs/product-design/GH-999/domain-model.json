@@ -1,0 +1,104 @@
+{
+  "entities": [
+    {
+      "description": "A durable product workspace with owners and delivery policy.",
+      "fields": [
+        "id",
+        "name",
+        "owner_id",
+        "policy_id",
+        "status",
+        "created_at",
+        "updated_at"
+      ],
+      "id": "ENT-PROJECT",
+      "lifecycle_states": [
+        "draft",
+        "active",
+        "blocked",
+        "archived"
+      ],
+      "name": "Project"
+    },
+    {
+      "description": "A revisioned execution of a project workflow.",
+      "fields": [
+        "id",
+        "project_id",
+        "revision",
+        "checkpoint",
+        "status",
+        "next_action",
+        "updated_at"
+      ],
+      "id": "ENT-RUN",
+      "lifecycle_states": [
+        "queued",
+        "running",
+        "waiting",
+        "blocked",
+        "complete"
+      ],
+      "name": "Run"
+    },
+    {
+      "description": "A revision and evidence-bound decision that must be resolved by an allowed role.",
+      "fields": [
+        "id",
+        "run_id",
+        "revision",
+        "allowed_decisions",
+        "evidence_hash",
+        "status",
+        "resolved_by"
+      ],
+      "id": "ENT-HUMAN-TASK",
+      "lifecycle_states": [
+        "pending",
+        "resolved",
+        "stale",
+        "cancelled"
+      ],
+      "name": "Human task"
+    },
+    {
+      "description": "A classified, redacted reference to a verified artifact.",
+      "fields": [
+        "id",
+        "run_id",
+        "classification",
+        "relative_path",
+        "sha256",
+        "byte_count",
+        "status"
+      ],
+      "id": "ENT-EVIDENCE",
+      "lifecycle_states": [
+        "candidate",
+        "verified",
+        "redacted",
+        "rejected"
+      ],
+      "name": "Evidence reference"
+    }
+  ],
+  "issue_id": "GH-999",
+  "relationships": [
+    {
+      "from": "ENT-PROJECT",
+      "name": "has_many",
+      "to": "ENT-RUN"
+    },
+    {
+      "from": "ENT-RUN",
+      "name": "has_many",
+      "to": "ENT-HUMAN-TASK"
+    },
+    {
+      "from": "ENT-RUN",
+      "name": "has_many",
+      "to": "ENT-EVIDENCE"
+    }
+  ],
+  "schema_version": "domain-model/v1"
+}

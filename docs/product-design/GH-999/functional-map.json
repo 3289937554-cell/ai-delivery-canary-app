@@ -1,0 +1,106 @@
+{
+  "capabilities": [
+    {
+      "acceptance_criteria": [
+        "The operator can see the current checkpoint, next legal action, and latest event receipt."
+      ],
+      "entities": [
+        "ENT-PROJECT",
+        "ENT-RUN"
+      ],
+      "errors": [
+        "FORBIDDEN",
+        "NOT_FOUND",
+        "STALE_REVISION",
+        "PROVIDER_BLOCKED"
+      ],
+      "id": "CAP-MONITOR-RUN",
+      "name": "Monitor a governed run",
+      "permissions": [
+        "run:read",
+        "run:create",
+        "run:resume"
+      ],
+      "roles": [
+        "ROLE-OPERATOR",
+        "ROLE-OWNER",
+        "ROLE-AUDITOR"
+      ],
+      "states": [
+        "queued",
+        "running",
+        "waiting",
+        "blocked",
+        "complete"
+      ]
+    },
+    {
+      "acceptance_criteria": [
+        "The allowed decision is recorded with actor, reason, revision, evidence hash, and receipt hash."
+      ],
+      "entities": [
+        "ENT-RUN",
+        "ENT-HUMAN-TASK",
+        "ENT-EVIDENCE"
+      ],
+      "errors": [
+        "FORBIDDEN",
+        "STALE_REVISION",
+        "EVIDENCE_MISMATCH",
+        "INVALID_DECISION"
+      ],
+      "id": "CAP-RESOLVE-HUMAN-TASK",
+      "name": "Resolve a bound human task",
+      "permissions": [
+        "task:read",
+        "task:approve",
+        "evidence:read"
+      ],
+      "roles": [
+        "ROLE-OWNER"
+      ],
+      "states": [
+        "pending",
+        "resolved",
+        "stale",
+        "rejected"
+      ]
+    },
+    {
+      "acceptance_criteria": [
+        "The auditor can confirm an evidence reference without receiving raw secrets, absolute paths, or model output."
+      ],
+      "entities": [
+        "ENT-RUN",
+        "ENT-EVIDENCE"
+      ],
+      "errors": [
+        "FORBIDDEN",
+        "NOT_FOUND",
+        "CLASSIFICATION_BLOCKED",
+        "FILE_TOO_LARGE"
+      ],
+      "id": "CAP-INSPECT-EVIDENCE",
+      "name": "Inspect verified evidence",
+      "permissions": [
+        "evidence:read"
+      ],
+      "roles": [
+        "ROLE-OWNER",
+        "ROLE-AUDITOR"
+      ],
+      "states": [
+        "candidate",
+        "verified",
+        "redacted",
+        "rejected"
+      ]
+    }
+  ],
+  "core_flow_ids": [
+    "FLOW-GOVERNED-RUN",
+    "FLOW-HUMAN-DECISION"
+  ],
+  "issue_id": "GH-999",
+  "schema_version": "functional-map/v1"
+}

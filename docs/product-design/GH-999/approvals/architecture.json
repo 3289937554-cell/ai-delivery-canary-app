@@ -1,0 +1,9 @@
+{
+  "artifact_path": "docs/product-design/GH-999/architecture-manifest.json",
+  "artifact_sha256": "9cb95ebb2af97353c3da3dc0049da7dc7f9ffeb32f04b695efbed45e9e25732a",
+  "decided_at": "2026-08-04T03:10:24Z",
+  "gate": "architecture",
+  "owner": "@3289937554-cell",
+  "schema_version": "product-architecture-approval/v1",
+  "status": "approved"
+}

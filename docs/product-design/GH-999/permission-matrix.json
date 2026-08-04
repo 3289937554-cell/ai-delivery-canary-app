@@ -1,0 +1,49 @@
+{
+  "issue_id": "GH-999",
+  "matrix": [
+    {
+      "actions": [
+        "project:read",
+        "run:read",
+        "run:create",
+        "run:pause",
+        "task:read"
+      ],
+      "role_id": "ROLE-OPERATOR"
+    },
+    {
+      "actions": [
+        "project:read",
+        "run:read",
+        "task:approve",
+        "evidence:read",
+        "run:resume"
+      ],
+      "role_id": "ROLE-OWNER"
+    },
+    {
+      "actions": [
+        "project:read",
+        "run:read",
+        "evidence:read",
+        "event:read"
+      ],
+      "role_id": "ROLE-AUDITOR"
+    }
+  ],
+  "roles": [
+    {
+      "id": "ROLE-OPERATOR",
+      "name": "Operator"
+    },
+    {
+      "id": "ROLE-OWNER",
+      "name": "Product owner"
+    },
+    {
+      "id": "ROLE-AUDITOR",
+      "name": "Auditor"
+    }
+  ],
+  "schema_version": "permission-matrix/v1"
+}

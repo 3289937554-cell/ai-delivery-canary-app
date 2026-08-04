@@ -1,0 +1,217 @@
+{
+  "issue_id": "GH-999",
+  "schema_version": "screen-state-matrix/v2",
+  "screens": [
+    {
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN"
+      ],
+      "functional_ids": [
+        "CAP-MONITOR-RUN"
+      ],
+      "id": "SCREEN-RUN-CENTER",
+      "name": "Run center",
+      "states": [
+        {
+          "name": "blocked",
+          "status": "required"
+        },
+        {
+          "name": "default",
+          "status": "required"
+        },
+        {
+          "name": "disabled",
+          "status": "required"
+        },
+        {
+          "name": "empty",
+          "status": "required"
+        },
+        {
+          "name": "error",
+          "status": "required"
+        },
+        {
+          "name": "extreme-content",
+          "status": "required"
+        },
+        {
+          "name": "loading",
+          "status": "required"
+        },
+        {
+          "name": "permission-denied",
+          "status": "required"
+        },
+        {
+          "name": "readonly",
+          "status": "required"
+        },
+        {
+          "name": "stale",
+          "status": "required"
+        }
+      ]
+    },
+    {
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN",
+        "FLOW-HUMAN-DECISION"
+      ],
+      "functional_ids": [
+        "CAP-MONITOR-RUN",
+        "CAP-RESOLVE-HUMAN-TASK"
+      ],
+      "id": "SCREEN-RUN-DETAIL",
+      "name": "Run detail",
+      "states": [
+        {
+          "name": "blocked",
+          "status": "required"
+        },
+        {
+          "name": "default",
+          "status": "required"
+        },
+        {
+          "name": "disabled",
+          "status": "required"
+        },
+        {
+          "name": "empty",
+          "status": "required"
+        },
+        {
+          "name": "error",
+          "status": "required"
+        },
+        {
+          "name": "extreme-content",
+          "status": "required"
+        },
+        {
+          "name": "loading",
+          "status": "required"
+        },
+        {
+          "name": "permission-denied",
+          "status": "required"
+        },
+        {
+          "name": "readonly",
+          "status": "required"
+        },
+        {
+          "name": "stale",
+          "status": "required"
+        }
+      ]
+    },
+    {
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN",
+        "FLOW-HUMAN-DECISION"
+      ],
+      "functional_ids": [
+        "CAP-RESOLVE-HUMAN-TASK"
+      ],
+      "id": "SCREEN-APPROVAL-DESK",
+      "name": "Approval desk",
+      "states": [
+        {
+          "name": "blocked",
+          "status": "required"
+        },
+        {
+          "name": "default",
+          "status": "required"
+        },
+        {
+          "name": "disabled",
+          "status": "required"
+        },
+        {
+          "name": "empty",
+          "status": "required"
+        },
+        {
+          "name": "error",
+          "status": "required"
+        },
+        {
+          "name": "extreme-content",
+          "status": "required"
+        },
+        {
+          "name": "loading",
+          "status": "required"
+        },
+        {
+          "name": "permission-denied",
+          "status": "required"
+        },
+        {
+          "name": "readonly",
+          "status": "required"
+        },
+        {
+          "name": "stale",
+          "status": "required"
+        }
+      ]
+    },
+    {
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN"
+      ],
+      "functional_ids": [
+        "CAP-INSPECT-EVIDENCE"
+      ],
+      "id": "SCREEN-EVIDENCE",
+      "name": "Evidence",
+      "states": [
+        {
+          "name": "blocked",
+          "status": "required"
+        },
+        {
+          "name": "default",
+          "status": "required"
+        },
+        {
+          "name": "disabled",
+          "status": "required"
+        },
+        {
+          "name": "empty",
+          "status": "required"
+        },
+        {
+          "name": "error",
+          "status": "required"
+        },
+        {
+          "name": "extreme-content",
+          "status": "required"
+        },
+        {
+          "name": "loading",
+          "status": "required"
+        },
+        {
+          "name": "permission-denied",
+          "status": "required"
+        },
+        {
+          "name": "readonly",
+          "status": "required"
+        },
+        {
+          "name": "stale",
+          "status": "required"
+        }
+      ]
+    }
+  ]
+}

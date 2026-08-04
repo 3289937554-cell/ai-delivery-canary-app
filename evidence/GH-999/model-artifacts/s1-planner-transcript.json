@@ -1,0 +1,16 @@
+{
+  "schema_version": "ai-delivery-model-transcript/v1",
+  "role": "deepseek-planner",
+  "provider": "deepseek",
+  "session_id": "deepseek-s1-20260804-922c71f33672",
+  "model": "deepseek-v4-pro",
+  "source_log_path": "evidence/GH-999/model-artifacts/source-logs/s1-planner.jsonl",
+  "source_log_sha256": "7e308c9461d68c20a252649cc13c8a2f70b2dcf7c860cf72b29b103549fba7c8",
+  "result": "DeepSeek V4-Pro generated a governed S1 planner task graph for GH-999.",
+  "endpoint": "https://api.deepseek.com/anthropic/v1/messages",
+  "usage": {
+    "input_tokens": 532,
+    "output_tokens": 3892
+  },
+  "cost_usd": 0.00723492
+}

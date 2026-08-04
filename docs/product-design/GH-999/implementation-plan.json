@@ -1,0 +1,185 @@
+{
+  "architecture": "feature-slice",
+  "blueprint_sha256": "9d4c7a36a8dfe7c1c82aa194a3bbf3cdacfcd2693937db1fa78e63c7b6c9adfb",
+  "issue_id": "GH-999",
+  "required_boundaries": [
+    "src/app",
+    "src/entities",
+    "src/features",
+    "src/workflows",
+    "src/pages",
+    "src/shared"
+  ],
+  "rules": [
+    "Implement one vertical slice before expanding scope.",
+    "Pages compose task surfaces; they do not own domain transitions.",
+    "Do not replace blocked, stale, empty, or permission-denied states with mock success.",
+    "Stop and return BLOCKED when API, workflow, permission, or design evidence conflicts."
+  ],
+  "schema_version": "frontend-implementation-plan/v1",
+  "slices": [
+    {
+      "acceptance": {
+        "failure_recovery": "Show the blocking reason, owner, retry or resume action, and preserve the run revision.",
+        "success_signal": "The operator can see the current checkpoint, next legal action, and latest event receipt."
+      },
+      "api_ids": [
+        "API-TASK-TASK-MONITOR-RUN"
+      ],
+      "entity_ids": [
+        "ENT-PROJECT",
+        "ENT-RUN"
+      ],
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN"
+      ],
+      "frontend_paths": [
+        "src/features/task-monitor-run/index.ts",
+        "src/features/task-monitor-run/task-monitor-run.api.ts",
+        "src/features/task-monitor-run/task-monitor-run.workflow.ts",
+        "src/pages/screen-run-center.tsx",
+        "src/pages/screen-run-detail.tsx"
+      ],
+      "id": "IMPLEMENTATION-TASK-MONITOR-RUN",
+      "required_ui_states": [
+        "blocked",
+        "default",
+        "disabled",
+        "empty",
+        "error",
+        "extreme-content",
+        "loading",
+        "permission-denied",
+        "readonly",
+        "stale"
+      ],
+      "screen_ids": [
+        "SCREEN-RUN-CENTER",
+        "SCREEN-RUN-DETAIL"
+      ],
+      "state_sources": {
+        "server": "typed API/Gateway projection and event receipt",
+        "transport": "loading, retry, offline, stale, and permission error state",
+        "ui": "local selection, filters, drawers, focus, and responsive presentation",
+        "workflow": "workflow-state-machine.json and legal typed actions"
+      },
+      "task_id": "TASK-MONITOR-RUN",
+      "verification_commands": [
+        "npm run lint",
+        "npm run typecheck",
+        "npm test",
+        "npm run build",
+        "npm run smoke"
+      ]
+    },
+    {
+      "acceptance": {
+        "failure_recovery": "Keep the drawer open, identify stale or mismatched evidence, and require refresh instead of accepting a guess.",
+        "success_signal": "The allowed decision is recorded with actor, reason, revision, evidence hash, and receipt hash."
+      },
+      "api_ids": [
+        "API-TASK-TASK-RESOLVE-HUMAN-TASK"
+      ],
+      "entity_ids": [
+        "ENT-RUN",
+        "ENT-HUMAN-TASK",
+        "ENT-EVIDENCE"
+      ],
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN",
+        "FLOW-HUMAN-DECISION"
+      ],
+      "frontend_paths": [
+        "src/features/task-resolve-human-task/index.ts",
+        "src/features/task-resolve-human-task/task-resolve-human-task.api.ts",
+        "src/features/task-resolve-human-task/task-resolve-human-task.workflow.ts",
+        "src/pages/screen-run-detail.tsx",
+        "src/pages/screen-approval-desk.tsx"
+      ],
+      "id": "IMPLEMENTATION-TASK-RESOLVE-HUMAN-TASK",
+      "required_ui_states": [
+        "blocked",
+        "default",
+        "disabled",
+        "empty",
+        "error",
+        "extreme-content",
+        "loading",
+        "permission-denied",
+        "readonly",
+        "stale"
+      ],
+      "screen_ids": [
+        "SCREEN-RUN-DETAIL",
+        "SCREEN-APPROVAL-DESK"
+      ],
+      "state_sources": {
+        "server": "typed API/Gateway projection and event receipt",
+        "transport": "loading, retry, offline, stale, and permission error state",
+        "ui": "local selection, filters, drawers, focus, and responsive presentation",
+        "workflow": "workflow-state-machine.json and legal typed actions"
+      },
+      "task_id": "TASK-RESOLVE-HUMAN-TASK",
+      "verification_commands": [
+        "npm test",
+        "npm run build",
+        "npm run smoke",
+        "npm run lint",
+        "npm run typecheck"
+      ]
+    },
+    {
+      "acceptance": {
+        "failure_recovery": "Explain why content is withheld and keep metadata available for audit without exposing restricted bytes.",
+        "success_signal": "The auditor can confirm an evidence reference without receiving raw secrets, absolute paths, or model output."
+      },
+      "api_ids": [
+        "API-TASK-TASK-INSPECT-EVIDENCE"
+      ],
+      "entity_ids": [
+        "ENT-RUN",
+        "ENT-EVIDENCE"
+      ],
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN"
+      ],
+      "frontend_paths": [
+        "src/features/task-inspect-evidence/index.ts",
+        "src/features/task-inspect-evidence/task-inspect-evidence.api.ts",
+        "src/features/task-inspect-evidence/task-inspect-evidence.workflow.ts",
+        "src/pages/screen-evidence.tsx"
+      ],
+      "id": "IMPLEMENTATION-TASK-INSPECT-EVIDENCE",
+      "required_ui_states": [
+        "blocked",
+        "default",
+        "disabled",
+        "empty",
+        "error",
+        "extreme-content",
+        "loading",
+        "permission-denied",
+        "readonly",
+        "stale"
+      ],
+      "screen_ids": [
+        "SCREEN-EVIDENCE"
+      ],
+      "state_sources": {
+        "server": "typed API/Gateway projection and event receipt",
+        "transport": "loading, retry, offline, stale, and permission error state",
+        "ui": "local selection, filters, drawers, focus, and responsive presentation",
+        "workflow": "workflow-state-machine.json and legal typed actions"
+      },
+      "task_id": "TASK-INSPECT-EVIDENCE",
+      "verification_commands": [
+        "npm run lint",
+        "npm run typecheck",
+        "npm test",
+        "npm run build",
+        "npm run smoke"
+      ]
+    }
+  ],
+  "vertical_slice_id": "SLICE-RUN-APPROVAL"
+}

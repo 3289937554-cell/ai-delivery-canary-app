@@ -1,0 +1,80 @@
+{
+  "endpoints": [
+    {
+      "entity_ids": [
+        "ENT-PROJECT",
+        "ENT-RUN"
+      ],
+      "error_codes": [
+        "FORBIDDEN",
+        "NOT_FOUND",
+        "STALE_REVISION",
+        "PROVIDER_BLOCKED"
+      ],
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN"
+      ],
+      "id": "API-TASK-TASK-MONITOR-RUN",
+      "method": "POST",
+      "path": "/api/task-monitor-run",
+      "request": {
+        "body": "TASK-MONITOR-RUNInput"
+      },
+      "response": {
+        "body": "TASK-MONITOR-RUNResult"
+      }
+    },
+    {
+      "entity_ids": [
+        "ENT-RUN",
+        "ENT-HUMAN-TASK",
+        "ENT-EVIDENCE"
+      ],
+      "error_codes": [
+        "FORBIDDEN",
+        "STALE_REVISION",
+        "EVIDENCE_MISMATCH",
+        "INVALID_DECISION"
+      ],
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN",
+        "FLOW-HUMAN-DECISION"
+      ],
+      "id": "API-TASK-TASK-RESOLVE-HUMAN-TASK",
+      "method": "POST",
+      "path": "/api/task-resolve-human-task",
+      "request": {
+        "body": "TASK-RESOLVE-HUMAN-TASKInput"
+      },
+      "response": {
+        "body": "TASK-RESOLVE-HUMAN-TASKResult"
+      }
+    },
+    {
+      "entity_ids": [
+        "ENT-RUN",
+        "ENT-EVIDENCE"
+      ],
+      "error_codes": [
+        "FORBIDDEN",
+        "NOT_FOUND",
+        "CLASSIFICATION_BLOCKED",
+        "FILE_TOO_LARGE"
+      ],
+      "flow_ids": [
+        "FLOW-GOVERNED-RUN"
+      ],
+      "id": "API-TASK-TASK-INSPECT-EVIDENCE",
+      "method": "POST",
+      "path": "/api/task-inspect-evidence",
+      "request": {
+        "body": "TASK-INSPECT-EVIDENCEInput"
+      },
+      "response": {
+        "body": "TASK-INSPECT-EVIDENCEResult"
+      }
+    }
+  ],
+  "issue_id": "GH-999",
+  "schema_version": "api-contract/v1"
+}
