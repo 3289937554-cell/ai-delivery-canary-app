@@ -8,4 +8,4 @@ The service binds only to `127.0.0.1`. Reads are available locally; mutations re
 
 The domain owns release, gate, and risk state transitions. The store serializes mutations, writes recoverable journal state, and verifies audit-prefix consistency during recovery. The browser surface supports desktop and mobile release operations without requiring an external framework or database.
 
-Delivery governance remains GitHub-first: Issue #3 defines acceptance, PR #4 carries one implementation commit followed by one evidence-only commit, CI runs six required checks, and merge remains a human or merge-queue action.
+Delivery governance remains GitHub-first: Issue #999 defines acceptance, PR #9 carries one implementation commit followed by one evidence-only commit, CI runs six required checks, and merge remains a human or merge-queue action.

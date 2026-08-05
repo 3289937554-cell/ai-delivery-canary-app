@@ -1,8 +1,5 @@
 {
   "branch_protection_evidence": "evidence/AI-DELIVERY-CANARY/branch-protection.json",
-  "claude_final_artifact": "evidence/AI-DELIVERY-CANARY/claude-final.md",
-  "claude_planner_artifact": "evidence/AI-DELIVERY-CANARY/claude-planner.md",
-  "claude_reviewer_artifact": "evidence/AI-DELIVERY-CANARY/claude-reviewer.md",
   "codeowners_review_evidence": "evidence/AI-DELIVERY-CANARY/codeowners-review.json",
   "codex_explorer_artifact": "evidence/AI-DELIVERY-CANARY/codex-explorer.md",
   "codex_plan": "evidence/AI-DELIVERY-CANARY/codex-plan.md",
@@ -11,85 +8,95 @@
   "commercial_application": {
     "backend_entrypoint": "src/aid_canary_app.py",
     "data_persistence_artifact": "evidence/AI-DELIVERY-CANARY/product/persistence.md",
-    "deployment_mode": "Loopback-only local browser service with runtime bearer authentication for mutations.",
+    "deployment_mode": "loopback_only_local_browser_service",
     "frontend_entrypoint": "web/index.html",
     "operations_runbook": "docs/operations-runbook.md",
     "product_acceptance_artifact": "evidence/AI-DELIVERY-CANARY/product/acceptance.md",
-    "product_goal": "Manage local software releases, delivery gates, risks, lifecycle decisions, and auditable operational history from one browser console.",
-    "product_name": "Delivery Operations Console",
+    "product_goal": "Validate governed provider routing, evidence capture, and human-controlled application delivery.",
+    "product_name": "AI Delivery Operations Console",
     "security_review_artifact": "evidence/AI-DELIVERY-CANARY/product/security-review.md",
-    "target_user": "A single software delivery operator responsible for release readiness and rollback decisions.",
+    "target_user": "Software delivery operator responsible for release readiness and rollback decisions.",
     "ui_surface_evidence": "evidence/AI-DELIVERY-CANARY/product/ui-surface.md"
   },
-  "diff_patch_path": "evidence/GH-3/diff.patch",
+  "deepseek_final_artifact": "evidence/GH-999/model-artifacts/s10-deepseek-final.json",
+  "deepseek_planner_artifact": "evidence/GH-999/model-artifacts/s1-planner.json",
+  "deepseek_reviewer_artifact": "evidence/GH-999/model-artifacts/s8-deepseek-review.json",
+  "diff_patch_path": "evidence/GH-999/diff.patch",
   "final_check_artifact": "evidence/AI-DELIVERY-CANARY/final-check.json",
-  "github_ci_run_url": "https://github.com/3289937554-cell/ai-delivery-canary-app/actions/runs/29638834475",
-  "github_issue_url": "https://github.com/3289937554-cell/ai-delivery-canary-app/issues/3",
-  "github_pr_url": "https://github.com/3289937554-cell/ai-delivery-canary-app/pull/4",
+  "github_ci_run_url": "https://github.com/3289937554-cell/ai-delivery-canary-app/actions/runs/30886416361",
+  "github_issue_url": "https://github.com/3289937554-cell/ai-delivery-canary-app/issues/10",
+  "github_pr_url": "https://github.com/3289937554-cell/ai-delivery-canary-app/pull/9",
+  "aid_issue_label": "GH-999",
+  "artifact_namespace": "GH-999",
+  "github_issue_id": "GH-10",
+  "archon_workflow_run_id": "1eee09370e93a89d427a31afcf3d2651",
+  "archon_adapter_artifact": "evidence/GH-999/model-artifacts/archon-adapter-deepseek.json",
+  "task_master_export_path": "evidence/GH-999/model-artifacts/s2-task-graph.json",
+  "aid_run_id": "aid-426acaebef5c4f0e88ad1726225bdc0f",
   "goal_boundary": "evidence/AI-DELIVERY-CANARY/goal-boundary.md",
   "governance_mode": "single_maintainer",
   "human_merge_deploy_checklist": "evidence/AI-DELIVERY-CANARY/human-checklist.md",
-  "manifest_path": "evidence/GH-3/manifest.json",
+  "manifest_path": "evidence/GH-999/manifest.json",
   "model_execution_provenance": {
-    "claude_final": "evidence/AI-DELIVERY-CANARY/model-executions/claude-final.json",
-    "claude_planner": "evidence/AI-DELIVERY-CANARY/model-executions/claude-planner.json",
-    "claude_reviewer": "evidence/AI-DELIVERY-CANARY/model-executions/claude-reviewer.json",
-    "codex_worker": "evidence/AI-DELIVERY-CANARY/model-executions/codex-worker.json"
+    "codex_worker": "evidence/AI-DELIVERY-CANARY/model-executions/codex-worker.json",
+    "deepseek_final": "evidence/GH-999/model-artifacts/s10-final-execution.json",
+    "deepseek_planner": "evidence/GH-999/model-artifacts/s1-planner-execution.json",
+    "deepseek_reviewer": "evidence/GH-999/model-artifacts/s8-reviewer-execution.json"
   },
   "placeholder": false,
   "prd_architecture": "evidence/AI-DELIVERY-CANARY/prd-architecture.md",
   "project_id": "project-0007-ai-delivery-canary-app",
-  "rollback_path": "evidence/GH-3/rollback.md",
-  "run_log_path": "evidence/GH-3/run-log.md",
+  "rollback_path": "evidence/GH-999/rollback.md",
+  "run_log_path": "evidence/GH-999/run-log.md",
   "s0_s10_status": {
     "s0_goal_boundary": {
-      "actor": "codex-control-plane",
+      "actor": "ai-delivery-control",
       "evidence_path": "evidence/AI-DELIVERY-CANARY/goal-boundary.md",
       "failure_route": "return_to_requirements",
-      "required_output": "bounded product goal and measurable acceptance",
+      "required_output": "bounded application goal and measurable acceptance",
       "status": "passed",
-      "timestamp": "2026-07-16T14:46:58Z"
+      "timestamp": "2026-08-04T06:47:00Z"
     },
     "s10_final_gate": {
-      "actor": "3289937554-cell",
-      "evidence_path": "evidence/AI-DELIVERY-CANARY/final-check.json",
+      "actor": "deepseek-final",
+      "evidence_path": "evidence/AI-DELIVERY-CANARY/deepseek-final.md",
       "failure_route": "blocked_for_human_decision",
       "required_output": "human-controlled merge readiness",
       "self_attested": true,
       "status": "passed",
-      "timestamp": "2026-07-16T14:46:58Z"
+      "timestamp": "2026-08-04T06:46:59Z"
     },
-    "s1_claude_prd_architecture": {
-      "actor": "claude-planner",
-      "evidence_path": "evidence/AI-DELIVERY-CANARY/claude-planner.md",
+    "s1_deepseek_prd_architecture": {
+      "actor": "deepseek-planner",
+      "evidence_path": "evidence/AI-DELIVERY-CANARY/deepseek-planner.md",
       "failure_route": "return_to_requirements",
-      "required_output": "product and architecture contract",
+      "required_output": "DeepSeek V4-Pro product and architecture contract",
       "status": "passed",
-      "timestamp": "2026-07-16T11:04:26Z"
+      "timestamp": "2026-08-04T04:11:14Z"
     },
     "s2_task_breakdown": {
-      "actor": "codex-control-plane",
+      "actor": "task-master-archon",
       "evidence_path": "evidence/AI-DELIVERY-CANARY/task-breakdown.md",
       "failure_route": "return_to_planning",
       "required_output": "ordered implementation and delivery tasks",
       "status": "passed",
-      "timestamp": "2026-07-16T14:46:58Z"
+      "timestamp": "2026-08-04T04:11:14Z"
     },
     "s3_branch_worktree": {
       "actor": "codex-delivery-init",
-      "evidence_path": "evidence/GH-3/run-log.md",
+      "evidence_path": "evidence/GH-999/run-log.md",
       "failure_route": "return_to_initialization",
       "required_output": "isolated branch and worktree",
       "status": "passed",
-      "timestamp": "2026-07-16T13:51:32Z"
+      "timestamp": "2026-08-04T04:11:14Z"
     },
     "s4_codex_plan": {
       "actor": "codex-worker",
       "evidence_path": "evidence/AI-DELIVERY-CANARY/codex-plan.md",
       "failure_route": "return_to_planning",
-      "required_output": "TDD execution plan",
+      "required_output": "implementation plan",
       "status": "passed",
-      "timestamp": "2026-07-16T13:51:32Z"
+      "timestamp": "2026-08-04T05:00:00Z"
     },
     "s5_read_only_exploration": {
       "actor": "codex-explorer",
@@ -97,7 +104,7 @@
       "failure_route": "return_to_exploration",
       "required_output": "read-only repository orientation",
       "status": "passed",
-      "timestamp": "2026-07-16T13:51:32Z"
+      "timestamp": "2026-08-04T05:05:00Z"
     },
     "s6_implementation_local_verification": {
       "actor": "codex-worker",
@@ -105,23 +112,23 @@
       "failure_route": "return_to_implementation",
       "required_output": "implementation and local gate results",
       "status": "passed",
-      "timestamp": "2026-07-16T14:26:07Z"
+      "timestamp": "2026-08-04T05:47:51Z"
     },
     "s7_pr_ci": {
       "actor": "github-actions",
-      "evidence_path": "evidence/GH-3/run-log.md",
+      "evidence_path": "evidence/GH-999/run-log.md",
       "failure_route": "return_to_implementation",
-      "required_output": "six successful PR checks",
+      "required_output": "successful PR checks",
       "status": "passed",
-      "timestamp": "2026-07-16T14:46:06Z"
+      "timestamp": "2026-08-04T06:30:00Z"
     },
-    "s8_claude_review": {
-      "actor": "claude-reviewer",
-      "evidence_path": "evidence/AI-DELIVERY-CANARY/claude-reviewer.md",
+    "s8_deepseek_review": {
+      "actor": "deepseek-reviewer",
+      "evidence_path": "evidence/AI-DELIVERY-CANARY/deepseek-reviewer.md",
       "failure_route": "return_to_implementation",
-      "required_output": "grounded frozen-SHA review",
+      "required_output": "grounded frozen-SHA DeepSeek review",
       "status": "passed",
-      "timestamp": "2026-07-16T14:30:27Z"
+      "timestamp": "2026-08-04T06:46:25Z"
     },
     "s9_fix_loop": {
       "actor": "codex-reviser",
@@ -129,16 +136,16 @@
       "failure_route": "return_to_implementation",
       "required_output": "no-blocker revision closeout",
       "status": "passed",
-      "timestamp": "2026-07-16T14:46:58Z"
+      "timestamp": "2026-08-04T06:46:30Z"
     }
   },
   "single_maintainer_attestation": {
     "acknowledged_no_independent_review": true,
-    "attested_at": "2026-07-16T14:46:58Z",
+    "attested_at": "2026-08-04T06:47:00Z",
     "independent_review": false,
     "maintainer_login": "3289937554-cell",
-    "reason": "This repository has one human maintainer. The self-review is recorded transparently and no independent GitHub approval is claimed. All required technical and model evidence remains independently machine-checkable."
+    "reason": "The repository has one maintainer. This record is an honest self-review attestation and does not claim an independent GitHub approval; human merge remains a separate gate."
   },
-  "surface_evidence_path": "evidence/GH-3/surface-evidence/browser-acceptance.md",
+  "surface_evidence_path": "evidence/GH-999/surface-evidence/README.md",
   "task_breakdown": "evidence/AI-DELIVERY-CANARY/task-breakdown.md"
 }

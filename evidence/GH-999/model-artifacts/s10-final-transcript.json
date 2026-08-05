@@ -1,0 +1,16 @@
+{
+  "cost_usd": 0.01226091,
+  "endpoint": "https://api.deepseek.com/anthropic/v1/messages",
+  "model": "deepseek-v4-pro",
+  "provider": "deepseek",
+  "result": "{\"approval_status\": \"approved_for_human_merge\", \"blockers\": [], \"evidence_refs\": [\"evidence/GH-999/manifest.json\", \"evidence/model-artifacts/fallback-status.jsonl\", \"evidence/.archon/workflows/contract-probe.yaml\", \"evidence/model-artifacts/s1-planner-execution.json\", \"evidence/model-artifacts/s8-reviewer-execution.json\", \"evidence/model-artifacts/s10-final-execution.json\"], \"handoff_decision\": \"ready_for_final_gate\", \"summary\": \"All acceptance criteria met; DeepSeek V4-Pro used for planner, reviewer, and finalizer; no fallback; Archon adapter probe passes; lint/typecheck/test/build/smoke all pass; handoff package respects human merge boundary. Ready for final gate with human merge approval.\"}",
+  "role": "deepseek-final",
+  "schema_version": "ai-delivery-model-transcript/v1",
+  "session_id": "deepseek-s10-20260804-a5c53c2d9ff6",
+  "source_log_path": "evidence/GH-999/model-artifacts/source-logs/s10-final.jsonl",
+  "source_log_sha256": "965b1fe37e2654aae72121d4e2475e939621fa960b79aa68d08abe6ffffca7ae",
+  "usage": {
+    "input_tokens": 10279,
+    "output_tokens": 1907
+  }
+}

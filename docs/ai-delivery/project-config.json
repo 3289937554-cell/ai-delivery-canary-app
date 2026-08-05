@@ -156,7 +156,7 @@
       },
       {
         "destination": ".github/workflows/ai-delivery-ci.yml",
-        "expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
+        "expected_sha256": "3fba3289489e100ad51c32bef926a1bca6d08288be21db22808204b42b879f97",
         "kind": "copy",
         "source": "templates/github/workflows/ai-delivery-ci.yml",
         "source_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a"
@@ -470,7 +470,16 @@
         "source_sha256": "209ff8041a1da46469cf7b505fead815b143352fa75c04e942a9baf5c453a2be"
       }
     ],
-    "identity_sha256": "1e233955ddfb9c864c74c6cb7f7f607b99254393295a762fd69ad0654f7d9870",
+    "target_template_overrides": [
+      {
+        "policy": "ci-template-specialization/v1",
+        "destination": ".github/workflows/ai-delivery-ci.yml",
+        "base_expected_sha256": "0709289cf3f38a774fcf8331e3faee6c0d4e4dfd999f6c8eed2d1556c3c8ce2a",
+        "actual_sha256": "3fba3289489e100ad51c32bef926a1bca6d08288be21db22808204b42b879f97",
+        "reason": "Pin GitHub Actions to immutable commit SHAs and install the repository fixed Python tooling before lint and typecheck so CI is reproducible and every gate is executable."
+      }
+    ],
+    "identity_sha256": "b89e57464bd3589d0966dce41861ad0c7ed399758af19558f22f5df96a735867",
     "installer_version": "ai-delivery-installer/v1",
     "schema_version": "ai-delivery-template-identity/v1"
   },

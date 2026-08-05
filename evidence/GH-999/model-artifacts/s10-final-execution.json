@@ -1,0 +1,20 @@
+{
+  "artifact_path": "evidence/GH-999/model-artifacts/s10-deepseek-final.json",
+  "artifact_sha256": "d01c761cd04278af412a30c882649891646611cf70d3f18e96ed5d7516aeea7f",
+  "completed_at": "2026-08-04T06:46:59Z",
+  "exit_code": 0,
+  "interface": "deepseek-anthropic-api",
+  "model": "deepseek-v4-pro",
+  "placeholder": false,
+  "prompt_path": "evidence/GH-999/model-artifacts/s10-final-prompt.txt",
+  "prompt_sha256": "49d091062765c5c2ce77d529adc8e439c9e5f440155c423bfb7e8d2a8b3fc856",
+  "provider": "deepseek",
+  "role": "deepseek-final",
+  "run_id": "deepseek-s10-20260804-a5c53c2d9ff6",
+  "schema_version": "ai-delivery-model-execution/v1",
+  "source_log_path": "evidence/GH-999/model-artifacts/source-logs/s10-final.jsonl",
+  "source_log_sha256": "965b1fe37e2654aae72121d4e2475e939621fa960b79aa68d08abe6ffffca7ae",
+  "started_at": "2026-08-04T06:46:25Z",
+  "transcript_path": "evidence/GH-999/model-artifacts/s10-final-transcript.json",
+  "transcript_sha256": "7e38a88bbb881dbf5a1ecc8c7a5c174a28f80f0fe3f2b55914137ea9f6d2c35c"
+}

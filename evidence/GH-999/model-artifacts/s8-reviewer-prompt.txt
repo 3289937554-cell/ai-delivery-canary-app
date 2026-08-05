@@ -1,3 +1,69 @@
+Repository: ai-delivery-canary-app, issue GH-999, PR-9. Goal: replace the legacy Claude planning, review, and final provider contracts with the official DeepSeek V4-Pro model while keeping Codex and Archon routing explicit. No production merge, deployment, secret, billing, or branch-protection action is authorized. Review only the supplied evidence and facts; do not invent missing evidence.
+
+Act as the DeepSeek V4-Pro reviewer for S8. Inspect the planner artifact, Archon adapter evidence, fallback log, human approval boundary, and manifest below. Decide accurately whether the implementation is ready for final gate. Return only the JSON contract.
+
+PLANNER:
+{
+  "contract_version": "agent-plan/v1",
+  "tasks": [
+    {
+      "task_id": "task-1",
+      "title": "Generate Planner Artifact with DeepSeek V4-Pro",
+      "acceptance_criteria": [
+        "Planner artifact is produced as a signed Plan document adhering to the governed schema.",
+        "Evidence manifest captures the artifact’s content hash, provider 'deepseek', and model 'deepseek-v4-pro'.",
+        "Provider routing logs confirm the request was dispatched to the DeepSeek V4-Pro endpoint.",
+        "If the primary provider fails, the fallback mechanism is triggered and details (fallback provider, model) are recorded in evidence without loss of traceability."
+      ],
+      "dependencies": [],
+      "risks": [
+        "DeepSeek API unavailability may trigger fallback to a non-DeepSeek provider, obscuring model identity.",
+        "Misrouting to a different model (e.g., DeepSeek-Chat) could break the contract of using V4-Pro.",
+        "Fallback logging might not be implemented, leaving gaps in provenance."
+      ]
+    },
+    {
+      "task_id": "task-2",
+      "title": "Governance Review of Planner Artifact by DeepSeek V4-Pro",
+      "acceptance_criteria": [
+        "Reviewer agent evaluates the planner artifact and produces a signed review decision.",
+        "Review evidence includes the provider routing (must be DeepSeek V4-Pro) and model identity.",
+        "Fallback details, if used, are recorded in the review evidence alongside the primary attempt.",
+        "Archon workflow enforces that only the designated DeepSeek V4-Pro reviewer can sign the review artifact."
+      ],
+      "dependencies": [
+        "task-1"
+      ],
+      "risks": [
+        "Reviewer fallback may silently switch to a different model, invalidating the model-identity requirement.",
+        "Governance checks could fail if the planner artifact is tampered with or evidence is incomplete.",
+        "API timeouts or rate limits could cause the review to be delayed, impacting downstream tasks."
+      ]
+    },
+    {
+      "task_id": "task-3",
+      "title": "Finalize Delivery Evidence and Prepare Handoff Package",
+      "acceptance_criteria": [
+        "Finalizer agent aggregates all prior evidence (planner, reviewer) and appends its own signed finalization evidence.",
+        "Finalizer’s provider routing and model identity (DeepSeek V4-Pro) are recorded in the final evidence manifest.",
+        "The complete evidence manifest is immutable and cryptographically chained, proving end-to-end AID governance.",
+        "A handoff package (e.g., PR description with evidence link) is generated but not merged; the package explicitly states that production merge requires human approval."
+      ],
+      "dependencies": [
+        "task-2"
+      ],
+      "risks": [
+        "Finalizer may fail to include all evidence links, breaking the provenance chain.",
+        "Handoff package generation might produce an incomplete reference to the evidence manifest.",
+        "Human gate may reject the handoff if any evidence discrepancy is found, requiring a re-run of earlier steps."
+      ]
+    }
+  ],
+  "stage": "S1"
+}
+
+
+ARCHON:
 {
   "adapter": {
     "binary": {
@@ -96,4 +162,136 @@
   },
   "ready": true,
   "schema": "ai-delivery.archon-adapter-check.v1"
+}
+
+
+FALLBACK LOG:
+{"schema":"ai-delivery.provider-fallback-status/v1","recorded_at":"2026-08-04T06:45:51Z","primary_provider":"deepseek","primary_model":"deepseek-v4-pro","fallback_active":false,"fallback_provider":null,"fallback_model":null,"note":"No fallback was used for the recorded DeepSeek V4-Pro planner, reviewer, or final executions."}
+
+
+HANDOFF:
+# Human Approval Boundary
+
+DeepSeek may prepare planner, reviewer, and final-gate evidence only. Production merge, deployment, secret changes, billing changes, and branch-protection changes require explicit human approval and are not performed by this delivery.
+
+
+MANIFEST:
+{
+    "manifest_version": "1.0",
+    "issue_id": "GH-999",
+    "pr_id": "PR-9",
+    "base_sha": "c3de200fb8733f31d05c421aa076cf3b522e7334",
+    "commit_sha": "ddb9e5c226d952819268e53d42569b9b56c0e232",
+    "created_at": "2026-08-04T05:47:51Z",
+    "actor": "codex worker",
+    "approval_status": "ready_for_deepseek_review",
+    "commands": [
+        {
+            "name": "lint",
+            "command": "./scripts/lint.sh",
+            "exit_code": 0,
+            "log_path": "evidence/GH-999/logs/lint.log",
+            "sha256": "3b6e60864d5570b75b8be75ddcecb04e44549adfba59e2275f83419cf01fada7"
+        },
+        {
+            "name": "typecheck",
+            "command": "./scripts/typecheck.sh",
+            "exit_code": 0,
+            "log_path": "evidence/GH-999/logs/typecheck.log",
+            "sha256": "a46b37588162c27a2d8c2f4faf08c017bf9be476ecab6cd9ce5b3347aa382d3e"
+        },
+        {
+            "name": "test",
+            "command": "python3 -m unittest discover -s tests",
+            "exit_code": 0,
+            "log_path": "evidence/GH-999/logs/test.log",
+            "sha256": "2e68df0813100ff9b02d5784c0902ee2e01819b0e5a100ea773f0ae0f58e8835"
+        },
+        {
+            "name": "build",
+            "command": "./scripts/build.sh",
+            "exit_code": 0,
+            "log_path": "evidence/GH-999/logs/build.log",
+            "sha256": "031efd25d14caba47384b1ab30225879cddb2ef54b36f980c21fef6d8fa21985"
+        },
+        {
+            "name": "smoke",
+            "command": "./scripts/smoke.sh",
+            "exit_code": 0,
+            "log_path": "evidence/GH-999/logs/smoke.log",
+            "sha256": "2decc0bf9e2ef871e422d8ec01ad138fc5550cff33be265bd99c44f1a6923fb6"
+        }
+    ],
+    "artifacts": [
+        {
+            "type": "diff",
+            "path": "evidence/GH-999/diff.patch",
+            "sha256": "2771a2bce7f5ba90bd61f5361999b331348ae89426edba17e068d48d4e5c2666"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/logs/test.log",
+            "sha256": "2e68df0813100ff9b02d5784c0902ee2e01819b0e5a100ea773f0ae0f58e8835"
+        },
+        {
+            "type": "tests",
+            "path": "evidence/GH-999/reports/test-summary.json",
+            "sha256": "a26098f968d8158af9ef213c31cec282501ebfd8bd13150c1ed518db91609cab"
+        },
+        {
+            "type": "surface-evidence",
+            "path": "evidence/GH-999/surface-evidence/smoke-observation.txt",
+            "sha256": "1c08f33fb414fe9936fa685983b23c515b8cadba0e6affdd7a8b743875fee4ed"
+        },
+        {
+            "type": "product-design-package",
+            "path": "evidence/GH-999/product-design/product-design-package.md",
+            "sha256": "8a14511ccfdb2704eb5fa3d55492e6c6db5273a1409c4dfc4985d17cf023e168"
+        },
+        {
+            "type": "accessibility",
+            "path": "evidence/GH-999/product-design/accessibility-report.md",
+            "sha256": "47bd2eedad2e3862c386ffb60b52b1135b5119fc306c110b1096a5c36392383c"
+        },
+        {
+            "type": "visual-regression",
+            "path": "evidence/GH-999/product-design/visual-regression.md",
+            "sha256": "a15d2ea350d93489866e600e4214cd1608fc3148fb87e84bf9ba5817fec1b6a5"
+        },
+        {
+            "type": "rollback",
+            "path": "evidence/GH-999/rollback.md",
+            "sha256": "597ddb5731a482c5761ec0b072084596c7a07fc7cdebe958eeb4944291744a32"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/model-artifacts/s1-planner-execution.json",
+            "sha256": "a5fad7f253abc55d58e981a17dd4f7bf9cc737aac3bc9aec341072b3734c510f"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/model-artifacts/fallback-status.jsonl",
+            "sha256": "e69cb92dab036f17de5ae01c58cb8c84abc85fe2b84f7aa15cad1b5bd91ad022"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/model-artifacts/handoff-human-approval.md",
+            "sha256": "f667bf94ca2e79d439a203fb63fe4b7820e4c76e7059b55df27dbb19974b8c23"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/model-artifacts/s8-reviewer-execution.json",
+            "sha256": "46ae0fc3cb0014c53a2ac876bd1e9874da12095856d7f365adc36ecad53f6a35"
+        },
+        {
+            "type": "logs",
+            "path": "evidence/GH-999/model-artifacts/s10-final-execution.json",
+            "sha256": "87379a0e9bdcbc48245b2800d98b14c1bf5e506cdce2a07c660909da59dd0c67"
+        }
+    ],
+    "rollback": {
+        "strategy": "revert_pr",
+        "command": "gh pr revert 9",
+        "data_notes": "No irreversible data migration recorded for this delivery packet."
+    }
 }

@@ -1,0 +1,19 @@
+{
+  "schema_version": "ai-delivery-model-execution/v1",
+  "role": "deepseek-planner",
+  "provider": "deepseek",
+  "model": "deepseek-v4-pro",
+  "interface": "deepseek-anthropic-api",
+  "run_id": "deepseek-s1-20260804-922c71f33672",
+  "started_at": "2026-08-04T04:11:14Z",
+  "completed_at": "2026-08-04T04:11:14Z",
+  "exit_code": 0,
+  "artifact_path": "evidence/GH-999/model-artifacts/s1-planner.json",
+  "artifact_sha256": "cbcdc99710358a16c5522400923052d399d57a54696ba30439b9e45d1ad64d67",
+  "transcript_path": "evidence/GH-999/model-artifacts/s1-planner-transcript.json",
+  "transcript_sha256": "738e03a02193fb68ebbe95272b73854c8d8c061c846856881cef6aa409701b3d",
+  "source_log_path": "evidence/GH-999/model-artifacts/source-logs/s1-planner.jsonl",
+  "source_log_sha256": "7e308c9461d68c20a252649cc13c8a2f70b2dcf7c860cf72b29b103549fba7c8",
+  "prompt_sha256": "922c71f336721e295048998643cd4c1ebea9bd3a6454d85bd345f71008841d6b",
+  "placeholder": false
+}

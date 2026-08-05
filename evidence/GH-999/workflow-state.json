@@ -1,0 +1,25 @@
+{
+  "approval_status": "approved_for_human_merge",
+  "blocker_counts": {},
+  "blockers": [],
+  "handoff_decision": "ready_for_final_gate",
+  "history": [
+    {
+      "approval_status": "approved_for_human_merge",
+      "at": "2026-08-04T11:30:39Z",
+      "blockers": [],
+      "handoff_decision": "ready_for_final_gate",
+      "repeated_blockers": [],
+      "state": "S10 Final Gate"
+    }
+  ],
+  "issue_id": "GH-999",
+  "repeated_blockers": [],
+  "review_artifact_path": "/Users/jiangli/项目库/worktrees/aid-GH-999-final-20260804/evidence/GH-999/model-artifacts/s10-deepseek-final.json",
+  "schema": "ai-delivery.review-state.v1",
+  "slug": "e2e-provider-fallback",
+  "state": "S10 Final Gate",
+  "target_repo": "/Users/jiangli/项目库/worktrees/GH-3-delivery-operations-console",
+  "updated_at": "2026-08-04T11:30:39Z",
+  "workflow_status": "S10_final_gate"
+}

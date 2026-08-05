@@ -4,7 +4,7 @@ schema_version: ai-architecture-brief/v1
 issue_id: GH-999
 status: draft
 
-这份文件是给 Claude/Codex 的输入契约，不是聊天摘要。先填业务事实，再允许 AI 生成 P0-P9 工件。
+这份文件是给 DeepSeek V4-Pro/Codex 的输入契约，不是聊天摘要。先填业务事实，再允许 AI 生成 P0-P9 工件。
 
 ## 1. 业务边界
 

@@ -1,0 +1,56 @@
+{
+  "result_sha256": "ecdc9235cfdd9c4eea00a88e3b1223faa37ca5500659fa948381dcbaae84fc9c",
+  "stage": "S4",
+  "structured_output": {
+    "contract_version": "agent-plan/v1",
+    "tasks": [
+      {
+        "acceptance_criteria": [
+          "The governed AID client is exercised end to end using the configured provider route.",
+          "The run demonstrates that request submission, provider invocation, response handling, and governed result validation complete successfully.",
+          "Evidence identifies the provider route used for the validation run."
+        ],
+        "dependencies": [],
+        "risks": [
+          "Provider credentials, network availability, or provider-side limits may prevent completion.",
+          "Provider routing configuration may differ between local and governed environments."
+        ],
+        "task_id": "T1",
+        "title": "Execute governed AID client end-to-end validation"
+      },
+      {
+        "acceptance_criteria": [
+          "All applicable local gates are run and their outcomes are recorded.",
+          "The validation confirms local gate selection and execution remain explicit and traceable.",
+          "Any skipped or unavailable gate has a documented reason and impact."
+        ],
+        "dependencies": [
+          "T1"
+        ],
+        "risks": [
+          "Unavailable tooling or environment prerequisites can leave a local gate unexecuted.",
+          "Gate results may be non-deterministic if dependent services or fixtures are unstable."
+        ],
+        "task_id": "T2",
+        "title": "Verify local gate execution traceability"
+      },
+      {
+        "acceptance_criteria": [
+          "The implementation plan records the end-to-end validation result, local gate outcomes, and provider routing evidence.",
+          "The plan preserves explicit links between validation activities, dependencies, risks, and acceptance criteria.",
+          "The final record is sufficient for an independent reviewer to trace governed delivery decisions."
+        ],
+        "dependencies": [
+          "T1",
+          "T2"
+        ],
+        "risks": [
+          "Incomplete evidence capture can make routing or gate decisions unverifiable.",
+          "Subsequent configuration changes may invalidate recorded provider-routing evidence."
+        ],
+        "task_id": "T3",
+        "title": "Document governed validation evidence"
+      }
+    ]
+  }
+}
